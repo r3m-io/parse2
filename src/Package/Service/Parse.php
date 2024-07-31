@@ -84,13 +84,6 @@ class Parse
                     $count = count($explode);
                     if($count > 1){
                         $content = trim(substr($tag, 2, -2));
-                        if(
-                            strtoupper($content) === 'LITERAL' ||
-                            $is_literal === true
-                        ){
-                            $is_literal = true;
-                            $record['is_literal'] = true;
-                        }
                         $length = strlen($explode[0]);
                         $record = [
                             'tag' => $tag,
@@ -114,6 +107,7 @@ class Parse
                                 ]
                             ]
                         ];
+                        d($record);
                         $tag_list[$line][] = $record;
                     } else {
                         $length = strlen($explode[0]);
