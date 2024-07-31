@@ -56,17 +56,12 @@ class Parse
             elseif($char === '}'){
                 $curly_count--;
             }
-            elseif($char === "\n" && $curly_count === 0){
+            elseif($char === "\n"){
                 $line++;
                 $column = 1;
-                /*
-                $token[] = [
-                    'value' => $row,
-                    'line' => $line,
-                    'column' => $column,
-                ];
-                */
-                $row = '';
+                if($curly_count === 0){
+                    $row = '';
+                }
             }
             if(
                 $curly_count === 2 &&
