@@ -9,7 +9,6 @@ use Exception;
 class Parse
 {
 
-
     /**
      * @throws Exception
      */
@@ -29,7 +28,6 @@ class Parse
                 'age' => '30',
                 // Add more placeholders and their replacements as needed
         ];
-
         // Step 3: Replace placeholders with actual values
         foreach ($placeholders as $key => $value) {
             $template = str_replace('{{' . $key . '}}', $value, $template);
