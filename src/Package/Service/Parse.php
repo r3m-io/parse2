@@ -24,6 +24,7 @@ class Parse
 
         $tags = Parse::tags($object, $template, $flags, $options);
         $tags = Parse::tags_remove($object, $tags, $flags, $options);
+        $tags = Parse::assign($object, $tags, $flags, $options);
         ddd($tags);
 
         // Step 2: Define the placeholder values
@@ -161,7 +162,7 @@ class Parse
         return $tag_list;
     }
 
-    private static function tags_remove(App $object, $tags, $flags, $options): array
+    public static function tags_remove(App $object, $tags, $flags, $options): array
     {
         foreach($tags as $line => $tag){
             foreach($tag as $nr => $record){
@@ -173,6 +174,28 @@ class Parse
                     if(empty($tags[$line])){
                         unset($tags[$line]);
                     }
+                }
+            }
+        }
+        return $tags;
+    }
+
+    public static function assign(App $object, $tags, $flags, $options): array
+    {
+        foreach($tags as $line => $tag){
+            foreach($tag as $nr => $record){
+                if(
+                    array_key_exists('tag', $record)
+                ){
+                    $content = trim(substr($record['tag'], 2, -2));
+                    if(substr($content, 0, 1) === '$'){
+                        //we have a variable assign
+                        $data = mb_str_split($content, 1);
+                        ddd($data);
+
+                    }
+
+
                 }
             }
         }
