@@ -192,6 +192,7 @@ class Parse
                         //we have a variable assign
                         $length = strlen($content);
                         $data = mb_str_split($content, 1);
+                        d($data);
                         $operator = false;
                         $before = '';
                         $after = '';
