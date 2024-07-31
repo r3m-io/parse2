@@ -410,6 +410,7 @@ class Parse
         $counter = 0;
         $value = [];
         $is_single_quoted = false;
+        $is_double_quoted = false;
         $is_value = false;
         $previous_char = false;
         foreach($input as $nr => $char){
@@ -444,6 +445,20 @@ class Parse
                 ){
                     $is_single_quoted = false;
                 }
+                elseif(
+                    $previous_char !== '\\' &&
+                    $char === '"' &&
+                    $is_double_quoted === false
+                ){
+                    $is_double_quoted = true;
+                }
+                elseif(
+                    $previous_char !== '\\' &&
+                    $char === '"' &&
+                    $is_double_quoted === true
+                ){
+                    $is_double_quoted = false;
+                }
                 if($is_value === false){
                     $key[] = $char;
                 } else {
@@ -455,8 +470,12 @@ class Parse
                 if(
                     $is_value &&
                     $is_single_quoted === false &&
+                    $is_double_quoted === false &&
                     $char === ','
                 ){
+                    array_pop($value);
+                    array_pop($key);
+                    array_pop($key);
                     $array[] = [
                         'key' => $key,
                         'value' => $value
@@ -468,7 +487,13 @@ class Parse
             }
             $previous_char = $char;
         }
-        if($is_value && $is_single_quoted === false){
+        if(
+            $is_value &&
+            $is_single_quoted === false &&
+            $is_double_quoted === false
+        ){
+            array_pop($key);
+            array_pop($key);
             $array[] = [
                 'key' => $key,
                 'value' => $value
