@@ -23,7 +23,7 @@ class Parse
         $template = File::read($options->source);
 
         $tags = Parse::tags($object, $template, $flags, $options);
-
+        $tags = Parse::tags_remove($object, $tags, $flags, $options);
         ddd($tags);
 
         // Step 2: Define the placeholder values
@@ -133,6 +133,22 @@ class Parse
             }
             if($char !== "\n"){
                 $column[$line]++;
+            }
+        }
+        return $tag_list;
+    }
+
+    private static function tags_remove(App $object, $tags, $flags, $options): array
+    {
+        $tag_list = [];
+        foreach($tags as $line => $tag){
+            foreach($tag as $nr => $record){
+                if(array_key_exists('is_header', $record)){
+                    unset($tags[$line][$nr]);
+                    if(empty($tags[$line])){
+                        unset($tags[$line]);
+                    }
+                }
             }
         }
         return $tag_list;
