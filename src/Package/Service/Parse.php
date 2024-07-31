@@ -165,7 +165,10 @@ class Parse
     {
         foreach($tags as $line => $tag){
             foreach($tag as $nr => $record){
-                if(array_key_exists('is_header', $record)){
+                if(
+                    array_key_exists('is_header', $record) ||
+                    array_key_exists('is_literal', $record)
+                ){
                     unset($tags[$line][$nr]);
                     if(empty($tags[$line])){
                         unset($tags[$line]);
