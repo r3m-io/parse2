@@ -58,7 +58,11 @@ class Parse
             elseif($char === "\n"){
                 $line++;
                 $column = 1;
-                $token[] = $row;
+                $token[] = [
+                    'value' => $row,
+                    'line' => $line,
+                    'column' => $column,
+                ];
                 $row = '';
             }
             if(
