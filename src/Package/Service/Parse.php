@@ -46,6 +46,7 @@ class Parse
         $curly_count = 0;
         $line = 1;
         $row = [];
+        $tag = false;
         foreach($split as $nr => $char){
             if($char === '{'){
                 $curly_count++;
@@ -59,11 +60,19 @@ class Parse
                 $row = [];
             }
             if($curly_count === 2){
-                d($token);
-                dd($row);
-                ddd('found start of function variable');
+                $tag = [];
+                $tag[] = '{';
+                $tag[] = '{';
+            }
+            elseif($curly_count === 0){
+                if($tag){
+                    ddd($tag);
+                }
             }
             $row[] = $char;
+            if($tag){
+                $tag[] = $char;
+            }
         }
 
 
