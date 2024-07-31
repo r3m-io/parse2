@@ -78,17 +78,35 @@ class Parse
                     }
                     $explode = explode("\n", $tag);
                     $count = count($explode);
-                    d($explode);
-                    $length = strlen($explode[0]);
-                    $tag_list[$line][] = [
-                        'tag' => $tag,
-                        'line' => $line,
-                        'length' => $length,
-                        'column' => [
-                            'start' => $column[($line - $count + 1)] - $length,
-                            'end' => $column[($line - $count + 1)]
-                        ]
-                    ];
+                    ddd($count);
+                    if($count > 1){
+                        $length = strlen($explode[0]);
+                        $tag_list[$line][] = [
+                            'tag' => $tag,
+                            'is_multiline' => true,
+                            'line' => [
+                                'start' => $line - $count + 1,
+                                'end' => $line
+                            ],
+                            'length' => $length,
+                            'column' => [
+                                'start' => $column[($line - $count + 1)] - $length,
+                                'end' => $column[($line - $count + 1)]
+                            ]
+                        ];
+                    } else {
+                        $length = strlen($explode[0]);
+                        $tag_list[$line][] = [
+                            'tag' => $tag,
+                            'line' => $line,
+                            'length' => $length,
+                            'column' => [
+                                'start' => $column[($line - $count + 1)] - $length,
+                                'end' => $column[($line - $count + 1)]
+                            ]
+                        ];
+                    }
+
                     $tag = false;
                 }
             }
