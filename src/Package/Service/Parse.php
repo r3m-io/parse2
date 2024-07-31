@@ -42,6 +42,21 @@ class Parse
 
     public static function token(App $object, $string=''){
         $split = mb_str_split($string, 1);
+        $token = [];
+        $curly_count = 0;
+        foreach($split as $nr => $char){
+            if($char == '{'){
+                $curly_count++;
+            }
+            elseif($char == '}'){
+                $curly_count--;
+            }
+            if($curly_count === 2){
+                ddd('found start of function variable');
+            }
+        }
+
+
         ddd($split);
     }
 }
