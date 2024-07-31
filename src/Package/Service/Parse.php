@@ -48,6 +48,7 @@ class Parse
         $column = 1;
         $row = '';
         $tag = false;
+        $tag_list = [];
         foreach($split as $nr => $char){
             if($char === '{'){
                 $curly_count++;
@@ -55,15 +56,17 @@ class Parse
             elseif($char === '}'){
                 $curly_count--;
             }
-            elseif($char === "\n"){
+            elseif($char === "\n" && $curly_count === 0){
                 $line++;
                 $column = 1;
+                d($tag_list);
                 $token[] = [
                     'value' => $row,
                     'line' => $line,
                     'column' => $column,
                 ];
                 $row = '';
+                $tag_list = [];
             }
             if(
                 $curly_count === 2 &&
@@ -75,8 +78,14 @@ class Parse
                 if($tag){
                     $tag .= $char;
                     $row .= $char;
-                    $row = explode($tag, $row, 1);
-                    if(array_key_exists(1, $row)){
+                    $tag_list[] = [
+                        'tag' => $tag,
+                        'line' => $line,
+                        'column' => $column
+                    ];
+                    /*
+                    $row_temp = explode($tag, $row, 1);
+                    if(array_key_exists(1, $row_temp)){
                         $token[] = [
                             'value' => $row[0],
                             'line' => $line,
@@ -89,7 +98,7 @@ class Parse
                             'column' => $column,
                             'is_tag' => true
                         ];
-                    }
+                    }*/
                     $tag = false;
 
                 }
@@ -100,8 +109,6 @@ class Parse
             }
             $column++;
         }
-
-
-        ddd($split);
+        ddd($tag_list);
     }
 }
