@@ -190,7 +190,49 @@ class Parse
                     $content = trim(substr($record['tag'], 2, -2));
                     if(substr($content, 0, 1) === '$'){
                         //we have a variable assign
+                        $length = strlen($content);
                         $data = mb_str_split($content, 1);
+                        $operator = false;
+                        $before = '';
+                        $after = '';
+                        $is_after = false;
+                        for($i=0; $i < $length; $i++){
+                            $char = $data[$i];
+                            if(
+                                in_array(
+                                    $char,
+                                    [
+                                        '=',
+                                        '.',
+                                        '+',
+                                        '-'
+                                    ],
+                                    true
+                                )
+                            ){
+                                $operator = $char;
+                                continue;
+                            }
+                            if($operator && $is_after === false){
+                                if(
+                                    $char === ' ' ||
+                                    $char === "\n" ||
+                                    $char === "\t"
+                                ) {
+                                    $is_after = true;
+                                    continue;
+                                } else {
+                                    $operator .= $char;
+                                }
+                            } elseif($is_after) {
+                                $after .= $char;
+                            } else {
+                                $before .= $char;
+                            }
+                        }
+                        d($before);
+                        d($operator);
+                        d($after);
                         ddd($data);
 
                     }
