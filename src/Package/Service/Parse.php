@@ -22,34 +22,9 @@ class Parse
         // Step 1: Read the template file
         $template = File::read($options->source);
 
-        $pattern = '/\{\{(.*?)\}\}/';
+        $tags = Parse::tags($object, $template);
 
-// Check for matches
-        $pattern = '/\{\{(.*?)\}\}/';
 
-// Check for matches
-        if (preg_match_all($pattern, $template, $matches, PREG_OFFSET_CAPTURE)) {
-            $result = [];
-            foreach ($matches[0] as $match) {
-                $matchText = $match[0];
-                $startPos = $match[1];
-                $lineNumber = substr_count(substr($template, 0, $startPos), "\n") + 1;
-                $lineStartPos = strrpos(substr($template, 0, $startPos), "\n") + 1;
-                $charPos = $startPos - $lineStartPos + 1;
-                $length = strlen($matchText);
-                $result[] = [
-                    'match' => $matchText,
-                    'line' => $lineNumber,
-                    'column' => [
-                        'start' => $charPos,
-                        'end' => $charPos + $length
-                    ]
-                ];
-            }
-            ddd($result);
-        } else {
-            echo "No matches found.";
-        }
         // Step 2: Define the placeholder values
         $placeholders = [
                 'name' => 'John Doe',
@@ -62,5 +37,29 @@ class Parse
         }
         // Step 4: Output the processed template
         dd($template);
+    }
+
+    public static function tags(App $object, $string='', $pattern='/\{\{(.*?)\}\}/'){
+        // Check for matches
+        $result = [];
+        if (preg_match_all($pattern, $string, $matches, PREG_OFFSET_CAPTURE)) {
+            foreach ($matches[0] as $match) {
+                $matchText = $match[0];
+                $startPos = $match[1];
+                $lineNumber = substr_count(substr($string, 0, $startPos), "\n") + 1;
+                $lineStartPos = strrpos(substr($string, 0, $startPos), "\n") + 1;
+                $charPos = $startPos - $lineStartPos + 1;
+                $length = strlen($matchText);
+                $result[] = [
+                    'match' => $matchText,
+                    'line' => $lineNumber,
+                    'column' => [
+                        'start' => $charPos,
+                        'end' => $charPos + $length
+                    ]
+                ];
+            }
+        }
+        return $result;
     }
 }
