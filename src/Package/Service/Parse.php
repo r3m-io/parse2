@@ -71,11 +71,23 @@ class Parse
                 if($tag){
                     $tag .= $char;
                     $row .= $char;
-                    d($token);
-                    d($line);
-                    d($column);
-                    d($row);
-                    ddd($tag);
+                    $row = explode($tag, $row, 1);
+                    if(array_key_exists(1, $row)){
+                        $token[] = [
+                            'value' => $row[0],
+                            'line' => $line,
+                            'column' => $column,
+                            'is_tag' => false
+                        ];
+                        $token[] = [
+                            'value' => $tag,
+                            'line' => $line,
+                            'column' => $column,
+                            'is_tag' => true
+                        ];
+                    }
+                    $tag = false;
+
                 }
             }
             $row .= $char;
