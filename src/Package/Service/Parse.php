@@ -51,6 +51,7 @@ class Parse
         $row = '';
         $tag = false;
         $tag_list = [];
+        $is_literal = false;
         foreach($split as $nr => $char){
             if($char === '{'){
                 $curly_count++;
@@ -81,6 +82,14 @@ class Parse
                     $explode = explode("\n", $tag);
                     $count = count($explode);
                     if($count > 1){
+                        $content = trim(substr($tag, 2, -2));
+                        if(
+                            strtoupper($content) === 'LITERAL' ||
+                            $is_literal === true
+                        ){
+                            $is_literal = true;
+                            $record['is_literal'] = true;
+                        }
                         $length = strlen($explode[0]);
                         $record = [
                             'tag' => $tag,
@@ -120,6 +129,20 @@ class Parse
                         if(strtoupper(substr($content, 0, 3)) === 'R3M'){
                             $record['is_header'] = true;
                             $record['content'] = $content;
+                        }
+                        elseif(
+                            strtoupper($content) === 'LITERAL' ||
+                            $is_literal === true
+                        ){
+                            $is_literal = true;
+                            $record['is_literal'] = true;
+                        }
+                        elseif(
+                            strtoupper($content) === '/LITERAL' ||
+                            $is_literal === true
+                        ){
+                            $is_literal = false;
+                            $record['is_literal'] = true;
                         }
                         $tag_list[$line][] = $record;
                     }
