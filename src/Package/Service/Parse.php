@@ -92,8 +92,14 @@ class Parse
                                 'end' => strlen($explode[$count - 1])
                             ],
                             'column' => [
-                                'start' => $column[($line - $count +1)] - $length,
-                                'end' => $column[$line]
+                                ($line - $count + 1) => [
+                                    'start' => $column[$line - $count + 1] - $length,
+                                    'end' => $column[$line - $count + 1]
+                                ],
+                                $line => [
+                                    'start' => $column[$line] - strlen($explode[$count - 1]),
+                                    'end' => $column[$line]
+                                ]
                             ]
                         ];
                     } else {
