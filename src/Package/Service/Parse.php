@@ -418,10 +418,15 @@ class Parse
             elseif($char == ']'){
                 $array_depth--;
                 if($array_depth === 0){
+                    ddd($array);
+                }
+                /*
+                if($array_depth === 0){
                     $array[] = $char;
                     $array = Parse::value_split($object, $array, $flags, $options);
                     return $array;
                 }
+                */
             }
             elseif($array_depth >= 1){
                 if(
