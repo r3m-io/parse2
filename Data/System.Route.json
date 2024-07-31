@@ -3,9 +3,9 @@
     "Route": [
       {
         "#class": "System.Route",
-        "name": "r3m-io-cli-task",
-        "path": "r3m_io\/task",
-        "controller": "Package.R3m.Io.Task.Controller.Cli.run",
+        "name": "r3m-io-cli-parse",
+        "path": "r3m_io\/parse",
+        "controller": "Package.R3m.Io.Parse.Controller.Cli.run",
         "request": {
           "language": "en"
         },
