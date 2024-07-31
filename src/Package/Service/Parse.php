@@ -98,19 +98,20 @@ class Parse
                                     'end' => $column[$line - $count + 1]
                                 ],
                                 $line => [
-                                    'start' => $column[$line] - strlen($explode[$count - 1]) + 1,
+                                    'start' => $column[$line] - strlen($explode[$count - 1]),
                                     'end' => $column[$line]
                                 ]
                             ]
                         ];
                     } else {
+                        ddd($column[$line]);
                         $length = strlen($explode[0]);
                         $tag_list[$line][] = [
                             'tag' => $tag,
                             'line' => $line,
                             'length' => $length,
                             'column' => [
-                                'start' => $column[$line] - $length + 1,
+                                'start' => $column[$line] - $length,
                                 'end' => $column[$line]
                             ]
                         ];
