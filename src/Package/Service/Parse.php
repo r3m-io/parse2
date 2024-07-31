@@ -419,10 +419,12 @@ class Parse
                 $is_double_quoted === false &&
                 $char == '['
             ){
-                if($is_value === false){
-                    $key[] = $char;
-                } else {
-                    $value[] = $char;
+                if($array_depth > 0){
+                    if($is_value === false){
+                        $key[] = $char;
+                    } else {
+                        $value[] = $char;
+                    }
                 }
                 $array_depth++;
             }
@@ -431,14 +433,15 @@ class Parse
                 $is_double_quoted === false &&
                 $char == ']'
             ){
-                if($is_value === false){
-                    $key[] = $char;
-                } else {
-                    $value[] = $char;
-                }
                 $array_depth--;
                 if($array_depth === 0){
                     d($array);
+                } else {
+                    if($is_value === false){
+                        $key[] = $char;
+                    } else {
+                        $value[] = $char;
+                    }
                 }
                 /*
                 if($array_depth === 0){
