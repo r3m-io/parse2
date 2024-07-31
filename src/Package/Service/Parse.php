@@ -318,12 +318,12 @@ class Parse
                 }
                 return Parse::value_split($object, $input['array'], $flags, $options);
         }
-        ddd($value);
     }
 
     public static function value_split(App $object, $input, $flags, $options){
         $set_depth = 0;
         $collect = [];
+        $list = [];
         foreach($input as $nr => $char){
             if($char === '('){
                 $set_depth++;
@@ -332,7 +332,56 @@ class Parse
                 $set_depth--;
                 if($set_depth === 0){
                     $collect[] = $char;
-                    ddd($collect);
+
+                    $cast = implode('', $collect);
+
+                    switch($cast){
+                        case '(bool)' :
+                        case '(boolean)' :
+                            $list[] = [
+                                'value' => $collect,
+                                'is_cast' => true,
+                                'cast' => 'boolean'
+                            ];
+                        break;
+                        case '(object)' :
+                            $list[] = [
+                                'value' => $collect,
+                                'is_cast' => true,
+                                'cast' => 'object'
+                            ];
+                        break;
+                        case '(array)' :
+                            $list[] = [
+                                'value' => $collect,
+                                'is_cast' => true,
+                                'cast' => 'array'
+                            ];
+                        break;
+                        case '(int)' :
+                        case '(integer)' :
+                            $list[] = [
+                                'value' => $collect,
+                                'is_cast' => true,
+                                'cast' => 'integer'
+                            ];
+                        break;
+                        case '(float)' :
+                        case '(double)' :
+                            $list[] = [
+                                'value' => $collect,
+                                'is_cast' => true,
+                                'cast' => 'float'
+                            ];
+                        break;
+                        case '(clone)' :
+                            $list[] = [
+                                'value' => $collect,
+                                'is_cast' => true,
+                                'cast' => 'clone'
+                            ];
+                        break;
+                    }
                     $collect = [];
 
                 }
@@ -341,8 +390,6 @@ class Parse
                 $collect[] = $char;
             }
         }
-
-
-        ddd($input);
+        return $list;
     }
 }
