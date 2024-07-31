@@ -45,7 +45,7 @@ class Parse
         $token = [];
         $curly_count = 0;
         $line = 1;
-        $column = 1;
+        $column = [];
         $row = '';
         $tag = false;
         $tag_list = [];
@@ -58,7 +58,7 @@ class Parse
             }
             elseif($char === "\n"){
                 $line++;
-                $column = 1;
+                $column[$line] = 1;
                 if($curly_count === 0){
                     $row = '';
                 }
@@ -75,14 +75,15 @@ class Parse
                     if(empty($tag_list[$line])){
                         $tag_list[$line] = [];
                     }
-                    $explode = explode("\n", $tag, 2);
+                    $explode = explode("\n", $tag);
+                    $count = count($explode);
                     $length = strlen($explode[0]);
                     $tag_list[$line][] = [
                         'tag' => $tag,
                         'line' => $line,
                         'length' => $length,
                         'column' => [
-                            'start' => $column - $length,
+                            'start' => $column[($line - $count)] - $length,
                             'end' => $column
                         ]
                     ];
@@ -93,7 +94,7 @@ class Parse
             if($tag){
                 $tag .= $char;
             }
-            $column++;
+            $column[$line]++;
         }
         d($string);
         ddd($tag_list);
