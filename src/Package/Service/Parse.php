@@ -232,6 +232,16 @@ class Parse
                                 }
                             }
                             elseif($is_after) {
+                                if(
+                                    (
+                                        $char === ' ' ||
+                                        $char === "\n" ||
+                                        $char === "\t"
+                                    ) &&
+                                    $after === ''
+                                ) {
+                                    continue;
+                                }
                                 $after .= $char;
                                 $after_array[] = $char;
                             }
