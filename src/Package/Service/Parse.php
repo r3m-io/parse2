@@ -44,16 +44,26 @@ class Parse
         $split = mb_str_split($string, 1);
         $token = [];
         $curly_count = 0;
+        $line = 1;
+        $row = [];
         foreach($split as $nr => $char){
-            if($char == '{'){
+            if($char === '{'){
                 $curly_count++;
             }
-            elseif($char == '}'){
+            elseif($char === '}'){
                 $curly_count--;
             }
+            elseif($char === "\n"){
+                $line++;
+                $token[] = $row;
+                $row = [];
+            }
             if($curly_count === 2){
+                d($token);
+                dd($row);
                 ddd('found start of function variable');
             }
+            $row[] = $char;
         }
 
 
