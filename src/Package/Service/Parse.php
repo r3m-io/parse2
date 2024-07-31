@@ -419,7 +419,7 @@ class Parse
             if($char == ']'){
                 $array_depth--;
                 if($array_depth === 0){
-                    ddd($array);
+                    d($array);
                 }
                 /*
                 if($array_depth === 0){
