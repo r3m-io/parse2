@@ -1,6 +1,6 @@
 <?php
 
-namespace Package\R3m\Io\Task\Controller;
+namespace Package\R3m\Io\Parse\Controller;
 
 use R3m\Io\App;
 use R3m\Io\Config;
@@ -22,8 +22,8 @@ class Cli extends Controller {
     const DIR = __DIR__ . '/';
     const MODULE_INFO = 'Info';
     const INFO = [
-        '{{binary()}} r3m_io/task                    | Task options',
-        '{{binary()}} r3m_io/task setup              | Setup Task',
+        '{{binary()}} r3m_io/parse                   | Parse options',
+        '{{binary()}} r3m_io/parse setup             | Setup Parse',
     ];
 
     /**
