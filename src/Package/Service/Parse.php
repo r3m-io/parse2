@@ -101,8 +101,8 @@ class Parse
                             'line' => $line,
                             'length' => $length,
                             'column' => [
-                                'start' => $column[($line - $count + 1)] - $length,
-                                'end' => $column[($line - $count + 1)]
+                                'start' => $column[$line] - $length,
+                                'end' => $column[$line]
                             ]
                         ];
                     }
