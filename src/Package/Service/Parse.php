@@ -116,7 +116,8 @@ class Parse
                                 'end' => $column[$line]
                             ]
                         ];
-                        if(strtoupper($tag) === '{{R3M}}'){
+                        $content = trim(substr($tag, 2, -2));
+                        if(strtoupper(substr($content, 0, 3)) === 'R3M'){
                             $record['is_header'] = true;
                         }
                         $tag_list[$line][] = $record;
