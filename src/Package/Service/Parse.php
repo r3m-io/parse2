@@ -85,7 +85,7 @@ class Parse
                         'length' => $length,
                         'column' => [
                             'start' => $column[($line - $count + 1)] - $length,
-                            'end' => $column
+                            'end' => $column[($line - $count + 1)]
                         ]
                     ];
                     $tag = false;
