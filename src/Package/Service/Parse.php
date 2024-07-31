@@ -91,6 +91,8 @@ class Parse
                     $row .= $char;
 
                     $row  = explode($tag, $row, 1);
+                    d($tag);
+                    d($row);
                     if(array_key_exists(1, $row)){
                         $token[] = [
                             'value' => $row[0],
