@@ -186,7 +186,7 @@ class Parse
                         $length = strlen($content);
                         $data = mb_str_split($content, 1);
                         d(ord($data[30]));
-                        ddd(ord([$data[31]]));
+                        ddd(ord($data[31]));
                         ddd($data);
                         $operator = false;
                         $before = '';
