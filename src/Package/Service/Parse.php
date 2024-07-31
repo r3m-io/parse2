@@ -416,7 +416,7 @@ class Parse
             if($char == '['){
                 $array_depth++;
             }
-            if($char == ']'){
+            elseif($char == ']'){
                 $array_depth--;
                 if($array_depth === 0){
                     d($array);
@@ -429,7 +429,7 @@ class Parse
                 }
                 */
             }
-            if($array_depth >= 1){
+            elseif($array_depth >= 1){
                 if(
                     $previous_char !== '\\' &&
                     $char === '\'' &&
