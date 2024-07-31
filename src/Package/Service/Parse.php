@@ -60,6 +60,17 @@ class Parse
                 $line++;
                 $column = 1;
                 d($tag_list);
+                /*
+                foreach($tag_list as $tag){
+                    $row_temp = explode($tag['tag'], $row, 1);
+                    if(array_key_exists(1, $row_temp)){
+                        $row_temp2 = explode($row_temp[1], $row, 1);
+
+
+                        $row = implode('', $row_temp);
+                    }
+                }
+                */
                 $token[] = [
                     'value' => $row,
                     'line' => $line,
@@ -78,6 +89,23 @@ class Parse
                 if($tag){
                     $tag .= $char;
                     $row .= $char;
+
+                    $row  = explode($tag, $row, 1);
+                    if(array_key_exists(1, $row)){
+                        $token[] = [
+                            'value' => $row[0],
+                            'line' => $line,
+                            'column' => 1,
+                            'is_tag' => false
+                        ];
+                        $token[] = [
+                            'value' => $tag,
+                            'line' => $line,
+                            'column' => $column,
+                            'is_tag' => true
+                        ];
+                    }
+                    $row = $row[0];
                     $tag_list[] = [
                         'tag' => $tag,
                         'line' => $line,
@@ -109,6 +137,6 @@ class Parse
             }
             $column++;
         }
-        ddd($tag_list);
+        ddd($token);
     }
 }
