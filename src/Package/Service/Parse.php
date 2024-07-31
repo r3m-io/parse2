@@ -185,9 +185,6 @@ class Parse
                         //we have a variable assign
                         $length = strlen($content);
                         $data = mb_str_split($content, 1);
-                        d(ord($data[30]));
-                        ddd(ord($data[31]));
-                        ddd($data);
                         $operator = false;
                         $before = '';
                         $after = '';
@@ -321,7 +318,6 @@ class Parse
         $array_depth = 0;
         $collect = [];
         $list = [];
-        d($input);
         foreach($input as $nr => $char){
             if($char === '('){
                 $set_depth++;
@@ -400,7 +396,6 @@ class Parse
                 $collect[] = $char;
             }
             elseif($array_depth >= 1){
-                d($collect);
                 $collect[] = $char;
             }
         }
