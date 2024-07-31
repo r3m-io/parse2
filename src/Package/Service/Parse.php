@@ -325,6 +325,7 @@ class Parse
         $array_depth = 0;
         $collect = [];
         $list = [];
+        d($input);
         foreach($input as $nr => $char){
             if($char === '('){
                 $set_depth++;
