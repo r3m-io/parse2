@@ -221,7 +221,6 @@ class Parse
                                     $char === "\t"
                                 ) {
                                     $is_after = true;
-                                    continue;
                                 } else {
                                     if($operator === '.' && $char === '='){
                                         //fix false positives
@@ -257,6 +256,7 @@ class Parse
     }
 
     public static function value(App $object, $value, $flags, $options){
+
         ddd($value);
     }
 }
