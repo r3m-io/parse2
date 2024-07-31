@@ -324,7 +324,7 @@ class Parse
             }
             elseif($char === ')'){
                 $set_depth--;
-                if($set_depth >= 0){
+                if($set_depth === 0){
                     $collect[] = $char;
                     $cast = implode('', $collect);
                     switch($cast){
@@ -383,7 +383,7 @@ class Parse
             }
             elseif($char === ']'){
                 $array_depth--;
-                if($array_depth >= 0){
+                if($array_depth === 0){
                     $collect[] = $char;
                     $list[] = [
                         'value' => $collect,
