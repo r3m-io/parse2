@@ -80,10 +80,15 @@ class Parse
                     if(empty($tag_list[$line])){
                         $tag_list[$line] = [];
                     }
+                    $length = strlen($tag);
                     $tag_list[$line][] = [
                         'tag' => $tag,
                         'line' => $line,
-                        'column' => $column
+                        'length' => $length,
+                        'column' => [
+                            'start' => $column - $length,
+                            'end' => $column
+                        ]
                     ];
                     $tag = false;
                 }
