@@ -46,6 +46,7 @@ class Parse
         $curly_count = 0;
         $line = 1;
         $column = [];
+        $column[$line] = 1;
         $row = '';
         $tag = false;
         $tag_list = [];
