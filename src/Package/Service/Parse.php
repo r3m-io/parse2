@@ -69,6 +69,7 @@ class Parse
             elseif($curly_count === 0){
                 if($tag){
                     $tag[] = $char;
+                    $row[] = $char;
                     d($row);
                     ddd($tag);
                 }
