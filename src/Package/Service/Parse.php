@@ -462,6 +462,12 @@ class Parse
             }
             $previous_char = $char;
         }
+        if($key && $value){
+            $array[] = [
+                'key' => $key,
+                'value' => $value
+            ];
+        }
         return $array;
     }
 }
