@@ -245,18 +245,18 @@ class Parse
                         $record['variable'] = [
                             'is_assign' => true,
                             'operator' => $operator,
-                            'name' => substr($before, 1)
+                            'name' => substr($before, 1),
+                            'value' => Parse::value($object, $after, $flags, $options)
                         ];
-                        d($record);
-                        d($after);
-                        ddd($data);
-
+                        ddd($record);
                     }
-
-
                 }
             }
         }
         return $tags;
+    }
+
+    public static function value(App $object, $value, $flags, $options){
+        ddd($value);
     }
 }
