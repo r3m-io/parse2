@@ -411,6 +411,7 @@ class Parse
         $value = [];
         $is_single_quoted = false;
         $is_value = false;
+        $previous_char = false;
         foreach($input as $nr => $char){
             if($char == '['){
                 $array_depth++;
