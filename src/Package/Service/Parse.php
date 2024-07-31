@@ -230,9 +230,15 @@ class Parse
                                         $operator = false;
                                     }
                                 }
-                            } elseif($is_after) {
+                            }
+                            elseif($is_after) {
                                 $after .= $char;
-                            } elseif($char !== ' ' && $char !== "\n" && $char !== "\t"){
+                            }
+                            elseif(
+                                $char !== ' ' &&
+                                $char !== "\n" &&
+                                $char !== "\t"
+                            ){
                                 $before .= $char;
                             }
                         }
