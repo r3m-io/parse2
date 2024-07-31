@@ -322,6 +322,7 @@ class Parse
 
     public static function value_split(App $object, $input, $flags, $options){
         $set_depth = 0;
+        $array_depth = 0;
         $collect = [];
         $list = [];
         foreach($input as $nr => $char){
@@ -330,11 +331,9 @@ class Parse
             }
             elseif($char === ')'){
                 $set_depth--;
-                if($set_depth === 0){
+                if($set_depth >= 0){
                     $collect[] = $char;
-
                     $cast = implode('', $collect);
-
                     switch($cast){
                         case '(bool)' :
                         case '(boolean)' :
@@ -383,11 +382,28 @@ class Parse
                         break;
                     }
                     $collect = [];
-
+                    $has_cast = true;
+                }
+            }
+            elseif($char === '['){
+                $array_depth++;
+            }
+            elseif($char === ']'){
+                $array_depth--;
+                if($array_depth >= 0){
+                    $collect_array[] = $char;
+                    $list[] = [
+                        'value' => $collect,
+                        'is_array' => true
+                    ];
+                    $collect_array = [];
                 }
             }
             if($set_depth >= 1){
                 $collect[] = $char;
+            }
+            elseif($array_depth >= 1){
+                $collect_array[] = $char;
             }
         }
         return $list;
