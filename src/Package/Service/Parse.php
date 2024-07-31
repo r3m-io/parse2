@@ -45,6 +45,7 @@ class Parse
         $token = [];
         $curly_count = 0;
         $line = 1;
+        $column = 1;
         $row = [];
         $tag = false;
         foreach($split as $nr => $char){
@@ -56,6 +57,7 @@ class Parse
             }
             elseif($char === "\n"){
                 $line++;
+                $column = 1;
                 $token[] = $row;
                 $row = [];
             }
@@ -70,6 +72,9 @@ class Parse
                 if($tag){
                     $tag[] = $char;
                     $row[] = $char;
+                    d($token);
+                    d($line);
+                    d($column);
                     d($row);
                     ddd($tag);
                 }
@@ -78,6 +83,7 @@ class Parse
             if($tag){
                 $tag[] = $char;
             }
+            $column++;
         }
 
 
