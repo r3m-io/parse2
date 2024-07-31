@@ -42,7 +42,7 @@ class Parse
 
     public static function words(App $object, $string=''){
         // Check for matches
-        $pattern = '/\{\{[^}]*\}\}|/\S+|\s+/';
+        $pattern = '/{{[^}]*}}|/\S+|\s+/';
         $result = [];
         if (preg_match_all($pattern, $string, $matches, PREG_OFFSET_CAPTURE)) {
             foreach ($matches[0] as $match) {
