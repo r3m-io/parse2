@@ -243,7 +243,7 @@ class Parse
                                 $before .= $char;
                             }
                         }
-                        $value = Parse::value(
+                        $list = Parse::value(
                             $object,
                             [
                                 'string' => $after,
@@ -252,49 +252,17 @@ class Parse
                             $flags,
                             $options
                         );
-                        if(array_key_exists('is_array', $value)){
-                            $record['variable'] = [
-                                'is_assign' => true,
-                                'operator' => $operator,
-                                'name' => substr($before, 1),
-                                'execute' => $value['execute'],
-                                'is_array' => true
-                            ];
+                        foreach($list as $nr => $value){
+
                         }
-                        elseif(array_key_exists('is_null', $value)){
-                            $record['variable'] = [
-                                'is_assign' => true,
-                                'operator' => $operator,
-                                'name' => substr($before, 1),
-                                'execute' => $value['execute'],
-                                'is_null' => true
-                            ];
-                        }
-                        elseif(array_key_exists('is_boolean', $value)){
-                            $record['variable'] = [
-                                'is_assign' => true,
-                                'operator' => $operator,
-                                'name' => substr($before, 1),
-                                'execute' => $value['execute'],
-                                'is_boolean' => true
-                            ];
-                        }
-                        elseif(array_key_exists('is_single_quoted', $value)){
-                            $record['variable'] = [
-                                'is_assign' => true,
-                                'operator' => $operator,
-                                'name' => substr($before, 1),
-                                'execute' => $value['execute'],
-                                'is_single_quoted' => true
-                            ];
-                        } else {
-                            $record['variable'] = [
-                                'is_assign' => true,
-                                'operator' => $operator,
-                                'name' => substr($before, 1),
-                                'execute' => $value['execute']
-                            ];
-                        }
+                        $record['variable'] = [
+                            'is_assign' => true,
+                            'operator' => $operator,
+                            'name' => substr($before, 1),
+                            'value' => $list,
+                        ];
+
+
                         ddd($record);
                     }
                 }
@@ -309,34 +277,34 @@ class Parse
         $value = $input['string'] ?? null;
         switch($value){
             case '[]':
-                return [
+                return [[
                     'execute' => [],
                     'is_array' => true
-                ];
+                ]];
             case 'true':
-                return [
+                return [[
                     'execute' => true,
                     'is_boolean' => true
-                ];
+                ]];
             case 'false':
-                return [
+                return [[
                     'execute' => false,
                     'is_boolean' => true
-                ];
+                ]];
             case 'null':
-                return [
+                return [[
                     'execute' => null,
                     'is_null' => true
-                ];
+                ]];
             default:
                 if(
                     substr($value, 0, 1) === '\'' &&
                     substr($value, -1) === '\''
                 ){
-                    return [
+                    return [[
                         'execute' => substr($value, 1, -1),
                         'is_single_quoted' => true
-                    ];
+                    ]];
                 }
                 return Parse::value_split($object, $input['array'], $flags, $options);
         }
@@ -344,6 +312,9 @@ class Parse
     }
 
     public static function value_split(App $object, $input, $flags, $options){
+
+
+
         ddd($input);
     }
 }
