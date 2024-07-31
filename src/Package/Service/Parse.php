@@ -24,6 +24,7 @@ class Parse
 
         $tags = Parse::tags($object, $template);
 
+        d($tags);
 
         // Step 2: Define the placeholder values
         $placeholders = [
