@@ -78,6 +78,7 @@ class Parse
                     }
                     $explode = explode("\n", $tag);
                     $count = count($explode);
+                    d($column);
                     if($count > 1){
                         $length = strlen($explode[0]);
                         $tag_list[$line][] = [
