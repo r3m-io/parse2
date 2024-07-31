@@ -309,6 +309,7 @@ class Parse
                         'is_single_quoted' => true
                     ]];
                 }
+                d($input['array']);
                 return Parse::value_split($object, $input['array'], $flags, $options);
         }
     }
