@@ -119,6 +119,7 @@ class Parse
                         $content = trim(substr($tag, 2, -2));
                         if(strtoupper(substr($content, 0, 3)) === 'R3M'){
                             $record['is_header'] = true;
+                            $record['content'] = $content;
                         }
                         $tag_list[$line][] = $record;
                     }
