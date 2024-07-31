@@ -22,6 +22,32 @@ class Parse
         // Step 1: Read the template file
         $template = File::read($options->source);
 
+        $pattern = '/\{\{(.*?)\}\}/';
+
+// Check for matches
+        $pattern = '/\{\{(.*?)\}\}/';
+
+// Check for matches
+        if (preg_match_all($pattern, $template, $matches, PREG_OFFSET_CAPTURE)) {
+            $result = [];
+            foreach ($matches[0] as $match) {
+                $matchText = $match[0];
+                $startPos = $match[1];
+                $lineNumber = substr_count(substr($template, 0, $startPos), "\n") + 1;
+                $lineStartPos = strrpos(substr($template, 0, $startPos), "\n") + 1;
+                $charPos = $startPos - $lineStartPos + 1;
+                $result[] = [
+                    'match' => $matchText,
+                    'line' => $lineNumber,
+                    'char' => $charPos,
+                    'start' => $startPos,
+                    'end' => $startPos + strlen($matchText) - 1
+                ];
+            }
+            ddd($result);
+        } else {
+            echo "No matches found.";
+        }
         // Step 2: Define the placeholder values
         $placeholders = [
                 'name' => 'John Doe',
