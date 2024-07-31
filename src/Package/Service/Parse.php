@@ -22,9 +22,9 @@ class Parse
         // Step 1: Read the template file
         $template = File::read($options->source);
 
-        $tags = Parse::tags($object, $template);
+        $words = Parse::words($object, $template, $flags, $options);
 
-        d($tags);
+        d($words);
 
         // Step 2: Define the placeholder values
         $placeholders = [
@@ -40,8 +40,9 @@ class Parse
         dd($template);
     }
 
-    public static function tags(App $object, $string='', $pattern='/\{\{(.*?)\}\}/'){
+    public static function words(App $object, $string=''){
         // Check for matches
+        $pattern = '/\S+|\s+/';
         $result = [];
         if (preg_match_all($pattern, $string, $matches, PREG_OFFSET_CAPTURE)) {
             foreach ($matches[0] as $match) {
