@@ -391,19 +391,19 @@ class Parse
             elseif($char === ']'){
                 $array_depth--;
                 if($array_depth >= 0){
-                    $collect_array[] = $char;
+                    $collect[] = $char;
                     $list[] = [
                         'value' => $collect,
                         'is_array' => true
                     ];
-                    $collect_array = [];
+                    $collect = [];
                 }
             }
             if($set_depth >= 1){
                 $collect[] = $char;
             }
             elseif($array_depth >= 1){
-                $collect_array[] = $char;
+                $collect[] = $char;
             }
         }
         return $list;
