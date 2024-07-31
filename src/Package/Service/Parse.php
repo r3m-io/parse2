@@ -59,8 +59,8 @@ class Parse
             elseif($char === "\n" && $curly_count === 0){
                 $line++;
                 $column = 1;
-                foreach($tag_list as $tag){
-                    $row_temp = explode($tag['tag'], $row, 1);
+                foreach($tag_list as $item){
+                    $row_temp = explode($item['tag'], $row, 1);
                     if(array_key_exists(1, $row_temp)){
                         d($tag);
                         ddd($token);
