@@ -93,7 +93,7 @@ class Parse
                             ],
                             'column' => [
                                 'start' => $column[($line - $count +1)] - $length,
-                                'end' => $column[($line - $count + 1)]
+                                'end' => $column[$line]
                             ]
                         ];
                     } else {
