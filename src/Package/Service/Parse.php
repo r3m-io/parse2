@@ -75,11 +75,11 @@ class Parse
             elseif($curly_count === 0){
                 if($tag){
                     $tag .= $char;
-                    $row .= $char;
+//                    $row .= $char;
 
 //                    $row  = explode($tag, $row, 1);
-                    d($tag);
-                    d($row);
+//                    d($tag);
+//                    d($row);
                     /*
                     if(array_key_exists(1, $row)){
                         $token[] = [
