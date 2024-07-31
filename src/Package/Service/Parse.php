@@ -276,7 +276,6 @@ class Parse
 
     public static function value(App $object, $input, $flags, $options): mixed
     {
-
         $value = $input['string'] ?? null;
         switch($value){
             case '[]':
@@ -546,7 +545,7 @@ class Parse
                             $object,
                             [
                                 'string' => implode('', $value),
-                                'array' => $key
+                                'array' => $value
                             ],
                             $flags,
                             $options
@@ -580,7 +579,7 @@ class Parse
                     $object,
                     [
                         'string' => implode('', $value),
-                        'array' => $key
+                        'array' => $value
                     ],
                     $flags,
                     $options
