@@ -107,7 +107,6 @@ class Parse
                                 ]
                             ]
                         ];
-                        d($record);
                         $tag_list[$line][] = $record;
                     } else {
                         $length = strlen($explode[0]);
@@ -182,6 +181,7 @@ class Parse
                     array_key_exists('tag', $record)
                 ){
                     $content = trim(substr($record['tag'], 2, -2));
+                    ddd($content);
                     if(substr($content, 0, 1) === '$'){
                         //we have a variable assign
                         $length = strlen($content);
