@@ -35,14 +35,14 @@ class Parse
                 $startPos = $match[1];
                 $lineNumber = substr_count(substr($template, 0, $startPos), "\n") + 1;
                 $lineStartPos = strrpos(substr($template, 0, $startPos), "\n") + 1;
-                $charPos = $startPos - $lineStartPos;
+                $charPos = $startPos - $lineStartPos + 1;
                 $length = strlen($matchText);
                 $result[] = [
                     'match' => $matchText,
                     'line' => $lineNumber,
                     'column' => [
                         'start' => $charPos,
-                        'end' => $charPos + $length - 1
+                        'end' => $charPos + $length
                     ]
                 ];
             }
