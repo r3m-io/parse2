@@ -22,9 +22,9 @@ class Parse
         // Step 1: Read the template file
         $template = File::read($options->source);
 
-        $token = Parse::token($object, $template, $flags, $options);
+        $tags = Parse::tags($object, $template, $flags, $options);
 
-        ddd($token);
+        ddd($tags);
 
         // Step 2: Define the placeholder values
         $placeholders = [
@@ -40,7 +40,8 @@ class Parse
         dd($template);
     }
 
-    public static function token(App $object, $string=''){
+    public static function tags(App $object, $string=''): array
+    {
         $split = mb_str_split($string, 1);
         $token = [];
         $curly_count = 0;
@@ -79,7 +80,6 @@ class Parse
                     }
                     $explode = explode("\n", $tag);
                     $count = count($explode);
-                    d($column);
                     if($count > 1){
                         $length = strlen($explode[0]);
                         $tag_list[$line][] = [
@@ -128,7 +128,6 @@ class Parse
                 $column[$line]++;
             }
         }
-        d($string);
-        ddd($tag_list);
+        return $tag_list;
     }
 }
