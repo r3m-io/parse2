@@ -59,11 +59,13 @@ class Parse
             elseif($char === "\n" && $curly_count === 0){
                 $line++;
                 $column = 1;
+                /*
                 $token[] = [
                     'value' => $row,
                     'line' => $line,
                     'column' => $column,
                 ];
+                */
                 $row = '';
             }
             if(
@@ -92,7 +94,7 @@ class Parse
             }
             $column++;
         }
+        d($string);
         ddd($tag_list);
-        ddd($token);
     }
 }
