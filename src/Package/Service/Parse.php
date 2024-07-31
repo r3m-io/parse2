@@ -65,7 +65,6 @@ class Parse
             ){
                 $tag = [];
                 $tag[] = '{';
-                $tag[] = '{';
             }
             elseif($curly_count === 0){
                 if($tag){
