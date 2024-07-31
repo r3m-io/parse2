@@ -62,7 +62,7 @@ class Parse
                 foreach($tag_list as $item){
                     $row_temp = explode($item['tag'], $row, 1);
                     if(array_key_exists(1, $row_temp)){
-                        d($tag);
+                        d($item);
                         ddd($token);
                         $row = implode('', $row_temp);
                     }
