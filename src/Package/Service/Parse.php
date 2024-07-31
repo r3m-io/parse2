@@ -226,7 +226,7 @@ class Parse
                                     if($operator === '.' && $char === '='){
                                         //fix false positives
                                     } elseif($operator === '.'){
-                                        $before .= $operator;
+                                        $before .= $operator . $char;
                                         $operator = false;
                                     }
                                 }
