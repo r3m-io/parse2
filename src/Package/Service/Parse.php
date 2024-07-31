@@ -199,6 +199,7 @@ class Parse
                         for($i=0; $i < $length; $i++){
                             $char = $data[$i];
                             if(
+                                !$operator &&
                                 in_array(
                                     $char,
                                     [
@@ -222,11 +223,16 @@ class Parse
                                     $is_after = true;
                                     continue;
                                 } else {
-                                    $operator .= $char;
+                                    if($operator === '.' && $char === '='){
+                                        //fix false positives
+                                    } elseif($operator === '.'){
+                                        $before .= $operator;
+                                        $operator = false;
+                                    }
                                 }
                             } elseif($is_after) {
                                 $after .= $char;
-                            } else {
+                            } elseif($char !== ' ' && $char !== "\n" && $char !== "\t"){
                                 $before .= $char;
                             }
                         }
