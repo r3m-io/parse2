@@ -385,6 +385,7 @@ class Parse
                 $array_depth--;
                 if($array_depth === 0){
                     $collect[] = $char;
+                    $collect = Parse::value_array($object, $collect, $flags, $options);
                     $list[] = [
                         'value' => $collect,
                         'is_array' => true
@@ -400,5 +401,67 @@ class Parse
             }
         }
         return $list;
+    }
+
+    public static function value_array(App $object, $input, $flags, $options){
+        $array_depth = 0;
+        $array = [];
+        $key = [];
+        $counter = 0;
+        $value = [];
+        $is_single_quoted = false;
+        $is_value = false;
+        foreach($input as $nr => $char){
+            if($char == '['){
+                $array_depth++;
+            }
+            elseif($char == ']'){
+                $array_depth--;
+                if($array_depth === 0){
+                    $array[] = $char;
+                    $array = Parse::value_split($object, $array, $flags, $options);
+                    return $array;
+                }
+            }
+            elseif($array_depth >= 1){
+                if(
+                    $previous_char !== '\\' &&
+                    $char === '\'' &&
+                    $is_single_quoted === false
+                ){
+                    $is_single_quoted = true;
+                }
+                elseif(
+                    $previous_char !== '\\' &&
+                    $char === '\'' &&
+                    $is_single_quoted === true
+                ){
+                    $is_single_quoted = false;
+                }
+                if($is_value === false){
+                    $key[] = $char;
+                } else {
+                    $value[] = $char;
+                }
+                if($previous_char === '=' && $char === '>'){
+                    $is_value = true;
+                }
+                if(
+                    $is_value &&
+                    $is_single_quoted === false &&
+                    $char === ','
+                ){
+                    $array[] = [
+                        'key' => $key,
+                        'value' => $value
+                    ];
+                    $key = [];
+                    $value = [];
+                    $is_value = false;
+                }
+            }
+            $previous_char = $char;
+        }
+        return $array;
     }
 }
