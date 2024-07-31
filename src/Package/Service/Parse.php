@@ -312,7 +312,25 @@ class Parse
     }
 
     public static function value_split(App $object, $input, $flags, $options){
+        $set_depth = 0;
+        $collect = [];
+        foreach($input as $nr => $char){
+            if($char === '('){
+                $set_depth++;
+            }
+            elseif($char === ')'){
+                $set_depth--;
+                if($set_depth === 0){
+                    $collect[] = $char;
+                    ddd($collect);
+                    $collect = [];
 
+                }
+            }
+            if($set_depth >= 1){
+                $collect[] = $char;
+            }
+        }
 
 
         ddd($input);
