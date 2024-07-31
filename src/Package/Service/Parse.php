@@ -79,7 +79,6 @@ class Parse
                     $explode = explode("\n", $tag);
                     $count = count($explode);
                     if($count > 1){
-                        ddd($count);
                         $length = strlen($explode[0]);
                         $tag_list[$line][] = [
                             'tag' => $tag,
@@ -88,7 +87,10 @@ class Parse
                                 'start' => $line - $count + 1,
                                 'end' => $line
                             ],
-                            'length' => $length,
+                            'length' => [
+                                'start' => $length,
+                                'end' => strlen($explode[$count - 1])
+                            ],
                             'column' => [
                                 'start' => $column[($line - $count + 1)] - $length,
                                 'end' => $column[($line - $count + 1)]
