@@ -242,8 +242,12 @@ class Parse
                                 $before .= $char;
                             }
                         }
-                        d($before);
-                        d($operator);
+                        $record['variable'] = [
+                            'is_assign' => true,
+                            'operator' => $operator,
+                            'name' => substr($before, 1)
+                        ];
+                        d($record);
                         d($after);
                         ddd($data);
 
