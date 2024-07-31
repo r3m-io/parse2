@@ -75,28 +75,6 @@ class Parse
             elseif($curly_count === 0){
                 if($tag){
                     $tag .= $char;
-//                    $row .= $char;
-
-//                    $row  = explode($tag, $row, 1);
-//                    d($tag);
-//                    d($row);
-                    /*
-                    if(array_key_exists(1, $row)){
-                        $token[] = [
-                            'value' => $row[0],
-                            'line' => $line,
-                            'column' => 1,
-                            'is_tag' => false
-                        ];
-                        $token[] = [
-                            'value' => $tag,
-                            'line' => $line,
-                            'column' => $column,
-                            'is_tag' => true
-                        ];
-                    }
-                    */
-//                    $row = $row[0];
                     if(empty($tag_list[$line])){
                         $tag_list[$line] = [];
                     }
@@ -105,22 +83,6 @@ class Parse
                         'line' => $line,
                         'column' => $column
                     ];
-                    /*
-                    $row_temp = explode($tag, $row, 1);
-                    if(array_key_exists(1, $row_temp)){
-                        $token[] = [
-                            'value' => $row[0],
-                            'line' => $line,
-                            'column' => $column,
-                            'is_tag' => false
-                        ];
-                        $token[] = [
-                            'value' => $tag,
-                            'line' => $line,
-                            'column' => $column,
-                            'is_tag' => true
-                        ];
-                    }*/
                     $tag = false;
                 }
             }
@@ -130,7 +92,7 @@ class Parse
             }
             $column++;
         }
-        d($tag_list);
+        ddd($tag_list);
         ddd($token);
     }
 }
