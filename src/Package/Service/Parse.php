@@ -530,15 +530,26 @@ class Parse
                     array_pop($value);
                     array_pop($key);
                     array_pop($key);
+
                     $array[] = [
-                        'key' => [
+                        'key' => Parse::value(
+                            $object,
+                            [
                             'string' => implode('', $key),
                             'array' => $key
-                        ],
-                        'value' => [
-                            'string' => implode('', $value),
-                            'array'=> $value
-                        ]
+                            ],
+                            $flags,
+                            $options
+                        ),
+                        'value' => Parse::value(
+                            $object,
+                            [
+                                'string' => implode('', $value),
+                                'array' => $key
+                            ],
+                            $flags,
+                            $options
+                        )
                     ];
                     $key = [];
                     $value = [];
@@ -555,14 +566,24 @@ class Parse
             array_pop($key);
             array_pop($key);
             $array[] = [
-                'key' => [
-                    'string' => implode('', $key),
-                    'array' => $key
-                ],
-                'value' => [
-                    'string' => implode('', $value),
-                    'array'=> $value
-                ]
+                'key' => Parse::value(
+                    $object,
+                    [
+                        'string' => implode('', $key),
+                        'array' => $key
+                    ],
+                    $flags,
+                    $options
+                ),
+                'value' => Parse::value(
+                    $object,
+                    [
+                        'string' => implode('', $value),
+                        'array' => $key
+                    ],
+                    $flags,
+                    $options
+                )
             ];
         }
         return $array;
