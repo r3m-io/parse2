@@ -39,9 +39,10 @@ class Parse
                 $result[] = [
                     'match' => $matchText,
                     'line' => $lineNumber,
-                    'char' => $charPos,
-                    'start' => $startPos,
-                    'end' => $startPos + strlen($matchText) - 1
+                    'column' => [
+                        'start' => $charPos,
+                        'end' => $charPos + strlen($matchText) - 1
+                    ]
                 ];
             }
             ddd($result);
