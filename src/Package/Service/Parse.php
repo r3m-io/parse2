@@ -75,7 +75,8 @@ class Parse
                     if(empty($tag_list[$line])){
                         $tag_list[$line] = [];
                     }
-                    $length = strlen($tag);
+                    $explode = explode("\n", $tag, 2);
+                    $length = strlen($explode[0]);
                     $tag_list[$line][] = [
                         'tag' => $tag,
                         'line' => $line,
