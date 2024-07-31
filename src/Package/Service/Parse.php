@@ -24,7 +24,7 @@ class Parse
 
         $words = Parse::words($object, $template, $flags, $options);
 
-        d($words);
+        ddd($words);
 
         // Step 2: Define the placeholder values
         $placeholders = [
