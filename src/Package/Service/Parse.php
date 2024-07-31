@@ -460,9 +460,42 @@ class Parse
                     $is_double_quoted = false;
                 }
                 if($is_value === false){
-                    $key[] = $char;
+                    if(
+                        $is_single_quoted === false &&
+                        $is_double_quoted === false &&
+                        in_array(
+                            $char,
+                            [
+                                ' ',
+                                "\n",
+                                "\t"
+                            ],
+                            true
+                        )
+                    ){
+                        //nothing
+                    } else {
+                        $key[] = $char;
+                    }
+
                 } else {
-                    $value[] = $char;
+                    if(
+                        $is_single_quoted === false &&
+                        $is_double_quoted === false &&
+                        in_array(
+                            $char,
+                            [
+                                ' ',
+                                "\n",
+                                "\t"
+                            ],
+                            true
+                        )
+                    ){
+                        //nothing
+                    } else {
+                        $value[] = $char;
+                    }
                 }
                 if($previous_char === '=' && $char === '>'){
                     $is_value = true;
