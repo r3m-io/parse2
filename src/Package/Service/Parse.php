@@ -414,10 +414,28 @@ class Parse
         $is_value = false;
         $previous_char = false;
         foreach($input as $nr => $char){
-            if($char == '['){
+            if(
+                $is_single_quoted === false &&
+                $is_double_quoted === false &&
+                $char == '['
+            ){
+                if($is_value === false){
+                    $key[] = $char;
+                } else {
+                    $value[] = $char;
+                }
                 $array_depth++;
             }
-            elseif($char == ']'){
+            elseif(
+                $is_single_quoted === false &&
+                $is_double_quoted === false &&
+                $char == ']'
+            ){
+                if($is_value === false){
+                    $key[] = $char;
+                } else {
+                    $value[] = $char;
+                }
                 $array_depth--;
                 if($array_depth === 0){
                     d($array);
