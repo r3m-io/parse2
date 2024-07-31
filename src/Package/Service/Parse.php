@@ -140,7 +140,6 @@ class Parse
 
     private static function tags_remove(App $object, $tags, $flags, $options): array
     {
-        $tag_list = [];
         foreach($tags as $line => $tag){
             foreach($tag as $nr => $record){
                 if(array_key_exists('is_header', $record)){
@@ -151,6 +150,6 @@ class Parse
                 }
             }
         }
-        return $tag_list;
+        return $tags;
     }
 }
