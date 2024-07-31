@@ -1,0 +1,16 @@
+{
+    "name" : "r3m_io/parse",
+    "description" : "r3m_io/parse see https://r3m.io for detailed usage",
+    "type" : "library",
+    "keywords" : ["node", "r3m", "library", "framework", "parse", "r3m.io"],
+    "homepage": "https://r3m.io",
+    "require" : {
+        "r3m_io/framework": "*"
+    },
+    "minimum-stability": "dev",
+    "license" : "MIT",
+    "authors" : [{
+        "name" : "Remco van der Velde",
+        "email" : "development@universeorange.com"
+    }]
+}
