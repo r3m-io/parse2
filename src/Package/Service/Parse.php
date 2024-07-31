@@ -403,6 +403,7 @@ class Parse
                 $collect[] = $char;
             }
             elseif($array_depth >= 1){
+                d($collect);
                 $collect[] = $char;
             }
         }
