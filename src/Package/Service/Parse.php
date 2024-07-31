@@ -59,21 +59,12 @@ class Parse
             elseif($char === "\n" && $curly_count === 0){
                 $line++;
                 $column = 1;
-                foreach($tag_list as $item){
-                    $row_temp = explode($item['tag'], $row, 1);
-                    if(array_key_exists(1, $row_temp)){
-                        d($item);
-                        ddd($token);
-                        $row = implode('', $row_temp);
-                    }
-                }
                 $token[] = [
                     'value' => $row,
                     'line' => $line,
                     'column' => $column,
                 ];
                 $row = '';
-                $tag_list = [];
             }
             if(
                 $curly_count === 2 &&
@@ -86,9 +77,10 @@ class Parse
                     $tag .= $char;
                     $row .= $char;
 
-                    $row  = explode($tag, $row, 1);
+//                    $row  = explode($tag, $row, 1);
                     d($tag);
                     d($row);
+                    /*
                     if(array_key_exists(1, $row)){
                         $token[] = [
                             'value' => $row[0],
@@ -103,8 +95,12 @@ class Parse
                             'is_tag' => true
                         ];
                     }
-                    $row = $row[0];
-                    $tag_list[] = [
+                    */
+//                    $row = $row[0];
+                    if(empty($tag_list[$line])){
+                        $tag_list[$line] = [];
+                    }
+                    $tag_list[$line][] = [
                         'tag' => $tag,
                         'line' => $line,
                         'column' => $column
@@ -126,7 +122,6 @@ class Parse
                         ];
                     }*/
                     $tag = false;
-
                 }
             }
             $row .= $char;
@@ -135,6 +130,7 @@ class Parse
             }
             $column++;
         }
+        d($tag_list);
         ddd($token);
     }
 }
