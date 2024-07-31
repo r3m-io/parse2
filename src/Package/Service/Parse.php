@@ -446,6 +446,8 @@ class Parse
                 if($previous_char === '=' && $char === '>'){
                     $is_value = true;
                 }
+                d($key);
+                d($value);
                 if(
                     $is_value &&
                     $is_single_quoted === false &&
