@@ -531,8 +531,14 @@ class Parse
                     array_pop($key);
                     array_pop($key);
                     $array[] = [
-                        'key' => $key,
-                        'value' => $value
+                        'key' => [
+                            'string' => implode('', $key),
+                            'array' => $key
+                        ],
+                        'value' => [
+                            'string' => implode('', $value),
+                            'array'=> $value
+                        ]
                     ];
                     $key = [];
                     $value = [];
@@ -549,8 +555,14 @@ class Parse
             array_pop($key);
             array_pop($key);
             $array[] = [
-                'key' => $key,
-                'value' => $value
+                'key' => [
+                    'string' => implode('', $key),
+                    'array' => $key
+                ],
+                'value' => [
+                    'string' => implode('', $value),
+                    'array'=> $value
+                ]
             ];
         }
         return $array;
