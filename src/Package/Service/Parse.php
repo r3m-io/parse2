@@ -123,7 +123,9 @@ class Parse
             if($tag){
                 $tag .= $char;
             }
-            $column[$line]++;
+            if($char !== "\n"){
+                $column[$line]++;
+            }
         }
         d($string);
         ddd($tag_list);
