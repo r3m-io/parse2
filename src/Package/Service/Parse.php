@@ -82,7 +82,7 @@ class Parse
                     $count = count($explode);
                     if($count > 1){
                         $length = strlen($explode[0]);
-                        $tag_list[$line][] = [
+                        $record = [
                             'tag' => $tag,
                             'is_multiline' => true,
                             'line' => [
@@ -104,9 +104,10 @@ class Parse
                                 ]
                             ]
                         ];
+                        $tag_list[$line][] = $record;
                     } else {
                         $length = strlen($explode[0]);
-                        $tag_list[$line][] = [
+                        $record = [
                             'tag' => $tag,
                             'line' => $line,
                             'length' => $length,
@@ -115,6 +116,10 @@ class Parse
                                 'end' => $column[$line]
                             ]
                         ];
+                        if(strtoupper($tag) === '{{R3M}}'){
+                            $record['is_header'] = true;
+                        }
+                        $tag_list[$line][] = $record;
                     }
                     $tag = false;
                     $column[$line]--;
