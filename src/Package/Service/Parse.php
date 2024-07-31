@@ -59,13 +59,17 @@ class Parse
                 $token[] = $row;
                 $row = [];
             }
-            if($curly_count === 2){
+            if(
+                $curly_count === 2 &&
+                $char == '{'
+            ){
                 $tag = [];
                 $tag[] = '{';
                 $tag[] = '{';
             }
             elseif($curly_count === 0){
                 if($tag){
+                    $tag[] = $char;
                     ddd($tag);
                 }
             }
