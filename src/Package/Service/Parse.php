@@ -196,6 +196,7 @@ class Parse
                         $before = '';
                         $after = '';
                         $is_after = false;
+                        $after_array = [];
                         for($i=0; $i < $length; $i++){
                             $char = $data[$i];
                             if(
@@ -232,6 +233,7 @@ class Parse
                             }
                             elseif($is_after) {
                                 $after .= $char;
+                                $after_array[] = $char;
                             }
                             elseif(
                                 $char !== ' ' &&
@@ -245,7 +247,10 @@ class Parse
                             'is_assign' => true,
                             'operator' => $operator,
                             'name' => substr($before, 1),
-                            'value' => Parse::value($object, $after, $flags, $options)
+                            'value' => Parse::value($object, [
+                                'string' => $after,
+                                'array' => $after_array
+                            ], $flags, $options)
                         ];
                         ddd($record);
                     }
@@ -255,8 +260,32 @@ class Parse
         return $tags;
     }
 
-    public static function value(App $object, $value, $flags, $options){
+    public static function value(App $object, $input, $flags, $options): mixed
+    {
 
+        $value = $input['string'] ?? null;
+        switch($value){
+            case '[]':
+                return [];
+            case 'true':
+                return true;
+            case 'false':
+                return false;
+            case 'null':
+                return null;
+            default:
+                if(
+                    substr($value, 0, 1) === '\'' &&
+                    substr($value, -1) === '\''
+                ){
+                    return substr($value, 1, -1);
+                }
+                return Parse::value_split($object, $input['array'], $flags, $options);
+        }
         ddd($value);
+    }
+
+    public static function value_split(App $object, $input, $flags, $options){
+        ddd($input);
     }
 }
