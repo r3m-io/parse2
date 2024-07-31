@@ -67,7 +67,6 @@ class Parse
                         $row = implode('', $row_temp);
                     }
                 }
-                */
                 $token[] = [
                     'value' => $row,
                     'line' => $line,
