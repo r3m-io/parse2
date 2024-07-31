@@ -446,10 +446,6 @@ class Parse
                 if($previous_char === '=' && $char === '>'){
                     $is_value = true;
                 }
-                d($is_value);
-                d($is_single_quoted);
-                d($key);
-                d($value);
                 if(
                     $is_value &&
                     $is_single_quoted === false &&
@@ -466,7 +462,7 @@ class Parse
             }
             $previous_char = $char;
         }
-        if($key && $value){
+        if($is_value && $is_single_quoted === false){
             $array[] = [
                 'key' => $key,
                 'value' => $value
