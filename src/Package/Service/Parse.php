@@ -544,10 +544,17 @@ class Parse
                 is_array($char) &&
                 array_key_exists('is_operator', $char)
             ){
+                if($operator){
+                    break;
+                }
                 $operator = $char;
-            } elseif(!$operator) {
+            }
+            elseif(
+                !$operator &&
+                $char !== null
+            ){
                 $left[] = $char;
-            } else {
+            } elseif($char !== null) {
                 $right[] = $char;
             }
         }
