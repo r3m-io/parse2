@@ -1274,5 +1274,7 @@ class Parse
                 $is_double_quoted = false;
             }
         }
+        return $input;
     }
+
 }
