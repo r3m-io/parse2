@@ -774,7 +774,7 @@ class Parse
         }
         d($input);
         $input = Parse::operator_solve($object, $input, $flags, $options);
-        $input = Parse::not_get($object, $input, $flags, $options);
+        $input = Parse::symbol_get($object, $input, $flags, $options);
         $input = Parse::variable_get($object, $input, $flags, $options);
 
         ddd($input);
@@ -1053,29 +1053,46 @@ class Parse
         return $array;
     }
 
-    public static function not_get(App $object, $input, $flags, $options): array
+    public static function symbol_exclamation(App $object, &$input, $nr, $flags, $options){
+        ddd($options);
+        $value = $char;
+        $key = $nr + 1;
+        while($not_char = $input[$key] ?? false){
+            if($not_char === $char){
+                $value .= $not_char;
+                unset($input[$key]);
+                $is_array_values = true;
+            } else {
+                break;
+            }
+            $key++;
+        }
+    }
+
+    public static function symbol_get(App $object, $input, $flags, $options): array
     {
         $is_array_values = false;
         foreach($input as $nr => $char){
-            if($char === '!'){
-                $value = $char;
-                $key = $nr + 1;
-                while($not_char = $input[$key] ?? false){
-                    if($not_char === '!'){
-                        $value .= $not_char;
-                        unset($input[$key]);
-                        $is_array_values = true;
-                    } else {
-                        break;
-                    }
-                    $key++;
-                }
-                if(array_key_exists($nr, $input)){
-                    $input[$nr] = [
-                        'value' => $value,
-                        'is_not' => true
+            switch($char){
+                case '!':
+                    $old_options_symbol = $options->symbol ?? false;
+                    $options->symbol = [
+                        'nr' => $nr,
+                        'char' => $char
                     ];
-                }
+                    $value = Parse::symbol_exclamation($object, &$input, $flags, $options);
+                    if($old_options_symbol){
+                        $options->symbol = $old_options_symbol;
+                    } else {
+                        unset($options->symbol);
+                    }
+                    if(array_key_exists($nr, $input)){
+                        $input[$nr] = [
+                            'value' => $value,
+                            'is_not' => true
+                        ];
+                    }
+                    break;
             }
         }
         if($is_array_values){
