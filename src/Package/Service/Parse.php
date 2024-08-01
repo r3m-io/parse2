@@ -435,6 +435,7 @@ class Parse
             $operator = Parse::operator_create($object, $operator, $flags, $options);
             ddd($operator);
         }
+        d($input);
         return Parse::remove_whitespace($object, $input, $flags, $options);
     }
 
