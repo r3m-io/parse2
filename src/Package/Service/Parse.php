@@ -629,6 +629,7 @@ class Parse
         }
         d($symbol);
         switch ($symbol) {
+            case '$';
             case '-':
             case '--':
             case '+':
