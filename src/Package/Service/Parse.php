@@ -396,6 +396,7 @@ class Parse
     public static function operator_solve(App $object, $input, $flags, $options){
 
         Parse::operator_define($object, $input, $flags, $options);
+        die;
         while(Parse::operator_has($object, $input, $flags, $options)){
             $statement = Parse::operator_get($object, $input, $flags, $options);
         }
