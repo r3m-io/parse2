@@ -473,6 +473,7 @@ class Parse
                     break;
                 }
                 $is_operator = $nr;
+                $data[$nr] = $operator['code'];
             }
             elseif(
                 $is_operator === false &&
@@ -483,7 +484,6 @@ class Parse
                 $data[$nr] = null;
             }
         }
-        $data[$is_operator] = $operator['code'];
         return $data;
     }
 
