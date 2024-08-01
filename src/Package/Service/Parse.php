@@ -600,7 +600,7 @@ class Parse
                 $code = $code_left . '.' . $code_right;
                 break;
             case '$' :
-                $code = $code_left . ' $' . $code_right;
+                $code = $code_left . ' $' . '$this->data(' . $code_right . ')';
                 break;
             case '!' :
                 $code = $code_left . ' ! ' . $code_right;
@@ -615,13 +615,7 @@ class Parse
                 $code = $code_left . ' !!!! ' . $code_right;
                 break;
         }
-        d($code);
-        if($code === false){
-            trace();
-            die;
-        }
         $input['code'] = $code;
-        d($input);
         return $input;
     }
 
