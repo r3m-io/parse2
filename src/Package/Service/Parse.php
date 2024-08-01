@@ -686,8 +686,18 @@ class Parse
                     $count++;
                     if($count > 4){
                         $chunks = array_chunk($operator, 4);
-                        ddd($chunks);
-                        throw new Exception('Operator too long');
+                        foreach($chunks as $symbol){
+                            $symbol = Parse::operator_symbol($object, $symbol, $flags, $options);
+                            if($symbol){
+                                for($i = 1; $i <= count($symbol); $i++){
+                                    $input[$nr - $i] = null;
+                                }
+                                $input[$nr - $i + 1] = [
+                                    'value' => $symbol,
+                                    'is_operator' => true
+                                ];
+                            }
+                        }
                     }
                 break;
                 default:
