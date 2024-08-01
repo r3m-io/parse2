@@ -509,13 +509,10 @@ class Parse
         foreach($input as $nr => $char){
             if(is_array($char) && array_key_exists('is_operator', $char)){
                 $operator = $char;
-                if(array_key_exists(($nr - 1), $input)){
-                    $assign_key = $input[($nr - 1)];
-                    $left = $input[($nr - 1)];
-                }
-                if(array_key_exists(($nr + 1), $input)){
-                    $right = $input[($nr + 1)];
-                }
+            } elseif(!$operator) {
+                $left[] = $char;
+            } else {
+                $right[] = $char;
             }
         }
         if($operator){
