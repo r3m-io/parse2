@@ -463,6 +463,7 @@ class Parse
             $left = Parse::value_split($object, $input['left'], $flags, $options);
         }
         if(!empty($input['right'])){
+            d($input['right']);
             $right = Parse::value_split($object, $input['right'], $flags, $options);
         }
         switch($input['operator']['value']){
