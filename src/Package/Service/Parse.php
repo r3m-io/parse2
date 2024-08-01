@@ -1063,14 +1063,14 @@ class Parse
         if(!array_key_exists('char', $options->symbol)){
             throw new Exception('Symbol char not found');
         }
-        if(!array_key_exists('nr', $options->symbol)){
+        if(!array_key_exists('index', $options->symbol)){
             throw new Exception('Symbol nr not found');
         }
         if(array_key_exists('is_array_values', $options->symbol)){
             throw new Exception('Symbol is_array_values found');
         }
         $value = $options->symbol->char;
-        $key = $options->symbol->nr + 1;
+        $key = $options->symbol->index + 1;
         while($not_char = $input[$key] ?? false){
             if($not_char ===  $options->symbol->char){
                 $value .= $not_char;
@@ -1092,7 +1092,7 @@ class Parse
                 case '!':
                     $old_options_symbol = $options->symbol ?? false;
                     $options->symbol = [
-                        'nr' => $nr,
+                        'index' => $nr,
                         'char' => $char
                     ];
                     $value = Parse::symbol_exclamation($object, $input, $flags, $options);
