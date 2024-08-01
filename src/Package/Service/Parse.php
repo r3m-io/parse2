@@ -370,9 +370,7 @@ class Parse
                 }
             }
         }
-        ddd($input);
-        ddd($highest);
-
+        return $input['input'];
     }
 
     public static function set_get(App $object, $input, $flags, $options){
@@ -759,7 +757,7 @@ class Parse
             $input = Parse::set_replace(
                 $object,
                 [
-                    'input' =>$input,
+                    'input' => $input,
                     'set' => $set
                 ],
                 $flags,
