@@ -311,12 +311,72 @@ class Parse
         }
     }
 
+    public static function set_has(App $object, $input, $flags, $options){
+        foreach($input as $nr => $char){
+            if($char === '('){
+                return true;
+            }
+        }
+    }
+
+    public static function set_highest(App $object, $input, $flags, $options){
+        $highest = 0;
+        $depth = 0;
+        foreach($input as $nr => $char){
+            if($char === '('){
+                $depth++;
+                if($depth > $highest) {
+                    $highest = $depth;
+                }
+            }
+            elseif($char === ')'){
+                $depth--;
+            }
+        }
+        return $highest;
+    }
+
+    public static function set_get(App $object, $input, $flags, $options){
+        $highest = Parse::set_highest($object, $input, $flags, $options);
+        $set = [];
+        $is_collect = false;
+        $depth = 0;
+        foreach($input as $nr => $char){
+            if($char === '('){
+                $is_collect = true;
+                $depth++;
+            }
+            elseif($char === ')'){
+                $is_collect = false;
+                $depth--;
+                break;
+            }
+            elseif($is_collect && $depth === $highest){
+                $set[$nr] = $char;
+            }
+        }
+        return $set;
+    }
+
+
     public static function value_split(App $object, $input, $flags, $options){
         $set_depth = 0;
         $array_depth = 0;
         $collect = [];
         $list = [];
+
+        if(Parse::set_has($object, $input, $flags, $options)){
+            $set = Parse::set_get($object, $input, $flags, $options);
+            ddd($set);
+        }
+
+//        $set = Parse::set_get($object, $input, $flags, $options);
+
         ddd($input);
+
+
+
+
         foreach($input as $nr => $char){
             if($char === '('){
                 $set_depth++;
