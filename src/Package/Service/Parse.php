@@ -689,34 +689,6 @@ class Parse
                 case '!':
                     $operator[] = $char;
                     $count++;
-                    if($count > 4){
-                        $chunks = array_chunk($operator, 4);
-                        foreach($chunks as $operator_symbol){
-                            $symbol = Parse::operator_symbol($object, $operator_symbol, $flags, $options);
-                            if($symbol){
-                                for($i = 1; $i <= count($operator_symbol); $i++){
-                                    $input[$nr - $i] = null;
-                                }
-                                $input[$nr - $i + 1] = [
-                                    'value' => $symbol,
-                                    'is_operator' => true
-                                ];
-                            }
-                        }
-                    } else {
-                        $symbol = Parse::operator_symbol($object, $operator, $flags, $options);
-                        if($symbol){
-                            for($i = 1; $i <= $count; $i++){
-                                $input[$nr - $i] = null;
-                            }
-                            $input[$nr - $i + 1] = [
-                                'value' => $symbol,
-                                'is_operator' => true
-                            ];
-                        }
-                    }
-                    $operator = [];
-                    $count = 0;
                 break;
                 default:
                     if(array_key_exists(0, $operator)){
