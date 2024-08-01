@@ -1066,9 +1066,6 @@ class Parse
         if(!array_key_exists('index', $options->symbol)){
             throw new Exception('Symbol nr not found');
         }
-        if(array_key_exists('is_array_values', $options->symbol)){
-            throw new Exception('Symbol is_array_values found');
-        }
         $value = $options->symbol->char;
         $key = $options->symbol->index + 1;
         while($not_char = $input[$key] ?? false){
