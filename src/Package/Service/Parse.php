@@ -397,8 +397,8 @@ class Parse
 
         $input = Parse::operator_define($object, $input, $flags, $options);
         while(Parse::operator_has($object, $input, $flags, $options)){
-            $statement = Parse::remove_whitespace($object, $input, $flags, $options);
-            $statement = Parse::operator_get($object, $statement, $flags, $options);
+//            $statement = Parse::remove_whitespace($object, $input, $flags, $options);
+            $statement = Parse::operator_get($object, $input, $flags, $options);
             $statement = Parse::operator_create($object, $statement, $flags, $options);
             ddd($statement);
         }
@@ -535,35 +535,27 @@ class Parse
 
     public static function operator_get(App $object, $input, $flags, $options): array
     {
-        $operator = [];
-        $previous_char = null;
+        $left = [];
+        $right = [];
+        $operator  = false;
         d($input);
         foreach($input as $nr => $char){
             if(
                 is_array($char) &&
                 array_key_exists('is_operator', $char)
             ){
-                $operator[] = $previous_char;
-                $operator[] = $char;
-                if(
-                    in_array(
-                        $char['value'],
-                        [
-                            '++',
-                            '--'
-                        ]
-                    )
-                ){
-                    break;
-                }
-                elseif(array_key_exists(($nr + 1), $input)){
-                    $operator[] = $input[($nr + 1)];
-                    break;
-                }
+                $operator = $char;
+            } elseif(!$operator) {
+                $left[] = $char;
+            } else {
+                $right[] = $char;
             }
-            $previous_char = $char;
         }
+        d($operator);
+        d($left);
+        ddd($right);
         return $operator;
+
     }
 
     public static function remove_whitespace(App $object, $input, $flags, $options): array
