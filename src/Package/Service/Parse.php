@@ -635,8 +635,6 @@ class Parse
             case '||':
             case '^':
             case '<':
-            case '!':
-            case '!!':
             case '<=':
             case '<<':
             case '<<=':
@@ -656,6 +654,10 @@ class Parse
             case '::':
             case '->':
             case '...':
+            case '!':
+            case '!!':
+            case '!!!':
+            case '!!!!':
                 return $symbol;
         }
         return false;
