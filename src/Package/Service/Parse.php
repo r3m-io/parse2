@@ -686,10 +686,10 @@ class Parse
                     $count++;
                     if($count > 4){
                         $chunks = array_chunk($operator, 4);
-                        foreach($chunks as $symbol){
-                            $symbol = Parse::operator_symbol($object, $symbol, $flags, $options);
+                        foreach($chunks as $operator_symbol){
+                            $symbol = Parse::operator_symbol($object, $operator_symbol, $flags, $options);
                             if($symbol){
-                                for($i = 1; $i <= count($symbol); $i++){
+                                for($i = 1; $i <= count($operator_symbol); $i++){
                                     $input[$nr - $i] = null;
                                 }
                                 $input[$nr - $i + 1] = [
