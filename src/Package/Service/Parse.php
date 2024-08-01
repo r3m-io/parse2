@@ -774,6 +774,8 @@ class Parse
         }
         d($input);
         $input = Parse::operator_solve($object, $input, $flags, $options);
+        $input = Parse::not_get($object, $input, $flags, $options);
+        $input = Parse::variable_get($object, $input, $flags, $options);
 
         ddd($input);
 
@@ -1049,5 +1051,33 @@ class Parse
             ];
         }
         return $array;
+    }
+
+    public static function not_get(App $object, $input, $flags, $options){
+
+        foreach($input as $nr => $char){
+            if($char === '!'){
+                $value = $char;
+                while($not_char = next($input)){
+                    if($not_char === '!'){
+                        $value .= $not_char;
+                    } else {
+                        break;
+                    }
+                }
+                $input[$nr] = [
+                    'value' => $value,
+                    'is_not' => true
+                ];
+            }
+        }
+        ddd($input);
+    }
+
+    public static function variable_get(App $object, $input, $flags, $options){
+        $variable = [];
+        $is_variable = false;
+        $is_single_quoted = false;
+        $is_double_quoted = false;
     }
 }
