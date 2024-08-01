@@ -573,6 +573,7 @@ class Parse
                 in_array(
                     $char,
                     [
+                        null,
                         ' ',
                         "\t",
                         "\n",
@@ -684,12 +685,7 @@ class Parse
                 ];
             }
         }
-        foreach($input as $nr => $char){
-            if($char === null){
-                unset($input[$nr]);
-            }
-        }
-        return array_values($input);
+        return $input;
     }
 
     public static function operator_has($object, $input, $flags, $options){
