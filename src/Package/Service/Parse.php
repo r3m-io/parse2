@@ -658,7 +658,7 @@ class Parse
                         $symbol = Parse::operator_symbol($object, $operator, $flags, $options);
                         if($symbol){
                             for($i = 1; $i <= $count; $i++){
-                                unset($input[$nr - $i]);
+                                $input[$nr - $i] = null;
                             }
                             $input[$nr - $i + 1] = [
                                 'value' => $symbol,
@@ -677,7 +677,7 @@ class Parse
             $symbol = Parse::operator_symbol($object, $operator, $flags, $options);
             if($symbol){
                 for($i = 1; $i <= $count; $i++){
-                    unset($input[$nr - $i]);
+                    $input[$nr - $i] = null;
                 }
                 $input[$nr - $i + 1] = [
                     'value' => $symbol,
@@ -685,7 +685,11 @@ class Parse
                 ];
             }
         }
-        //re-index from 0
+        foreach($input as $nr => $char){
+            if($char === null){
+                unset($input[$nr]);
+            }
+        }
         return array_values($input);
     }
 
