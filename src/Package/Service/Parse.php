@@ -1058,12 +1058,14 @@ class Parse
         foreach($input as $nr => $char){
             if($char === '!'){
                 $value = $char;
+                $key = $nr;
                 while($not_char = next($input)){
                     if($not_char === '!'){
                         $value .= $not_char;
                     } else {
                         break;
                     }
+                    $key++;
                 }
                 $input[$nr] = [
                     'value' => $value,
