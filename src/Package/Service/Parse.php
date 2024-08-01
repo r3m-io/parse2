@@ -1055,6 +1055,7 @@ class Parse
 
     public static function not_get(App $object, $input, $flags, $options): array
     {
+        d($input);
         foreach($input as $nr => $char){
             if($char === '!'){
                 $value = $char;
