@@ -1053,7 +1053,8 @@ class Parse
         return $array;
     }
 
-    public static function not_get(App $object, $input, $flags, $options){
+    public static function not_get(App $object, $input, $flags, $options): array
+    {
         foreach($input as $nr => $char){
             if($char === '!'){
                 $value = $char;
