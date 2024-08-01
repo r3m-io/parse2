@@ -341,6 +341,7 @@ class Parse
 
     public static function set_get(App $object, $input, $flags, $options){
         $highest = Parse::set_highest($object, $input, $flags, $options);
+        ddd($highest);
         $set = [];
         $is_collect = false;
         $depth = 0;
