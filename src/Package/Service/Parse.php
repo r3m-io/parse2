@@ -750,6 +750,7 @@ class Parse
         $collect = [];
         $list = [];
 
+        $counter = 0;
         while(Parse::set_has($object, $input, $flags, $options)){
             $set = Parse::set_get($object, $input, $flags, $options);
             $set = Parse::operator_solve($object, $set, $flags, $options);
@@ -763,7 +764,10 @@ class Parse
                 $flags,
                 $options
             );
-            ddd($set);
+            d($set);
+            if($counter > 2){
+                break;
+            }
         }
         if(empty($input)){
             trace();
