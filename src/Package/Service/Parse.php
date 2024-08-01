@@ -408,6 +408,8 @@ class Parse
     public static function operator_get(App $object, $input, $flags, $options): array
     {
         $operator = [];
+        $previous_char = null;
+        d($input);
         foreach($input as $nr => $char){
             if(
                 is_array($char) &&
