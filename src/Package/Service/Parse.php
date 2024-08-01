@@ -1053,7 +1053,7 @@ class Parse
         return $array;
     }
 
-    public static function symbol_exclamation(App $object, &$input, $nr, $flags, $options){
+    public static function symbol_exclamation(App $object, &$input, $flags, $options){
         ddd($options);
         $value = $char;
         $key = $nr + 1;
