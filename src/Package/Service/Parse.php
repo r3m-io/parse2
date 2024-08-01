@@ -1189,6 +1189,7 @@ class Parse
         $is_variable = false;
         $is_single_quoted = false;
         $is_double_quoted = false;
+        d($input);
         foreach($input as $nr => $char){
             if(
                 $is_single_quoted === false &&
