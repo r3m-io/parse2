@@ -703,7 +703,7 @@ class Parse
                                     for($i = 1; $i <= count($operator_symbol); $i++){
                                         $input[$nr - $i] = null;
                                     }
-                                    $input[$nr - $i + 1] = [
+                                    $input[$nr - $i] = [
                                         'value' => $symbol,
                                         'is_operator' => true
                                     ];
