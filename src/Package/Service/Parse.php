@@ -398,9 +398,9 @@ class Parse
         $input = Parse::operator_define($object, $input, $flags, $options);
         while(Parse::operator_has($object, $input, $flags, $options)){
 //            $statement = Parse::remove_whitespace($object, $input, $flags, $options);
-            $statement = Parse::operator_get($object, $input, $flags, $options);
-            $statement = Parse::operator_create($object, $statement, $flags, $options);
-            ddd($statement);
+            $operator = Parse::operator_get($object, $input, $flags, $options);
+            $operator = Parse::operator_create($object, $operator, $flags, $options);
+            ddd($operator);
         }
 
         return $input;
@@ -504,33 +504,23 @@ class Parse
      * @throws Exception
      */
     public static function operator_create(App $object, $input, $flags, $options){
-        $left = [];
-        $right = [];
-        $operator = null;
-        $assign_key = null;
-        d($input);
-        foreach($input as $nr => $char){
-            if(is_array($char) && array_key_exists('is_operator', $char)){
-                $operator = $char;
-            } elseif(!$operator) {
-                $left[] = $char;
-            } else {
-                $right[] = $char;
-            }
+        if(!array_key_exists('left', $input)){
+            throw new Exception('Left value not found');
         }
-        if($operator){
-            $code = Parse::operator_code(
-                $object,
-                [
-                    'left' => $left,
-                    'operator' => $operator,
-                    'right' => $right,
-                ],
-                $flags,
-                $options
-            );
-            ddd($code);
+        if(!array_key_exists('operator', $input)){
+            throw new Exception('Operator not found');
         }
+        if(!array_key_exists('right', $input['operator'])){
+            throw new Exception('Right value not found');
+        }
+        $code = Parse::operator_code(
+            $object,
+            $input,
+            $flags,
+            $options
+        );
+        ddd($code);
+
     }
 
     public static function operator_get(App $object, $input, $flags, $options): array
@@ -538,7 +528,6 @@ class Parse
         $left = [];
         $right = [];
         $operator  = false;
-        d($input);
         foreach($input as $nr => $char){
             if(
                 is_array($char) &&
@@ -558,11 +547,11 @@ class Parse
                 $right[] = $char;
             }
         }
-        d($operator);
-        d($left);
-        ddd($right);
-        return $operator;
-
+        return [
+            'operator' => $operator,
+            'left' => $left,
+            'right' => $right
+        ];
     }
 
     public static function remove_whitespace(App $object, $input, $flags, $options): array
