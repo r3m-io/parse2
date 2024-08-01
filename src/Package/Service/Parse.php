@@ -397,19 +397,40 @@ class Parse
 
         $input = Parse::operator_define($object, $input, $flags, $options);
         while(Parse::operator_has($object, $input, $flags, $options)){
-            $statement = Parse::operator_remove_whitespace($object, $input, $flags, $options);
+            $statement = Parse::remove_whitespace($object, $input, $flags, $options);
             $statement = Parse::operator_get($object, $statement, $flags, $options);
+            $statement = Parse::operator_create($object, $statement, $flags, $options);
             ddd($statement);
         }
 
         return $input;
     }
 
+    public static function operator_create(App $object, $input, $flags, $options){
+        $left = null;
+        $right = null;
+        $operator = null;
+        $assign_key = null;
+        foreach($input as $nr => $char){
+            if(is_array($char) && array_key_exists('is_operator', $char)){
+                $operator = $char;
+                if(array_key_exists(($nr - 1), $input)){
+                    $left = $input[($nr - 1)];
+                }
+                if(array_key_exists(($nr + 1), $input)){
+                    $right = $input[($nr + 1)];
+                }
+            }
+        }
+        d($left);
+        d($operator);
+        ddd($right);
+    }
+
     public static function operator_get(App $object, $input, $flags, $options): array
     {
         $operator = [];
         $previous_char = null;
-        d($input);
         foreach($input as $nr => $char){
             if(
                 is_array($char) &&
@@ -438,7 +459,7 @@ class Parse
         return $operator;
     }
 
-    public static function operator_remove_whitespace(App $object, $input, $flags, $options): array
+    public static function remove_whitespace(App $object, $input, $flags, $options): array
     {
         foreach($input as $nr => $char){
             if(
