@@ -395,12 +395,64 @@ class Parse
 
     public static function operator_solve(App $object, $input, $flags, $options){
 
-        Parse::operator_define($object, $input, $flags, $options);
-        die;
+        $input = Parse::operator_define($object, $input, $flags, $options);
         while(Parse::operator_has($object, $input, $flags, $options)){
-            $statement = Parse::operator_get($object, $input, $flags, $options);
+            $statement = Parse::operator_remove_whitespace($object, $input, $flags, $options);
+            $statement = Parse::operator_get($object, $statement, $flags, $options);
+            ddd($statement);
         }
 
+        return $input;
+    }
+
+    public static function operator_get(App $object, $input, $flags, $options): array
+    {
+        $operator = [];
+        foreach($input as $nr => $char){
+            if(
+                is_array($char) &&
+                array_key_exists('is_operator', $char)
+            ){
+                $operator[] = $previous_char;
+                $operator[] = $char;
+                if(
+                    in_array(
+                        $char['value'],
+                        [
+                            '++',
+                            '--'
+                        ]
+                    )
+                ){
+                    break;
+                }
+                elseif(array_key_exists($nr + 1, $input)){
+                    $operator[] = $input[$nr + 1];
+                    break;
+                }
+            }
+            $previous_char = $char;
+        }
+        return $operator;
+    }
+
+    public static function operator_remove_whitespace(App $object, $input, $flags, $options): array
+    {
+        foreach($input as $nr => $char){
+            if(
+                in_array(
+                    $char,
+                    [
+                        ' ',
+                        "\t",
+                        "\n",
+                        "\r"
+                    ], true
+                )
+            ){
+                unset($input[$nr]);
+            }
+        }
         return $input;
     }
 
@@ -499,20 +551,12 @@ class Parse
                 ];
             }
         }
-        d($input);
         return $input;
     }
 
     public static function operator_has($object, $input, $flags, $options){
-        $operator = false;
         foreach($input as $nr => $char){
-            if(in_array($char, [
-                '-',
-                '+',
-                '/',
-                '*',
-                '%'
-            ], true)){
+            if(is_array($char) && array_key_exists('is_operator', $char)){
                 return true;
             }
         }
