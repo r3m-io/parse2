@@ -349,6 +349,7 @@ class Parse
         d($input);
         $highest = Parse::set_highest($object, $input['input'], $flags, $options);
         $depth = 0;
+        $is_set = false;
         foreach($input['input'] as $nr => $char){
             if($char === '('){
                 $depth++;
@@ -361,9 +362,13 @@ class Parse
                 $depth--;
             }
             if($depth === $highest){
-                $input['input'][$nr] = null;
+                if($is_set === false){
+                    $input['input'][$nr] = $input['set'];
+                    $is_set = true;
+                } else {
+                    $input['input'][$nr] = null;
+                }
             }
-
         }
         ddd($input);
         ddd($highest);
