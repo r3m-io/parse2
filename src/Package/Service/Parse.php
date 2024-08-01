@@ -941,12 +941,10 @@ class Parse
             trace();
         }
         d($input);
-        trace();
         $input = Parse::operator_solve($object, $input, $flags, $options);
         d($input);
         $input = Parse::symbol_get($object, $input, $flags, $options);
         $input = Parse::variable_get($object, $input, $flags, $options);
-
         d($input);
         return $input;
 
