@@ -699,6 +699,7 @@ class Parse
             $set = Parse::set_get($object, $input, $flags, $options);
             ddd($set);
         }
+        d($input);
         $input = Parse::operator_solve($object, $input, $flags, $options);
 
         ddd($input);
