@@ -1055,6 +1055,7 @@ class Parse
 
     public static function not_get(App $object, $input, $flags, $options): array
     {
+        $is_array_values = false;
         foreach($input as $nr => $char){
             if($char === '!'){
                 $value = $char;
@@ -1063,6 +1064,7 @@ class Parse
                     if($not_char === '!'){
                         $value .= $not_char;
                         unset($input[$key]);
+                        $is_array_values = true;
                     } else {
                         break;
                     }
@@ -1076,7 +1078,10 @@ class Parse
                 }
             }
         }
-        return array_values($input);
+        if($is_array_values){
+            return array_values($input);
+        }
+        return $input;
     }
 
     public static function variable_get(App $object, $input, $flags, $options){
