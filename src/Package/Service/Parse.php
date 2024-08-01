@@ -466,7 +466,8 @@ class Parse
         if(!empty($input['right'])){
             d($input['right']);
             $right = Parse::value_split($object, $input['right'], $flags, $options);
-            if(!is_string($right)){
+            if(is_array($right)){
+                $code_right = Parse::value_code($object, $right, $flags, $options);
                 ddd($right);
             }
         }
@@ -816,6 +817,34 @@ class Parse
                 ];
         }
         return $input;
+    }
+
+    public static function value_code(App $object, $input, $flags, $options): string
+    {
+        $code = '';
+        foreach($input as $nr => $record){
+            if(array_key_exists('is_array', $record)){
+                $code .= '[';
+                $code .= Parse::value_code($object, $record['execute'], $flags, $options);
+                $code .= ']';
+            }
+            elseif(array_key_exists('is_boolean', $record)){
+                $code .= $record['execute'] ? 'true' : 'false';
+            }
+            elseif(array_key_exists('is_null', $record)){
+                $code .= 'null';
+            }
+            elseif(array_key_exists('is_single_quoted', $record)){
+                $code .= '\'' . $record['execute'] . '\'';
+            }
+            elseif(array_key_exists('is_cast', $record)){
+                $code .= '(' . $record['value'] . ')';
+            }
+            else {
+                $code .= $record['execute'];
+            }
+        }
+        return $code;
     }
 
 
