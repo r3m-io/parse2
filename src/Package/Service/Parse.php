@@ -512,14 +512,12 @@ class Parse
         $code_left = '';
         $code_right = '';
         if(!empty($input['left'])){
-            d($input['left']);
             $left = Parse::value_split($object, $input['left'], $flags, $options);
             if(is_array($left)){
                 $code_left = Parse::value_code($object, $left, $flags, $options);
             }
         }
         if(!empty($input['right'])){
-            d($input['right']);
             $right = Parse::value_split($object, $input['right'], $flags, $options);
             if(is_array($right)){
                 $code_right = Parse::value_code($object, $right, $flags, $options);
@@ -598,6 +596,9 @@ class Parse
             case '...' :
                 $code = $code_left . ' ... ' . $code_right;
             break;
+            case '$' :
+                $code = $code_left . ' $ ' . $code_right;
+                break;
             case '!' :
                 $code = $code_left . ' ! ' . $code_right;
                 break;
