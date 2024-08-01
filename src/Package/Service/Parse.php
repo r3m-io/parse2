@@ -598,13 +598,13 @@ class Parse
             break;
             case '.' :
                 $has_parenthese = false;
-                if(substr($code_left, -1) === ')' ){
-                    $code_left = substr($code_left, 0, -1);
+                if(substr($code_left, -2) === '\')' ){
+                    $code_left = substr($code_left, 0, -2);
                     $has_parenthese = true;
                 }
                 $code = $code_left . '.' . $code_right;
                 if($has_parenthese){
-                    $code .= ')';
+                    $code .= '\')';
                 }
                 break;
             case '$' :
