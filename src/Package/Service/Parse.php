@@ -460,89 +460,94 @@ class Parse
         $code = false;
         $left = '';
         $right = '';
+        $code_left = '';
+        $code_right = '';
         if(!empty($input['left'])){
             $left = Parse::value_split($object, $input['left'], $flags, $options);
+            if(is_array($left)){
+                $code_left = Parse::value_code($object, $left, $flags, $options);
+                ddd($code_left);
+            }
         }
         if(!empty($input['right'])){
             d($input['right']);
             $right = Parse::value_split($object, $input['right'], $flags, $options);
             if(is_array($right)){
                 $code_right = Parse::value_code($object, $right, $flags, $options);
-                ddd($right);
             }
         }
         switch($input['operator']['value']){
             case '??' :
-                $code = $left . ' ?? ' . $right;
+                $code = $code_left . ' ?? ' . $code_right;
             break;
             case '&&' :
-                $code = $left . ' && ' . $right;
+                $code = $code_left . ' && ' . $code_right;
             break;
             case '||' :
-                $code = $left . ' || ' . $right;
+                $code = $code_left . ' || ' . $code_right;
             break;
             case '*' :
-                $code = '$this->value_multiply(' . $left . ', ' . $right . ')';
+                $code = '$this->value_multiply(' . $code_left . ', ' . $code_right . ')';
             break;
             case '/' :
-                $code = '$this->value_divide(' . $left . ', ' . $right . ')';
+                $code = '$this->value_divide(' . $code_left . ', ' . $code_right . ')';
             break;
             case '%' :
-                $code = '$this->value_modulo(' . $left . ', ' . $right . ')';
+                $code = '$this->value_modulo(' . $code_left . ', ' . $code_right . ')';
             break;
             case '+' :
-                $code = '$this->value_plus(' . $left . ', ' . $right . ')';
+                $code = '$this->value_plus(' . $code_left . ', ' . $code_right . ')';
             break;
             case '-' :
-                $code = '$this->value_minus(' . $left . ', ' . $right . ')';
+                $code = '$this->value_minus(' . $code_left . ', ' . $code_right . ')';
             break;
             case '<' :
-                $code = '$this->value_smaller(' . $left . ', ' . $right . ')';
+                $code = '$this->value_smaller(' . $code_left . ', ' . $code_right . ')';
             break;
             case '<=' :
-                $code = '$this->value_smaller_equal(' . $left . ', ' . $right . ')';
+                $code = '$this->value_smaller_equal(' . $code_left . ', ' . $code_right . ')';
             break;
             case '<<' :
-                $code = '$this->value_smaller_smaller(' . $left . ', ' . $right . ')';
+                $code = '$this->value_smaller_smaller(' . $code_left . ', ' . $code_right . ')';
             break;
             case '>' :
-                $code = '$this->value_greater(' . $left . ', ' . $right . ')';
+                $code = '$this->value_greater(' . $code_left . ', ' . $code_right . ')';
             break;
             case '>=' :
-                $code = '$this->value_greater_equal(' . $left . ', ' . $right . ')';
+                $code = '$this->value_greater_equal(' . $code_left . ', ' . $code_right . ')';
             break;
             case '>>' :
-                $code = '$this->value_greater_greater(' . $left . ', ' . $right . ')';
+                $code = '$this->value_greater_greater(' . $code_left . ', ' . $code_right . ')';
             break;
             case '!=' :
-                $code = '$this->value_not_equal(' . $left . ', ' . $right . ')';
+                $code = '$this->value_not_equal(' . $code_left . ', ' . $code_right . ')';
             break;
             case '!==' :
-                $code = '$this->value_not_identical(' . $left . ', ' . $right . ')';
+                $code = '$this->value_not_identical(' . $code_left . ', ' . $code_right . ')';
             break;
             case '==' :
-                $code = '$this->value_equal(' . $left . ', ' . $right . ')';
+                $code = '$this->value_equal(' . $code_left . ', ' . $code_right . ')';
             break;
             case '===' :
-                $code = '$this->value_identical(' . $left . ', ' . $right . ')';
+                $code = '$this->value_identical(' . $code_left . ', ' . $code_right . ')';
             break;
             case '=>' :
-                $code = $left . ' => ' . $right;
+                $code = $code_left . ' => ' . $code_right;
             break;
             case '->' :
-                $code = $left . ' -> ' . $right;
+                $code = $code_left . ' -> ' . $code_right;
             break;
             case '::' :
-                $code = $left . ' :: ' . $right;
+                $code = $code_left . ' :: ' . $code_right;
             break;
             case '=' :
-                $code = $left . ' = ' . $right;
+                $code = $code_left . ' = ' . $code_right;
             break;
             case '^' :
-                $code = $left . ' ^ ' . $right;
+                $code = $code_left . ' ^ ' . $code_right;
                 break;
             case '...' :
-                $code = $left . ' ... ' . $right;
+                $code = $code_left . ' ... ' . $code_right;
             break;
         }
         $input['code'] = $code;
