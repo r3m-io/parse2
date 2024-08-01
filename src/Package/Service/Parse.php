@@ -691,6 +691,8 @@ class Parse
 
     public static function cast_get(App $object, $input, $flags, $options){
         $string = implode('', $input);
+        d($input);
+
         switch($string){
             case 'bool' :
             case 'boolean' :
