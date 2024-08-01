@@ -599,6 +599,11 @@ class Parse
                 $code = $code_left . ' ... ' . $code_right;
             break;
         }
+        d($code);
+        if($code === false){
+            trace();
+            die;
+        }
         $input['code'] = $code;
         d($input);
         return $input;
