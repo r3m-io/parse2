@@ -510,7 +510,7 @@ class Parse
         if(!array_key_exists('operator', $input)){
             throw new Exception('Operator not found');
         }
-        if(!array_key_exists('value', $input['operotor'])){
+        if(!array_key_exists('value', $input['operator'])){
             throw new Exception('Invalid operator');
         }
         if(!array_key_exists('right', $input)){
