@@ -444,7 +444,6 @@ class Parse
                 $options
             );
             d($input);
-            ddd($operator);
         }
         d($input);
         return Parse::remove_whitespace($object, $input, $flags, $options);
