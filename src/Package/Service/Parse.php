@@ -1053,20 +1053,35 @@ class Parse
         return $array;
     }
 
+    /**
+     * @throws Exception
+     */
     public static function symbol_exclamation(App $object, &$input, $flags, $options){
-        ddd($options);
-        $value = $char;
-        $key = $nr + 1;
+        if(property_exists($options, 'symbol') === false){
+            throw new Exception('Symbol not found');
+        }
+        if(property_exists($options->symbol, 'char') === false){
+            throw new Exception('Symbol char not found');
+        }
+        if(property_exists($options->symbol, 'nr') === false){
+            throw new Exception('Symbol nr not found');
+        }
+        if(property_exists($options->symbol, 'is_array_values')){
+            throw new Exception('Symbol is_array_values found');
+        }
+        $value = $options->symbol->char;
+        $key = $options->symbol->nr + 1;
         while($not_char = $input[$key] ?? false){
-            if($not_char === $char){
+            if($not_char ===  $options->symbol->char){
                 $value .= $not_char;
                 unset($input[$key]);
-                $is_array_values = true;
+                $options->symbol->is_array_values = true;
             } else {
                 break;
             }
             $key++;
         }
+        return $value;
     }
 
     public static function symbol_get(App $object, $input, $flags, $options): array
@@ -1081,6 +1096,10 @@ class Parse
                         'char' => $char
                     ];
                     $value = Parse::symbol_exclamation($object, $input, $flags, $options);
+                    if(array_key_exists('is_array_values', $options->symbol)){
+                        $is_array_values = true;
+                        unset($options->symbol->is_array_values);
+                    }
                     if($old_options_symbol){
                         $options->symbol = $old_options_symbol;
                     } else {
