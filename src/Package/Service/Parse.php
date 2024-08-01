@@ -658,7 +658,7 @@ class Parse
                         $symbol = Parse::operator_symbol($object, $operator, $flags, $options);
                         if($symbol){
                             for($i = 1; $i <= $count; $i++){
-                                $input[$nr - $i] = null;
+                                unset($input[$nr - $i]);
                             }
                             $input[$nr - $i + 1] = [
                                 'value' => $symbol,
@@ -677,7 +677,7 @@ class Parse
             $symbol = Parse::operator_symbol($object, $operator, $flags, $options);
             if($symbol){
                 for($i = 1; $i <= $count; $i++){
-                    $input[$nr - $i] = null;
+                    unset($input[$nr - $i]);
                 }
                 $input[$nr - $i + 1] = [
                     'value' => $symbol,
@@ -685,7 +685,8 @@ class Parse
                 ];
             }
         }
-        return $input;
+        //re-index from 0
+        return array_values($input);
     }
 
     public static function operator_has($object, $input, $flags, $options){
