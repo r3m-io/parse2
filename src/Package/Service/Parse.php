@@ -508,6 +508,7 @@ class Parse
         $right = [];
         $operator = null;
         $assign_key = null;
+        d($input);
         foreach($input as $nr => $char){
             if(is_array($char) && array_key_exists('is_operator', $char)){
                 $operator = $char;
