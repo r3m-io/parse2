@@ -1333,7 +1333,44 @@ class Parse
         return $input;
     }
 
-    public static function method_get(App $object, $input, $flags, $options){
+    public static function method_get(App $object, $input, $flags, $options): array{
+        $before = [];
+        $is_method = false;
+        $arguments = [];
+        $set_depth = 0;
+        foreach($input as $nr => $char){
+            if(
+                $char === '(' &&
+                array_key_exists(0, $before)
+            ){
+                $set_depth++;
+                $is_method = true;
+                $input[$nr] = [
+                    'value' => implode('', $before),
+                    'is_method' => true
+                ];
+            }
+            if($is_method === false){
+                $before[] = $char;
+            } else {
+                if($char === ')'){
+                    $set_depth--;
+                    if($set_depth === 0){
+                        $input[$nr] = Core::array_merge(
+                            $input[$nr],
+                            [
+                            'argument' => $arguments,
+                            'has_argument' => true
+                            ]
+                        ];
+                        $arguments = [];
+                        $is_method = false;
+                    }
+                }
+                $arguments[] = $char;
+            }
+
+        }
         d($input);
         return $input;
     }
