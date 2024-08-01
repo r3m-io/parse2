@@ -1066,13 +1066,13 @@ class Parse
         if(!array_key_exists('index', $options->symbol)){
             throw new Exception('Symbol nr not found');
         }
-        $value = $options->symbol->char;
-        $key = $options->symbol->index + 1;
+        $value = $options->symbol['char'];
+        $key = $options->symbol['index'] + 1;
         while($not_char = $input[$key] ?? false){
-            if($not_char ===  $options->symbol->char){
+            if($not_char ===  $options->symbol['char']){
                 $value .= $not_char;
                 unset($input[$key]);
-                $options->symbol->is_array_values = true;
+                $options->symbol['is_array_values'] = true;
             } else {
                 break;
             }
