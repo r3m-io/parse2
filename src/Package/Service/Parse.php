@@ -699,6 +699,9 @@ class Parse
             $set = Parse::set_get($object, $input, $flags, $options);
             ddd($set);
         }
+        if(empty($input)){
+            trace();
+        }
         d($input);
         $input = Parse::operator_solve($object, $input, $flags, $options);
 
