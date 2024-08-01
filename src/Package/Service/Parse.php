@@ -514,6 +514,7 @@ class Parse
         $code_left = '';
         $code_right = '';
         if(!empty($input['left'])){
+            d($input['left']);
             $left = Parse::value_split($object, $input['left'], $flags, $options);
             if(is_array($left)){
                 $code_left = Parse::value_code($object, $left, $flags, $options);
