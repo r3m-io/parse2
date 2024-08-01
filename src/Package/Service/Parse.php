@@ -1353,6 +1353,7 @@ class Parse
                     'value' => implode('', $before),
                     'is_method' => true
                 ];
+                continue;
             }
             if(
                 $is_single_quote === false &&
@@ -1385,6 +1386,7 @@ class Parse
                     $is_single_quote === false &&
                     $is_double_quote === false
                 ){
+
                     if($char === ','){
                         $argument_nr++;
                         $arguments[$argument_nr] = [];
