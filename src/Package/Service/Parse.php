@@ -1392,7 +1392,7 @@ class Parse
                     elseif($char === ')'){
                         $set_depth--;
                         if($set_depth === 0) {
-                            $input[$nr] = Core::array_merge(
+                            $input[$nr] = array_merge(
                                 $input[$nr],
                                 [
                                     'argument' => $arguments,
