@@ -684,6 +684,11 @@ class Parse
                 case '!':
                     $operator[] = $char;
                     $count++;
+                    if($count > 4){
+                        $chunks = array_chunk($operator, 4);
+                        ddd($chunks);
+                        throw new Exception('Operator too long');
+                    }
                 break;
                 default:
                     if(array_key_exists(0, $operator)){
