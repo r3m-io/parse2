@@ -541,7 +541,8 @@ class Parse
                 $code = $left . ' ... ' . $right;
             break;
         }
-        return $code;
+        $input['code'] = $code;
+        return $input;
     }
 
     /**
