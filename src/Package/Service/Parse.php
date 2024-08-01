@@ -819,6 +819,7 @@ class Parse
         while(Parse::set_has($object, $input, $flags, $options)){
             $set = Parse::set_get($object, $input, $flags, $options);
             $set = Parse::operator_solve($object, $set, $flags, $options);
+            d($set);
             $set = Parse::cast_get($object, $set, $flags, $options);
             $input = Parse::set_replace(
                 $object,
