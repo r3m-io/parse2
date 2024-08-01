@@ -424,6 +424,7 @@ class Parse
             throw new Exception('Right value not found');
         }
         $code = false;
+        return $code;
         switch($input['operator']['value']){
             case '&&' :
                 $code = $input['left'] . ' && ' . $input['right'];
@@ -502,8 +503,8 @@ class Parse
      * @throws Exception
      */
     public static function operator_create(App $object, $input, $flags, $options){
-        $left = null;
-        $right = null;
+        $left = [];
+        $right = [];
         $operator = null;
         $assign_key = null;
         foreach($input as $nr => $char){
