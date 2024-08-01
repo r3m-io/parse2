@@ -472,7 +472,7 @@ class Parse
                 if($is_operator){
                     break;
                 }
-                $is_operator = $nr;
+                $is_operator = true;
                 $data[$nr] = $operator['code'];
             }
             elseif(
