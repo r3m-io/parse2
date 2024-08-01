@@ -597,10 +597,10 @@ class Parse
                 $code = $code_left . ' ... ' . $code_right;
             break;
             case '.' :
-                $code = $code_left . ' . ' . $code_right;
+                $code = $code_left . '.' . $code_right;
                 break;
             case '$' :
-                $code = $code_left . ' $ ' . $code_right;
+                $code = $code_left . ' $' . $code_right;
                 break;
             case '!' :
                 $code = $code_left . ' ! ' . $code_right;
