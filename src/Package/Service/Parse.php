@@ -467,13 +467,15 @@ class Parse
                 break;
                 default:
                     if(array_key_exists(0, $operator)){
+                        d($operator);
+                        d($count);
                         $symbol = Parse::operator_symbol($object, $operator, $flags, $options);
                         if($symbol){
                             for($i = 1; $i <= $count; $i++){
                                 $input[$nr - $i] = null;
                             }
                         }
-
+                        $operator = [];
                     }
             }
         }
