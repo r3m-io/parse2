@@ -445,6 +445,8 @@ class Parse
 
     public static function operator_define(App $object, $input, $flags, $options){
         $operator = [];
+        $count = 0;
+        $nr = false;
         foreach($input as $nr => $char){
             switch($char){
                 case '-':
@@ -460,18 +462,27 @@ class Parse
                 case '=':
                 case '.':
                     $operator[] = $char;
+                    $count++;
                 break;
                 default:
                     if(array_key_exists(0, $operator)){
                         $symbol = Parse::operator_symbol($object, $operator, $flags, $options);
-                        ddd($symbol);
+                        for($i = 1; $i <= $count; $i++){
+                            $input[$nr - $i] = null;
+                        }
                     }
             }
         }
-        if(array_key_exists(0, $operator)){
+        if(
+            array_key_exists(0, $operator) &&
+            $nr !== false
+        ){
             $symbol = Parse::operator_symbol($object, $operator, $flags, $options);
-            ddd($symbol);
+            for($i = 1; $i <= $count; $i++){
+                $input[$nr - $i] = null;
+            }
         }
+        return $input;
     }
 
     public static function operator_has($object, $input, $flags, $options){
