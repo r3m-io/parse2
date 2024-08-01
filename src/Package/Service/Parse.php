@@ -542,6 +542,7 @@ class Parse
             break;
         }
         $input['code'] = $code;
+        d($input);
         return $input;
     }
 
