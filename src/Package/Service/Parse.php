@@ -487,6 +487,10 @@ class Parse
             break;
             case '=' :
                 $code = $input['left'] . ' = ' . $input['right'];
+            break;
+            case '^' :
+                $code = $input['left'] . ' ^ ' . $input['right'];
+                break;
             case '...' :
                 $code = $input['left'] . ' ... ' . $input['right'];
             break;
@@ -494,6 +498,9 @@ class Parse
         return $code;
     }
 
+    /**
+     * @throws Exception
+     */
     public static function operator_create(App $object, $input, $flags, $options){
         $left = null;
         $right = null;
