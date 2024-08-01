@@ -466,6 +466,9 @@ class Parse
         if(!empty($input['right'])){
             d($input['right']);
             $right = Parse::value_split($object, $input['right'], $flags, $options);
+            if(!is_string($right)){
+                ddd($right);
+            }
         }
         switch($input['operator']['value']){
             case '??' :
