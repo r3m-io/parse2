@@ -839,8 +839,8 @@ class Parse
         if(empty($input)){
             trace();
         }
-        d($input);
         $input = Parse::operator_solve($object, $input, $flags, $options);
+        ddd($input);
         $input = Parse::symbol_get($object, $input, $flags, $options);
         $input = Parse::variable_get($object, $input, $flags, $options);
 
