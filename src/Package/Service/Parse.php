@@ -680,6 +680,7 @@ class Parse
         $nr = false;
         foreach($input as $nr => $char){
             switch($char){
+                case '$':
                 case '-':
                 case '+':
                 case '/':
