@@ -339,6 +339,19 @@ class Parse
         return $highest;
     }
 
+    public static function set_replace(App $object, $input, $flags, $options){
+        if(!array_key_exists('input', $input)){
+            throw new Exception('Input not found');
+        }
+        if(!array_key_exists('set', $input)){
+            throw new Exception('Set not found');
+        }
+        d($input);
+        $highest = Parse::set_highest($object, $input['input'], $flags, $options);
+        ddd($highest);
+
+    }
+
     public static function set_get(App $object, $input, $flags, $options){
         $highest = Parse::set_highest($object, $input, $flags, $options);
         $set = [];
@@ -691,8 +704,6 @@ class Parse
 
     public static function cast_get(App $object, $input, $flags, $options){
         $string = implode('', $input);
-        d($input);
-
         switch($string){
             case 'bool' :
             case 'boolean' :
@@ -722,6 +733,15 @@ class Parse
             $set = Parse::set_get($object, $input, $flags, $options);
             $set = Parse::operator_solve($object, $set, $flags, $options);
             $set = Parse::cast_get($object, $set, $flags, $options);
+            $input = Parse::set_replace(
+                $object,
+                [
+                    'input' =>$input,
+                    'set' => $set
+                ],
+                $flags,
+                $options
+            );
             ddd($set);
         }
         if(empty($input)){
