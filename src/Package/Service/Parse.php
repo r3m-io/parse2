@@ -829,6 +829,7 @@ class Parse
                 $flags,
                 $options
             );
+            d($input);
             d($set);
             if($counter >= 2){
                 ddd($input);
