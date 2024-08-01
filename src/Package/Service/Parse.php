@@ -406,6 +406,94 @@ class Parse
         return $input;
     }
 
+    /**
+     * @throws Exception
+     */
+    public static function operator_code(App $object, $input, $flags, $options): bool | string
+    {
+        if(!array_key_exists('left', $input)){
+            throw new Exception('Left value not found');
+        }
+        if(!array_key_exists('operator', $input)){
+            throw new Exception('Operator not found');
+        }
+        if(!array_key_exists('value', $input['operator'])){
+            throw new Exception('Operator not found');
+        }
+        if(!array_key_exists('right', $input)){
+            throw new Exception('Right value not found');
+        }
+        $code = false;
+        switch($input['operator']['value']){
+            case '&&' :
+                $code = $input['left'] . ' && ' . $input['right'];
+            break;
+            case '||' :
+                $code = $input['left'] . ' || ' . $input['right'];
+            break;
+            case '*' :
+                $code = '$this->value_multiply(' . $input['left'] . ', ' . $input['right'] . ')';
+            break;
+            case '/' :
+                $code = '$this->value_divide(' . $input['left'] . ', ' . $input['right'] . ')';
+            break;
+            case '%' :
+                $code = '$this->value_modulo(' . $input['left'] . ', ' . $input['right'] . ')';
+            break;
+            case '+' :
+                $code = '$this->value_plus(' . $input['left'] . ', ' . $input['right'] . ')';
+            break;
+            case '-' :
+                $code = '$this->value_minus(' . $input['left'] . ', ' . $input['right'] . ')';
+            break;
+            case '<' :
+                $code = '$this->value_smaller(' . $input['left'] . ', ' . $input['right'] . ')';
+            break;
+            case '<=' :
+                $code = '$this->value_smaller_equal(' . $input['left'] . ', ' . $input['right'] . ')';
+            break;
+            case '<<' :
+                $code = '$this->value_smaller_smaller(' . $input['left'] . ', ' . $input['right'] . ')';
+            break;
+            case '>' :
+                $code = '$this->value_greater(' . $input['left'] . ', ' . $input['right'] . ')';
+            break;
+            case '>=' :
+                $code = '$this->value_greater_equal(' . $input['left'] . ', ' . $input['right'] . ')';
+            break;
+            case '>>' :
+                $code = '$this->value_greater_greater(' . $input['left'] . ', ' . $input['right'] . ')';
+            break;
+            case '!=' :
+                $code = '$this->value_not_equal(' . $input['left'] . ', ' . $input['right'] . ')';
+            break;
+            case '!==' :
+                $code = '$this->value_not_identical(' . $input['left'] . ', ' . $input['right'] . ')';
+            break;
+            case '==' :
+                $code = '$this->value_equal(' . $input['left'] . ', ' . $input['right'] . ')';
+            break;
+            case '===' :
+                $code = '$this->value_identical(' . $input['left'] . ', ' . $input['right'] . ')';
+            break;
+            case '=>' :
+                $code = $input['left'] . ' => ' . $input['right'];
+            break;
+            case '->' :
+                $code = $input['left'] . ' -> ' . $input['right'];
+            break;
+            case '::' :
+                $code = $input['left'] . ' :: ' . $input['right'];
+            break;
+            case '=' :
+                $code = $input['left'] . ' = ' . $input['right'];
+            case '...' :
+                $code = $input['left'] . ' ... ' . $input['right'];
+            break;
+        }
+        return $code;
+    }
+
     public static function operator_create(App $object, $input, $flags, $options){
         $left = null;
         $right = null;
@@ -415,6 +503,7 @@ class Parse
             if(is_array($char) && array_key_exists('is_operator', $char)){
                 $operator = $char;
                 if(array_key_exists(($nr - 1), $input)){
+                    $assign_key = $input[($nr - 1)];
                     $left = $input[($nr - 1)];
                 }
                 if(array_key_exists(($nr + 1), $input)){
@@ -422,9 +511,19 @@ class Parse
                 }
             }
         }
-        d($left);
-        d($operator);
-        ddd($right);
+        if($operator){
+            $code = Parse::operator_code(
+                $object,
+                [
+                    'left' => $left,
+                    'operator' => $operator,
+                    'right' => $right,
+                ],
+                $flags,
+                $options
+            );
+            ddd($code);
+        }
     }
 
     public static function operator_get(App $object, $input, $flags, $options): array
@@ -514,6 +613,9 @@ class Parse
             case '-=':
             case '/=':
             case '*=':
+            case '::':
+            case '->':
+            case '...':
                 return $symbol;
         }
         return false;
@@ -538,13 +640,12 @@ class Parse
                 case '>':
                 case '=':
                 case '.':
+                case ':':
                     $operator[] = $char;
                     $count++;
                 break;
                 default:
                     if(array_key_exists(0, $operator)){
-                        d($operator);
-                        d($count);
                         $symbol = Parse::operator_symbol($object, $operator, $flags, $options);
                         if($symbol){
                             for($i = 1; $i <= $count; $i++){
