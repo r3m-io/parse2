@@ -597,8 +597,15 @@ class Parse
                 $code = $code_left . ' ... ' . $code_right;
             break;
             case '.' :
-                d($code_left);
+                $has_parenthese = false;
+                if(substr($code_left, -1) === ')' ){
+                    $code_left = substr($code_left, 0, -1);
+                    $has_parenthese = true;
+                }
                 $code = $code_left . '.' . $code_right;
+                if($has_parenthese){
+                    $code .= ')';
+                }
                 break;
             case '$' :
                 $code = $code_left . ' $' . '$this->data(\'' . $code_right . '\')';
