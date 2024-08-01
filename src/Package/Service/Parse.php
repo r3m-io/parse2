@@ -107,7 +107,6 @@ class Parse
                                 ]
                             ]
                         ];
-                        $tag_list[$line][] = $record;
                     } else {
                         $length = strlen($explode[0]);
                         $record = [
@@ -140,8 +139,8 @@ class Parse
                             $record['is_literal'] = true;
                             $record['is_literal_end'] = true;
                         }
-                        $tag_list[$line][] = $record;
                     }
+                    $tag_list[$line][] = $record;
                     $tag = false;
                     $column[$line]--;
                 }
@@ -259,17 +258,12 @@ class Parse
                             $flags,
                             $options
                         );
-                        foreach($list as $nr => $value){
-
-                        }
                         $record['variable'] = [
                             'is_assign' => true,
                             'operator' => $operator,
                             'name' => substr($before, 1),
                             'value' => $list,
                         ];
-
-
                         ddd($record);
                     }
                 }
@@ -322,6 +316,7 @@ class Parse
         $array_depth = 0;
         $collect = [];
         $list = [];
+        ddd($input);
         foreach($input as $nr => $char){
             if($char === '('){
                 $set_depth++;
