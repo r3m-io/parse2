@@ -1071,6 +1071,7 @@ class Parse
                     'value' => $value,
                     'is_not' => true
                 ];
+                break;
             }
         }
         ddd($input);
