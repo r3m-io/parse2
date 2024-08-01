@@ -1061,10 +1061,10 @@ class Parse
                 $value = $char;
                 $key = $nr + 1;
                 d($key);
-                while($not_char = next($input)){
+                while($not_char = $input[$key] ?? false){
                     if($not_char === '!'){
-                        unset($input[$key]);
                         $value .= $not_char;
+                        unset($input[$key]);
                     } else {
                         break;
                     }
