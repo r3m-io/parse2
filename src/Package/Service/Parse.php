@@ -598,6 +598,18 @@ class Parse
             case '...' :
                 $code = $code_left . ' ... ' . $code_right;
             break;
+            case '!' :
+                $code = $code_left . ' ! ' . $code_right;
+                break;
+            case '!!' :
+                $code = $code_left . ' !! ' . $code_right;
+                break;
+            case '!!!' :
+                $code = $code_left . ' ! ' . $code_right;
+                break;
+            case '!!!!' :
+                $code = $code_left . ' !! ' . $code_right;
+                break;
         }
         d($code);
         if($code === false){
