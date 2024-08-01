@@ -432,7 +432,6 @@ class Parse
         $input = Parse::operator_define($object, $input, $flags, $options);
         while(Parse::operator_has($object, $input, $flags, $options)){
             $operator = Parse::operator_get($object, $input, $flags, $options);
-            d($operator);
             $operator = Parse::operator_create($object, $operator, $flags, $options);
             $input = Parse::operator_remove(
                 $object,
@@ -443,9 +442,7 @@ class Parse
                 $flags,
                 $options
             );
-            d($input);
         }
-        d($input);
         return Parse::remove_whitespace($object, $input, $flags, $options);
     }
 
