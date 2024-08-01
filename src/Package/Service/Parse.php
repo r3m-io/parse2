@@ -1089,5 +1089,90 @@ class Parse
         $is_variable = false;
         $is_single_quoted = false;
         $is_double_quoted = false;
+        for($input as $nr => $char){
+            if(
+                $is_single_quoted === false &&
+                $is_double_quoted === false &&
+                $char === '$'
+            ){
+                $is_variable = true;
+            }
+            if($is_variable){
+                if(
+                    $is_single_quoted === false &&
+                    $is_double_quoted === false &&
+                    in_array(
+                        $char,
+                        [
+                            ' ',
+                            "\n",
+                            "\t",
+                            "\r",
+                            '??',
+                            '&&',
+                            '||',
+                            '===',
+                            '!==',
+                            '==',
+                            '!=',
+                            '>=',
+                            '<=',
+                            '=>',
+                            '->',
+                            '::',
+                            '++',
+                            '--',
+                            '**',
+                            '...',
+                            '=',
+                            '+',
+                            '-',
+                            '/',
+                            '*',
+                            '%',
+                            '&',
+                            '|',
+                            '^',
+                            '?',
+                            '<',
+                            '>',
+                            '<<',
+                            '>>',
+                            '.=',
+                        ],
+                        true
+                    )
+                ){
+                    $is_variable = false;
+                    ddd($variable);
+                } else {
+                    $variable[] = $char;
+                }
+            }
+            if(
+                $is_single_quoted === false &&
+                $char === '\''
+            ){
+                $is_single_quoted = true;
+            }
+            elseif(
+                $is_single_quoted === true &&
+                $char === '\''
+            ){
+                $is_single_quoted = false;
+            }
+            if(
+                $is_double_quoted === false &&
+                $char === '"'
+            ){
+                $is_double_quoted = true;
+            }
+            elseif(
+                $is_double_quoted === true &&
+                $char === '"'
+            ){
+                $is_double_quoted = false;
+            }
+        }
     }
 }
