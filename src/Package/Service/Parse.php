@@ -1348,7 +1348,7 @@ class Parse
                 array_key_exists(0, $before)
             ){
                 $set_depth++;
-                $is_method = true;
+                $is_method = $nr;
                 $input[$nr] = [
                     'value' => implode('', $before),
                     'is_method' => true
@@ -1392,8 +1392,8 @@ class Parse
                     elseif($char === ')'){
                         $set_depth--;
                         if($set_depth === 0) {
-                            $input[$nr] = array_merge(
-                                $input[$nr],
+                            $input[$is_method] = array_merge(
+                                $input[$is_method],
                                 [
                                     'argument' => $arguments,
                                     'has_argument' => true
