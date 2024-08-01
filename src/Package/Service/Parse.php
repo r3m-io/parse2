@@ -1057,16 +1057,16 @@ class Parse
      * @throws Exception
      */
     public static function symbol_exclamation(App $object, &$input, $flags, $options){
-        if(property_exists($options, 'symbol') === false){
+        if(!property_exists($options, 'symbol')){
             throw new Exception('Symbol not found');
         }
-        if(property_exists($options->symbol, 'char') === false){
+        if(!array_key_exists('char', $options->symbol)){
             throw new Exception('Symbol char not found');
         }
-        if(property_exists($options->symbol, 'nr') === false){
+        if(!array_key_exists(('nr', $options->symbol)){
             throw new Exception('Symbol nr not found');
         }
-        if(property_exists($options->symbol, 'is_array_values')){
+        if(array_key_exists('is_array_values', $options->symbol)){
             throw new Exception('Symbol is_array_values found');
         }
         $value = $options->symbol->char;
