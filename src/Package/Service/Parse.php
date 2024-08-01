@@ -424,7 +424,7 @@ class Parse
             throw new Exception('Right value not found');
         }
         $code = false;
-        $left = Parse::value_split($object, $input['left'], $flags, $options);
+//        $left = Parse::value_split($object, $input['left'], $flags, $options);
         $right = Parse::value_split($object, $input['right'], $flags, $options);
         switch($input['operator']['value']){
             case '&&' :
