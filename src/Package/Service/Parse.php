@@ -424,8 +424,6 @@ class Parse
             throw new Exception('Right value not found');
         }
         $code = false;
-        ddd($input);
-        return $code;
         switch($input['operator']['value']){
             case '&&' :
                 $code = $input['left'] . ' && ' . $input['right'];
