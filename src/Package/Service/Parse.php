@@ -765,7 +765,7 @@ class Parse
                 $options
             );
             d($set);
-            if($counter > 2){
+            if($counter >= 2){
                 ddd($input);
                 break;
             }
