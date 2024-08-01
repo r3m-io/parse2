@@ -561,14 +561,13 @@ class Parse
         if(!array_key_exists('right', $input)){
             throw new Exception('Right value not found');
         }
-        $code = Parse::operator_code(
+        $input = Parse::operator_code(
             $object,
             $input,
             $flags,
             $options
         );
-        ddd($code);
-
+        return $input;
     }
 
     public static function operator_get(App $object, $input, $flags, $options): array
