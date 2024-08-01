@@ -1063,7 +1063,7 @@ class Parse
         if(!array_key_exists('char', $options->symbol)){
             throw new Exception('Symbol char not found');
         }
-        if(!array_key_exists(('nr', $options->symbol)){
+        if(!array_key_exists('nr', $options->symbol)){
             throw new Exception('Symbol nr not found');
         }
         if(array_key_exists('is_array_values', $options->symbol)){
