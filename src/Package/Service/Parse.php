@@ -463,8 +463,6 @@ class Parse
         }
         $data = $input['input'];
         $operator = $input['operator'];
-        $left = [];
-        $right = [];
         $is_operator = false;
         foreach($data as $nr => $char){
             if(
@@ -474,10 +472,10 @@ class Parse
                 if($is_operator){
                     break;
                 }
-                $is_operator = true;
+                $is_operator = $nr;
             }
             elseif(
-                !$is_operator &&
+                $is_operator === false &&
                 $char !== null
             ){
                 $data[$nr] = null;
@@ -485,6 +483,7 @@ class Parse
                 $data[$nr] = null;
             }
         }
+        $data[$is_operator] = $operator['code'];
         return $data;
     }
 
