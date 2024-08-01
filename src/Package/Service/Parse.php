@@ -214,8 +214,9 @@ class Parse
                             if($operator && $is_after === false){
                                 if(
                                     $char === ' ' ||
+                                    $char === "\t" ||
                                     $char === "\n" ||
-                                    $char === "\t"
+                                    $char === "\r"
                                 ) {
                                     $is_after = true;
                                 } else {
@@ -231,8 +232,9 @@ class Parse
                                 if(
                                     (
                                         $char === ' ' ||
+                                        $char === "\t" ||
                                         $char === "\n" ||
-                                        $char === "\t"
+                                        $char === "\r"
                                     ) &&
                                     $after === ''
                                 ) {
@@ -243,8 +245,9 @@ class Parse
                             }
                             elseif(
                                 $char !== ' ' &&
-                                $char !== "\n" &&
-                                $char !== "\t"
+                                $char !== "\t" &&
+                                $char !== "\r" &&
+                                $char !== "\n"
                             ){
                                 $before .= $char;
                             }
@@ -341,6 +344,8 @@ class Parse
         $set = [];
         $is_collect = false;
         $depth = 0;
+        $is_single_quoted = false;
+        $is_double_quoted = false;
         foreach($input as $nr => $char){
             if($char === '('){
                 $is_collect = true;
@@ -352,6 +357,34 @@ class Parse
                 break;
             }
             elseif($is_collect && $depth === $highest){
+                if(
+                    $char === '\'' &&
+                    $is_single_quoted === false
+                ){
+                    $is_single_quoted = true;
+                }
+                if(
+                    $char === '"' &&
+                    $is_double_quoted === false
+                ){
+                    $is_double_quoted = true;
+                }
+                if(
+                    $is_single_quoted === false &&
+                    $is_double_quoted === false &&
+                    in_array(
+                        $char,
+                        [
+                            " ",
+                            "\t",
+                            "\n",
+                            "\r"
+                        ],
+                        true
+                    )
+                ){
+                    continue;
+                }
                 $set[$nr] = $char;
             }
         }
