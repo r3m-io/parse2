@@ -432,13 +432,11 @@ class Parse
         $input = Parse::operator_define($object, $input, $flags, $options);
         d($input);
         while(Parse::operator_has($object, $input, $flags, $options)){
-//            $statement = Parse::remove_whitespace($object, $input, $flags, $options);
             $operator = Parse::operator_get($object, $input, $flags, $options);
             $operator = Parse::operator_create($object, $operator, $flags, $options);
             ddd($operator);
         }
-
-        return $input;
+        return Parse::remove_whitespace($object, $input, $flags, $options);
     }
 
     /**
