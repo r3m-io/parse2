@@ -428,8 +428,8 @@ class Parse
                 ){
                     break;
                 }
-                elseif(array_key_exists($nr + 1, $input)){
-                    $operator[] = $input[$nr + 1];
+                elseif(array_key_exists(($nr + 1), $input)){
+                    $operator[] = $input[($nr + 1)];
                     break;
                 }
             }
@@ -455,7 +455,8 @@ class Parse
                 unset($input[$nr]);
             }
         }
-        return $input;
+        //re-index from 0
+        return array_values($input);
     }
 
     public static function operator_symbol(App $object, $input, $flags, $options): bool | string
