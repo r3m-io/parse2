@@ -844,6 +844,7 @@ class Parse
                 $code .= $record['execute'];
             }
         }
+        d($code);
         return $code;
     }
 
