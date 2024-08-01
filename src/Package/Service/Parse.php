@@ -434,11 +434,58 @@ class Parse
             $operator = Parse::operator_get($object, $input, $flags, $options);
             d($operator);
             $operator = Parse::operator_create($object, $operator, $flags, $options);
+            $input = Parse::operator_remove(
+                $object,
+                [
+                    'input' => $input,
+                    'operator' => $operator
+                ],
+                $flags,
+                $options
+            );
             d($input);
             ddd($operator);
         }
         d($input);
         return Parse::remove_whitespace($object, $input, $flags, $options);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public static function operator_remove(App $object, $input, $flags, $options): array
+    {
+        if(!array_key_exists('input', $input)){
+            throw new Exception('Input not found');
+        }
+        if(!array_key_exists('operator', $input)){
+            throw new Exception('Operator not found');
+        }
+        $data = $input['input'];
+        $operator = $input['operator'];
+        $left = [];
+        $right = [];
+        $is_operator = false;
+        foreach($data as $nr => $char){
+            if(
+                is_array($char) &&
+                array_key_exists('is_operator', $char)
+            ){
+                if($is_operator){
+                    break;
+                }
+                $is_operator = true;
+            }
+            elseif(
+                !$is_operator &&
+                $char !== null
+            ){
+                $data[$nr] = null;
+            } elseif($char !== null) {
+                $data[$nr] = null;
+            }
+        }
+        return $data;
     }
 
     /**
