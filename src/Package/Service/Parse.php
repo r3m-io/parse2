@@ -443,7 +443,7 @@ class Parse
     /**
      * @throws Exception
      */
-    public static function operator_code(App $object, $input, $flags, $options): bool | string
+    public static function operator_code(App $object, $input, $flags, $options): array
     {
         if(!array_key_exists('left', $input)){
             throw new Exception('Left value not found');
