@@ -393,6 +393,103 @@ class Parse
         return $set;
     }
 
+    public static function operator_solve(App $object, $input, $flags, $options){
+
+        Parse::operator_define($object, $input, $flags, $options);
+        while(Parse::operator_has($object, $input, $flags, $options)){
+            $statement = Parse::operator_get($object, $input, $flags, $options);
+        }
+
+        return $input;
+    }
+
+    public static function operator_symbol(App $object, $input, $flags, $options): bool | string
+    {
+        $symbol = implode('', $input);
+        switch ($symbol) {
+            case '-':
+            case '--':
+            case '+':
+            case '++':
+            case '/':
+            case '*':
+            case '**':
+            case '%':
+            case '&':
+            case '&&':
+            case '|':
+            case '||':
+            case '^':
+            case '<':
+            case '<=':
+            case '<<':
+            case '<<=':
+            case '>':
+            case '=>':
+            case '>>':
+            case '=>>':
+            case '=':
+            case '==':
+            case '===':
+            case '.':
+            case '.=':
+            case '+=':
+            case '-=':
+            case '/=':
+            case '*=':
+                return $input;
+        }
+        return false;
+    }
+
+
+    public static function operator_define(App $object, $input, $flags, $options){
+        $operator = [];
+        foreach($input as $nr => $char){
+            switch($char){
+                case '-':
+                case '+':
+                case '/':
+                case '*':
+                case '%':
+                case '&':
+                case '|':
+                case '^':
+                case '<':
+                case '>':
+                case '=':
+                case '.':
+                    $operator[] = $char;
+                break;
+                default:
+                    if(array_key_exists(0, $operator)){
+                        $symbol = Parse::operator_symbol($object, $operator, $flags, $options);
+                        ddd($symbol);
+                    }
+            }
+        }
+        if(array_key_exists(0, $operator)){
+            $symbol = Parse::operator_symbol($object, $operator, $flags, $options);
+            ddd($symbol);
+        }
+    }
+
+    public static function operator_has($object, $input, $flags, $options){
+        $operator = false;
+        foreach($input as $nr => $char){
+            if(in_array($char, [
+                '-',
+                '+',
+                '/',
+                '*',
+                '%'
+            ], true)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public static function value_split(App $object, $input, $flags, $options){
         $set_depth = 0;
@@ -404,8 +501,7 @@ class Parse
             $set = Parse::set_get($object, $input, $flags, $options);
             ddd($set);
         }
-
-//        $set = Parse::set_get($object, $input, $flags, $options);
+        $input = Parse::operator_solve($object, $input, $flags, $options);
 
         ddd($input);
 
