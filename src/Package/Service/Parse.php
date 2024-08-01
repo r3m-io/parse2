@@ -432,6 +432,7 @@ class Parse
         $input = Parse::operator_define($object, $input, $flags, $options);
         while(Parse::operator_has($object, $input, $flags, $options)){
             $operator = Parse::operator_get($object, $input, $flags, $options);
+            ddd($operator);
             $operator = Parse::operator_create($object, $operator, $flags, $options);
             ddd($operator);
         }
