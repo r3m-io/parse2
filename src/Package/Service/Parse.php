@@ -463,6 +463,7 @@ class Parse
         switch($input['operator']['value']){
             case '??' :
                 $code = $left . ' ?? ' . $right;
+            break;
             case '&&' :
                 $code = $left . ' && ' . $right;
             break;
@@ -677,6 +678,7 @@ class Parse
                 case '=':
                 case '.':
                 case ':':
+                case '!':
                     $operator[] = $char;
                     $count++;
                 break;
