@@ -472,12 +472,7 @@ class Parse
                     break;
                 }
                 $is_operator = true;
-                if(array_key_exists('code', $operator)){
-                    $data[$nr] = $operator['code'];
-                }
-                else {
-                    $data[$nr] = $operator['value'];
-                }
+                $data[$nr] = $operator;
             }
             elseif(
                 $is_operator === false &&
@@ -947,93 +942,6 @@ class Parse
         $input = Parse::variable_get($object, $input, $flags, $options);
         d($input);
         return $input;
-
-
-
-
-        foreach($input as $nr => $char){
-            if($char === '('){
-                $set_depth++;
-            }
-            elseif($char === ')'){
-                $set_depth--;
-                if($set_depth === 0){
-                    $collect[] = $char;
-                    $cast = implode('', $collect);
-                    switch($cast){
-                        case '(bool)' :
-                        case '(boolean)' :
-                            $list[] = [
-                                'value' => $collect,
-                                'is_cast' => true,
-                                'cast' => 'boolean'
-                            ];
-                        break;
-                        case '(object)' :
-                            $list[] = [
-                                'value' => $collect,
-                                'is_cast' => true,
-                                'cast' => 'object'
-                            ];
-                        break;
-                        case '(array)' :
-                            $list[] = [
-                                'value' => $collect,
-                                'is_cast' => true,
-                                'cast' => 'array'
-                            ];
-                        break;
-                        case '(int)' :
-                        case '(integer)' :
-                            $list[] = [
-                                'value' => $collect,
-                                'is_cast' => true,
-                                'cast' => 'integer'
-                            ];
-                        break;
-                        case '(float)' :
-                        case '(double)' :
-                            $list[] = [
-                                'value' => $collect,
-                                'is_cast' => true,
-                                'cast' => 'float'
-                            ];
-                        break;
-                        case '(clone)' :
-                            $list[] = [
-                                'value' => $collect,
-                                'is_cast' => true,
-                                'cast' => 'clone'
-                            ];
-                        break;
-                    }
-                    $collect = [];
-                    $has_cast = true;
-                }
-            }
-            elseif($char === '['){
-                $array_depth++;
-            }
-            elseif($char === ']'){
-                $array_depth--;
-                if($array_depth === 0){
-                    $collect[] = $char;
-                    $collect = Parse::value_array($object, $collect, $flags, $options);
-                    $list[] = [
-                        'value' => $collect,
-                        'is_array' => true
-                    ];
-                    $collect = [];
-                }
-            }
-            if($set_depth >= 1){
-                $collect[] = $char;
-            }
-            elseif($array_depth >= 1){
-                $collect[] = $char;
-            }
-        }
-        return $list;
     }
 
     public static function value_array(App $object, $input, $flags, $options){
