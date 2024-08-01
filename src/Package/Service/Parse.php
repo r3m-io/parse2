@@ -472,7 +472,7 @@ class Parse
                     break;
                 }
                 $is_operator = true;
-                $data[$nr] = $operator;
+                $data[$nr] = $operator['code'];
             }
             elseif(
                 $is_operator === false &&
@@ -914,7 +914,6 @@ class Parse
         $list = [];
 
         $counter = 0;
-        ddd($input);
         while(Parse::set_has($object, $input, $flags, $options)){
             $set = Parse::set_get($object, $input, $flags, $options);
             $set = Parse::operator_solve($object, $set, $flags, $options);
