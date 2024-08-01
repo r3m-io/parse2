@@ -955,6 +955,7 @@ class Parse
         $list = [];
 
         $counter = 0;
+        $input = Parse::method_get($object, $input, $flags, $options);
         while(Parse::set_has($object, $input, $flags, $options)){
             $set = Parse::set_get($object, $input, $flags, $options);
             $set = Parse::operator_solve($object, $set, $flags, $options);
@@ -1329,6 +1330,11 @@ class Parse
                 $is_double_quoted = false;
             }
         }
+        return $input;
+    }
+
+    public static function method_get(App $object, $input, $flags, $options){
+        d($input);
         return $input;
     }
 
