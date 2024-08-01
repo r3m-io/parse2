@@ -1338,6 +1338,9 @@ class Parse
         $is_method = false;
         $arguments = [];
         $set_depth = 0;
+        $argument_nr = 0;
+        $is_single_quote = false;
+        $is_double_quote = false;
         foreach($input as $nr => $char){
             if(
                 $char === '(' &&
@@ -1350,24 +1353,60 @@ class Parse
                     'is_method' => true
                 ];
             }
+            if(
+                $is_single_quote === false &&
+                $char === '\''
+            ){
+                $is_single_quote = true;
+            }
+            elseif(
+                $is_single_quote === true &&
+                $char === '\''
+            ){
+                $is_single_quote = false;
+            }
+            if(
+                $is_double_quote === false &&
+                $char === '"'
+            ){
+                $is_double_quote = true;
+            }
+            elseif(
+                $is_double_quote === true &&
+                $char === '"'
+            ){
+                $is_double_quote = false;
+            }
             if($is_method === false){
                 $before[] = $char;
             } else {
-                if($char === ')'){
-                    $set_depth--;
-                    if($set_depth === 0){
-                        $input[$nr] = Core::array_merge(
-                            $input[$nr],
-                            [
-                            'argument' => $arguments,
-                            'has_argument' => true
-                            ]
-                        ];
-                        $arguments = [];
-                        $is_method = false;
+                if(
+                    $is_single_quote === false &&
+                    $is_double_quote === false
+                ){
+                    if($char === ','){
+                        $argument_nr++;
+                        $arguments[$argument_nr] = [];
+                    }
+                    elseif($char === ')'){
+                        $set_depth--;
+                        if($set_depth === 0) {
+                            $input[$nr] = Core::array_merge(
+                                $input[$nr],
+                                [
+                                    'argument' => $arguments,
+                                    'has_argument' => true
+                                ]
+                            );
+                            $arguments = [];
+                            $argument_nr = 0;
+                            $arguments[$argument_nr] = [];
+                            $is_method = false;
+                        }
+
                     }
                 }
-                $arguments[] = $char;
+                $arguments[$argument_nr][] = $char;
             }
 
         }
