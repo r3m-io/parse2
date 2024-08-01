@@ -878,6 +878,7 @@ class Parse
                 $code .= $record;
                 continue;
             }
+            d($record);
             if(array_key_exists('is_array', $record)){
                 $code .= '[';
                 $code .= Parse::value_code($object, $record['execute'], $flags, $options);
@@ -896,7 +897,7 @@ class Parse
                 $code .= '(' . $record['value'] . ')';
             }
             else {
-                $code .= $record['execute'];
+                $code .= $record['value'];
             }
         }
         d($code);
