@@ -537,6 +537,7 @@ class Parse
     {
         $operator = [];
         $previous_char = null;
+        d($input);
         foreach($input as $nr => $char){
             if(
                 is_array($char) &&
