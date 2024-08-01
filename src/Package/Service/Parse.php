@@ -619,6 +619,9 @@ class Parse
     public static function operator_symbol(App $object, $input, $flags, $options): bool | string
     {
         $symbol = implode('', $input);
+        if(strlen($symbol) > 4){
+            trace();
+        }
         d($symbol);
         switch ($symbol) {
             case '-':
