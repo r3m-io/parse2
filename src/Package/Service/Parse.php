@@ -854,7 +854,8 @@ class Parse
         $input = Parse::symbol_get($object, $input, $flags, $options);
         $input = Parse::variable_get($object, $input, $flags, $options);
 
-        ddd($input);
+        d($input);
+        return $input;
 
 
 
