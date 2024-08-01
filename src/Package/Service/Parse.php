@@ -314,15 +314,18 @@ class Parse
         }
     }
 
-    public static function set_has(App $object, $input, $flags, $options){
+    public static function set_has(App $object, $input, $flags, $options): bool
+    {
         foreach($input as $nr => $char){
             if($char === '('){
                 return true;
             }
         }
+        return false;
     }
 
-    public static function set_highest(App $object, $input, $flags, $options){
+    public static function set_highest(App $object, $input, $flags, $options): int
+    {
         $highest = 0;
         $depth = 0;
         foreach($input as $nr => $char){
@@ -339,7 +342,8 @@ class Parse
         return $highest;
     }
 
-    public static function set_replace(App $object, $input, $flags, $options){
+    public static function set_replace(App $object, $input, $flags, $options): array
+    {
         if(!array_key_exists('input', $input)){
             throw new Exception('Input not found');
         }
@@ -373,7 +377,8 @@ class Parse
         return $input['input'];
     }
 
-    public static function set_get(App $object, $input, $flags, $options){
+    public static function set_get(App $object, $input, $flags, $options): array
+    {
         $highest = Parse::set_highest($object, $input, $flags, $options);
         $set = [];
         $is_collect = false;
@@ -427,7 +432,11 @@ class Parse
         return $set;
     }
 
-    public static function operator_solve(App $object, $input, $flags, $options){
+    /**
+     * @throws Exception
+     */
+    public static function operator_solve(App $object, $input, $flags, $options): array
+    {
 
         $input = Parse::operator_define($object, $input, $flags, $options);
         while(Parse::operator_has($object, $input, $flags, $options)){
