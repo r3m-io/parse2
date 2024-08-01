@@ -437,7 +437,7 @@ class Parse
             case '-=':
             case '/=':
             case '*=':
-                return $input;
+                return $symbol;
         }
         return false;
     }
