@@ -461,6 +461,8 @@ class Parse
 //        $left = Parse::value_split($object, $input['left'], $flags, $options);
         $right = Parse::value_split($object, $input['right'], $flags, $options);
         switch($input['operator']['value']){
+            case '??' :
+                $code = $left . ' ?? ' . $right;
             case '&&' :
                 $code = $left . ' && ' . $right;
             break;
