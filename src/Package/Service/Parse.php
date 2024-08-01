@@ -468,9 +468,12 @@ class Parse
                 default:
                     if(array_key_exists(0, $operator)){
                         $symbol = Parse::operator_symbol($object, $operator, $flags, $options);
-                        for($i = 1; $i <= $count; $i++){
-                            $input[$nr - $i] = null;
+                        if($symbol){
+                            for($i = 1; $i <= $count; $i++){
+                                $input[$nr - $i] = null;
+                            }
                         }
+
                     }
             }
         }
@@ -479,10 +482,13 @@ class Parse
             $nr !== false
         ){
             $symbol = Parse::operator_symbol($object, $operator, $flags, $options);
-            for($i = 1; $i <= $count; $i++){
-                $input[$nr - $i] = null;
+            if($symbol){
+                for($i = 1; $i <= $count; $i++){
+                    $input[$nr - $i] = null;
+                }
             }
         }
+        d($input);
         return $input;
     }
 
