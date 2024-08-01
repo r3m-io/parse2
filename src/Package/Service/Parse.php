@@ -710,6 +710,7 @@ class Parse
                             }
                         } else {
                             $symbol = Parse::operator_symbol($object, $operator, $flags, $options);
+                            d($symbol);
                             if($symbol){
                                 for($i = 1; $i <= $count; $i++){
                                     $input[$nr - $i] = null;
