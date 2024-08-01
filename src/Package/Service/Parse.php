@@ -689,6 +689,26 @@ class Parse
         return false;
     }
 
+    public static function cast_get(App $object, $input, $flags, $options){
+        $string = implode('', $input);
+        switch($string){
+            case 'bool' :
+            case 'boolean' :
+            case 'object' :
+            case 'array' :
+            case 'int' :
+            case 'integer' :
+            case 'float' :
+            case 'double' :
+            case 'clone' :
+                return [
+                    'value' => $string,
+                    'is_cast' => true
+                ];
+        }
+        return $input;
+    }
+
 
     public static function value_split(App $object, $input, $flags, $options){
         $set_depth = 0;
@@ -699,6 +719,7 @@ class Parse
         while(Parse::set_has($object, $input, $flags, $options)){
             $set = Parse::set_get($object, $input, $flags, $options);
             $set = Parse::operator_solve($object, $set, $flags, $options);
+            $set = Parse::cast_get($object, $set, $flags, $options);
             ddd($set);
         }
         if(empty($input)){
