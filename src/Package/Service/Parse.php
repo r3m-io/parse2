@@ -1058,7 +1058,7 @@ class Parse
         foreach($input as $nr => $char){
             if($char === '!'){
                 $value = $char;
-                $key = $nr;
+                $key = $nr + 1;
                 while($not_char = next($input)){
                     if($not_char === '!'){
                         unset($input[$key]);
