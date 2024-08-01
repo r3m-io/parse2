@@ -434,6 +434,7 @@ class Parse
             $operator = Parse::operator_get($object, $input, $flags, $options);
             d($operator);
             $operator = Parse::operator_create($object, $operator, $flags, $options);
+            d($input);
             ddd($operator);
         }
         d($input);
