@@ -472,7 +472,12 @@ class Parse
                     break;
                 }
                 $is_operator = true;
-                $data[$nr] = $operator['code'];
+                if(array_key_exists('code', $operator)){
+                    $data[$nr] = $operator['code'];
+                }
+                else {
+                    $data[$nr] = $operator['value'];
+                }
             }
             elseif(
                 $is_operator === false &&
