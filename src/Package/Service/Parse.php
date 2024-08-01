@@ -874,6 +874,10 @@ class Parse
     {
         $code = '';
         foreach($input as $nr => $record){
+            if(!is_array($record)){
+                $code .= $record;
+                continue;
+            }
             if(array_key_exists('is_array', $record)){
                 $code .= '[';
                 $code .= Parse::value_code($object, $record['execute'], $flags, $options);
