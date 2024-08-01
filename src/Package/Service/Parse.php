@@ -130,6 +130,7 @@ class Parse
                         ){
                             $is_literal = true;
                             $record['is_literal'] = true;
+                            $record['is_literal_start'] = true;
                         }
                         elseif(
                             strtoupper($content) === '/LITERAL' ||
@@ -137,6 +138,7 @@ class Parse
                         ){
                             $is_literal = false;
                             $record['is_literal'] = true;
+                            $record['is_literal_end'] = true;
                         }
                         $tag_list[$line][] = $record;
                     }
@@ -161,7 +163,9 @@ class Parse
             foreach($tag as $nr => $record){
                 if(
                     array_key_exists('is_header', $record) ||
-                    array_key_exists('is_literal', $record)
+                    array_key_exists('is_literal', $record) &&
+                    !array_key_exists('is_literal_start', $record) &&
+                    !array_key_exists('is_literal_end', $record)
                 ){
                     unset($tags[$line][$nr]);
                     if(empty($tags[$line])){
