@@ -1080,7 +1080,7 @@ class Parse
                         'nr' => $nr,
                         'char' => $char
                     ];
-                    $value = Parse::symbol_exclamation($object, &$input, $flags, $options);
+                    $value = Parse::symbol_exclamation($object, $input, $flags, $options);
                     if($old_options_symbol){
                         $options->symbol = $old_options_symbol;
                     } else {
