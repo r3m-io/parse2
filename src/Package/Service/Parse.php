@@ -480,6 +480,7 @@ class Parse
                             ];
                         }
                         $operator = [];
+                        $count = 0;
                     }
             }
         }
