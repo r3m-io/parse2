@@ -688,7 +688,22 @@ class Parse
                 case '=':
                 case '.':
                 case ':':
+                case ';':
                 case '!':
+                case '?':
+                case '\\':
+                case '[':
+                case ']':
+                case '{':
+                case '}':
+                case '(':
+                case ')':
+                case '`':
+                case '~':
+                case '@':
+                case '#':
+                case '%':
+                case '_':
                     $operator[] = $char;
                     $count++;
                 break;
@@ -698,7 +713,6 @@ class Parse
                             $chunks = array_chunk($operator, 4);
                             foreach($chunks as $operator_symbol){
                                 $symbol = Parse::operator_symbol($object, $operator_symbol, $flags, $options);
-                                d($symbol);
                                 if($symbol){
                                     for($i = 1; $i <= count($operator_symbol); $i++){
                                         $input[$nr - $i] = null;
@@ -711,7 +725,6 @@ class Parse
                             }
                         } else {
                             $symbol = Parse::operator_symbol($object, $operator, $flags, $options);
-                            d($symbol);
                             if($symbol){
                                 for($i = 1; $i <= $count; $i++){
                                     $input[$nr - $i] = null;
