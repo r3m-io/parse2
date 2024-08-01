@@ -916,6 +916,9 @@ class Parse
             elseif(array_key_exists('is_cast', $record)){
                 $code .= '(' . $record['value'] . ')';
             }
+            elseif(array_key_exists('code', $record)){
+                $code .= $record['code'];
+            }
             elseif(array_key_exists('value', $record)) {
                 $code .= $record['value'];
             } else {
