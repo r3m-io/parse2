@@ -354,11 +354,16 @@ class Parse
                 $depth++;
             }
             elseif($char === ')'){
+                if($depth === $highest){
+                    $input['input'][$nr] = null;
+                    break;
+                }
                 $depth--;
             }
             if($depth === $highest){
                 $input['input'][$nr] = null;
             }
+
         }
         ddd($input);
         ddd($highest);
