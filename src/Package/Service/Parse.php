@@ -1054,24 +1054,25 @@ class Parse
     }
 
     public static function not_get(App $object, $input, $flags, $options){
-
         foreach($input as $nr => $char){
             if($char === '!'){
                 $value = $char;
                 $key = $nr;
                 while($not_char = next($input)){
                     if($not_char === '!'){
+                        unset($input[$key]);
                         $value .= $not_char;
                     } else {
                         break;
                     }
                     $key++;
                 }
-                $input[$nr] = [
-                    'value' => $value,
-                    'is_not' => true
-                ];
-                break;
+                if(array_key_exists($nr, $input)){
+                    $input[$nr] = [
+                        'value' => $value,
+                        'is_not' => true
+                    ];
+                }
             }
         }
         ddd($input);
