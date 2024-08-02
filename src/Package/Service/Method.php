@@ -17,6 +17,7 @@ class Method
         $set_depth = 0;
         $is_single_quote = false;
         $is_double_quote = false;
+        $argument = [];
         $argument_list = [];
         foreach($input as $nr => $char){
             if(
@@ -136,18 +137,19 @@ class Method
                         $is_single_quote === false &&
                         $is_double_quote === false
                     ){
-                        if($argument_list){
-                            ddd($argument_list);
-                            $argument_list = [];
+                        if($argument){
+                            $argument_list[] = $argument;
+                            $argument = [];
                         }
                     } else {
-                        $argument_list[] = $char;
+                        $argument[] = $char;
                     }
                 }
             }
         }
-        if($argument_list){
-            ddd($argument_list);
+        if($argument){
+            $argument_list[] = $argument;
         }
+        ddd($argument_list);
     }
 }
