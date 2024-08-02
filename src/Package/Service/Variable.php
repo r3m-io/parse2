@@ -121,6 +121,7 @@ class Variable
                                                 $flags,
                                                 $options
                                             );
+                                            ddd($argument_list);
                                             $argument = [];
                                         } else {
                                             $has_name = true;
