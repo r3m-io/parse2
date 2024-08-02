@@ -58,6 +58,9 @@ class Variable
                             array_key_exists('value', $previous)
                         ){
                             $is_reference = $previous['value'] === '&';
+                            if($is_reference){
+                                $input[$nr - 1] = null;
+                            }
                         }
                         $input[$is_variable] = [
                             'type' => 'variable',
