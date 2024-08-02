@@ -25,7 +25,7 @@ class Method
                                 array_key_exists('value', $input[$i]) &&
                                 $input[$i]['value'] === '.'
                             ){
-                                $name .= $input[$i];
+                                $name .= $input[$i]['value'];
                             } else {
                                 ddd($name);
                             }
