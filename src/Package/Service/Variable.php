@@ -145,6 +145,7 @@ class Variable
                                 $flags,
                                 $options
                             );
+                            ddd($argument_list);
                             $argument = [];
                         }
                         d($input[$is_variable]);
