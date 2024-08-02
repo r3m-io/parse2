@@ -37,10 +37,15 @@ class Variable
                                 break;
                             }
                         } else {
-                            if(is_array($char)){
-                                ddd($char);
+                            if(
+                                is_array($char) &&
+                                array_key_exists('value', $char)
+                            ){
+                                $name .= $char['value'];
+                            } else {
+                                $name .= $char;
                             }
-                            $name .= $char;
+
                         }
                     }
                     if($name){
