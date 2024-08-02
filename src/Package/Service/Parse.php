@@ -120,6 +120,7 @@ class Parse
                 $is_tag_in_double_quoted === true
             ){
                 $curly_count--;
+                $is_tag_in_double_quoted = false;
             }
             elseif($char === "\n"){
                 $line++;
