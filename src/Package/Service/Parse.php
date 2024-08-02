@@ -295,8 +295,39 @@ class Parse
                                 continue;
                             }
                             elseif($modifier_name){
-                                $argument .= $char;
-                                $argument_array[] = $char;
+                                if(
+                                    in_array(
+                                        $char,
+                                        [
+                                            " ",
+                                            "\t",
+                                            "\n",
+                                            "\r"
+                                        ],
+                                        true
+                                    ) &&
+                                    $is_single_quoted === false &&
+                                    $is_double_quoted === false
+                                ){
+                                    //nothing
+                                } else {
+                                    if(
+                                        $char === ':' &&
+                                        $is_single_quoted === false &&
+                                        $is_double_quoted === false
+                                    ){
+                                        $argument_list[] = [
+                                            'string' => $argument,
+                                            'array' => $argument_array
+                                        ];
+                                        $argument = '';
+                                        $argument_array = [];
+                                    } else {
+                                        $argument .= $char;
+                                        $argument_array[] = $char;
+                                    }
+
+                                }
                                 continue;
                             }
                             elseif($is_modifier){
