@@ -438,8 +438,6 @@ class Parse
      */
     public static function operator_solve(App $object, $input, $flags, $options): array
     {
-
-        $input = Parse::operator_define($object, $input, $flags, $options);
         while(Parse::operator_has($object, $input, $flags, $options)){
             $operator = Parse::operator_get($object, $input, $flags, $options);
             $operator = Parse::operator_create($object, $operator, $flags, $options);
@@ -957,6 +955,12 @@ class Parse
 
         $counter = 0;
         d($input);
+
+        $input = Parse::operator_define($object, $input, $flags, $options);
+
+        ddd($input);
+
+
         $input = Parse::method_get($object, $input, $flags, $options);
         while(Parse::set_has($object, $input, $flags, $options)){
             $set = Parse::set_get($object, $input, $flags, $options);
