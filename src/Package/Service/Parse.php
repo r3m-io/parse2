@@ -369,6 +369,7 @@ class Parse
                     ]];
                 }
                 d($input['array']);
+                trace();
                 return Parse::value_split($object, $input['array'], $flags, $options);
         }
     }
