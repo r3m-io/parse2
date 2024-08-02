@@ -498,7 +498,7 @@ class Parse
                             $argument_array = [];
                         }
                         if($modifier_name){
-                            ddd($argument_list);
+                            d($argument_list);
                             $modifier_list[] = [
                                 'name' => $modifier_name,
                                 'argument' => $argument_list
