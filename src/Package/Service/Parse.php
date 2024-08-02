@@ -425,8 +425,12 @@ class Parse
                             }
                         }
                         if($argument){
-                            $argument_list[] = $argument;
+                            $argument_list[] = [
+                                'string' => $argument,
+                                'array' => $argument_array
+                            ];
                             $argument = '';
+                            $argument_array = [];
                         }
                         d($modifier_name);
                         d($modifier_list);
