@@ -139,6 +139,7 @@ class Variable
                             }
                         }
                         if(array_key_exists(0, $argument)){
+                            ddd($argument);
                             $argument_list[] = Parse::value_split(
                                 $object,
                                 $argument,
