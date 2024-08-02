@@ -19,6 +19,7 @@ class Method
             ){
                 $is_method = $nr;
                 $name = '';
+                $has_name = false;
                 for($i = $nr - 1; $i >= 0; $i--){
                     if($input[$i] !== null){
                         if(is_array($input[$i])){
@@ -34,7 +35,8 @@ class Method
                             ){
                                 $name .= $input[$i]['value'];
                             } else {
-                                ddd($name);
+                                $has_name = true;
+                                break;
                             }
                         } else {
                             if(
@@ -48,18 +50,19 @@ class Method
                                     ]
                                 ) === true
                             ){
-                                ddd($name);
+                                $has_name = true;
+                                break;
                             } else {
                                 $name .= $input[$i];
                             }
-
                         }
-
                     }
                 }
-                ddd($name);
+                if($has_name){
+                    $name = strrev($name);
+                    ddd($name);
+                }
             }
-
         }
     }
 }
