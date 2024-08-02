@@ -1009,7 +1009,7 @@ class Parse
         $list = [];
 
         $counter = 0;
-        $input = Parse::operator_define($object, $input, $flags, $options);
+        $input = Parse::token_define($object, $input, $flags, $options);
         ddd($input);
 
 
