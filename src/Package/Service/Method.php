@@ -22,7 +22,6 @@ class Method
                 $char['value'] === '(' &&
                 $is_method === false
             ){
-                $set_depth++;
                 $name = '';
                 $is_method = $nr;
                 for($i = $nr - 1; $i >= 0; $i--){
@@ -72,7 +71,6 @@ class Method
                 $name &&
                 $has_name === true
             ){
-                d($char);
                 if(
                     is_array($char) &&
                     array_key_exists('value', $char) &&
