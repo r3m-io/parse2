@@ -90,6 +90,7 @@ class Method
                     $set_depth--;
                     if($set_depth === 0){
                         $is_method = false;
+                        d($argument_list);
                         ddd($name);
                     }
                 }
