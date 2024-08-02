@@ -329,7 +329,6 @@ class Parse
                             'name' => substr($before, 1),
                             'value' => $list,
                         ];
-                        ddd($record);
                     }
                 }
             }
