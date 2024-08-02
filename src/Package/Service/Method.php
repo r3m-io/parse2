@@ -108,6 +108,7 @@ class Method
                         $is_double_quote === false
                     ){
                         $is_single_quote = true;
+                        $argument[] = $char;
                     }
                     elseif(
                         is_array($char) &&
@@ -117,6 +118,7 @@ class Method
                         $is_double_quote === false
                     ){
                         $is_single_quote = false;
+                        $argument[] = $char;
                     }
                     elseif(
                         is_array($char) &&
@@ -126,6 +128,7 @@ class Method
                         $is_double_quote === false
                     ){
                         $is_double_quote = true;
+                        $argument[] = $char;
                     }
                     elseif(
                         is_array($char) &&
@@ -135,6 +138,7 @@ class Method
                         $is_double_quote === true
                     ){
                         $is_double_quote = false;
+                        $argument[] = $char;
                     }
                     elseif(
                         is_array($char) &&
