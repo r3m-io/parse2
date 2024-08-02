@@ -323,7 +323,7 @@ class Parse
                             $flags,
                             $options
                         );
-                        $record['variable'] = [
+                        $tags[$line][$nr]['variable'] = [
                             'is_assign' => true,
                             'operator' => $operator,
                             'name' => substr($before, 1),
