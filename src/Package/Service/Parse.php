@@ -353,11 +353,26 @@ class Parse
                                         $modifier_name = false;
                                         $argument_list = [];
                                     } else {
-                                        if($char === '('){
+                                        if(
+                                            $char === '(' &&
+                                            $is_single_quoted === false &&
+                                            $is_double_quoted === false
+                                        ){
                                             $set_depth++;
                                         }
-                                        elseif($char === ')'){
+                                        elseif(
+                                            $char === ')' &&
+                                            $is_single_quoted === false &&
+                                            $is_double_quoted === false
+                                        ){
                                             $set_depth--;
+                                        }
+                                        elseif(
+                                            $char === ',' &&
+                                            $is_single_quoted === false &&
+                                            $is_double_quoted === false
+                                        ){
+                                            break;
                                         }
                                         $argument .= $char;
                                         $argument_array[] = $char;
