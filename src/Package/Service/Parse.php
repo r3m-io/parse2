@@ -47,12 +47,10 @@ class Parse
     public static function tags(App $object, $string='', $flags, $options): array
     {
         $split = mb_str_split($string, 1);
-        $token = [];
         $curly_count = 0;
         $line = 1;
         $column = [];
         $column[$line] = 1;
-        $row = '';
         $tag = false;
         $tag_list = [];
         $is_literal = false;
@@ -91,9 +89,6 @@ class Parse
             elseif($char === "\n"){
                 $line++;
                 $column[$line] = 1;
-                if($curly_count === 0){
-                    $row = '';
-                }
             }
             if(
                 $curly_count === 1 &&
@@ -174,13 +169,13 @@ class Parse
                     $column[$line]--;
                 }
             }
-            $row .= $char;
-            if($tag){
+            elseif($tag){
                 $tag .= $char;
             }
             if($char !== "\n"){
                 $column[$line]++;
             }
+
         }
         return $tag_list;
     }
