@@ -322,7 +322,29 @@ class Parse
                                         ];
                                         $argument = '';
                                         $argument_array = [];
-                                    } else {
+                                    }
+                                    elseif(
+                                        $char === '|' &&
+                                        $next !== '|' &&
+                                        $is_single_quoted === false &&
+                                        $is_double_quoted === false
+                                    ){
+                                        $argument_list[] = [
+                                            'string' => $argument,
+                                            'array' => $argument_array
+                                        ];
+                                        $argument = '';
+                                        $argument_array = [];
+
+                                        d($modifier_name);
+                                        d($modifier_list);
+                                        d($argument_list);
+                                        ddd($variable_name);
+
+
+                                    }
+
+                                    else {
                                         $argument .= $char;
                                         $argument_array[] = $char;
                                     }
