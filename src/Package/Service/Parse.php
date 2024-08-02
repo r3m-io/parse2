@@ -488,10 +488,12 @@ class Parse
                             }
                         }
                         if($argument){
-                            $argument_list[] = [
-                                'string' => $argument,
-                                'array' => $argument_array
-                            ];
+                            $argument_list[] = Parse::value_split(
+                                $object,
+                                $argument_array,
+                                $flags,
+                                $options
+                            );
                             $argument = '';
                             $argument_array = [];
                         }
