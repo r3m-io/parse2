@@ -9,7 +9,8 @@ use R3m\Io\Module\File;
 use Exception;
 class Method
 {
-    public static function define(App $object, $input, $flags, $options){
+    public static function define(App $object, $input, $flags, $options): array
+    {
         d($input);
         $has_name = false;
         $name = false;
