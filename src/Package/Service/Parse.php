@@ -1051,7 +1051,9 @@ class Parse
                         "\n",
                         "\r"
                     ], true
-                )
+                ) &&
+                $is_single_quote === false &&
+                $is_double_quote === false
             ){
                 unset($input[$nr]);
             }
