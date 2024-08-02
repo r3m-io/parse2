@@ -197,9 +197,10 @@ class Method
                 }
             }
         }
-        if($argument){
+        if(array_key_exists(0, $argument)){
             $argument_list[] = $argument;
+            ddd($argument_list);
         }
-        ddd($argument_list);
+        ddd($input);
     }
 }
