@@ -103,6 +103,9 @@ class Variable
                                 $modifier[] = $input[$i];
                             }
                         }
+                        if(array_key_exists(0, $modifier)){
+                            $input[$is_variable]['modifier'] = $modifier;
+                        }
                         d($modifier);
                     }
                 }
