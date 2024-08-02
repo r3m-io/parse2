@@ -15,6 +15,9 @@ class Method
         $name = false;
         $is_method = false;
         $set_depth = 0;
+        $is_single_quote = false;
+        $is_double_quote = false;
+        $argument_list = [];
         foreach($input as $nr => $char){
             if(
                 is_array($char) &&
@@ -89,7 +92,62 @@ class Method
                         ddd($name);
                     }
                 }
+                elseif($set_depth > 0){
+                    if(
+                        is_array($char) &&
+                        array_key_exists('value', $char) &&
+                        $char['value'] === '\'' &&
+                        $is_single_quote === false &&
+                        $is_double_quote === false
+                    ){
+                        $is_single_quote = true;
+                    }
+                    elseif(
+                        is_array($char) &&
+                        array_key_exists('value', $char) &&
+                        $char['value'] === '\'' &&
+                        $is_single_quote === true &&
+                        $is_double_quote === false
+                    ){
+                        $is_single_quote = false;
+                    }
+                    elseif(
+                        is_array($char) &&
+                        array_key_exists('value', $char) &&
+                        $char['value'] === '"' &&
+                        $is_single_quote === false &&
+                        $is_double_quote === false
+                    ){
+                        $is_double_quote = true;
+                    }
+                    elseif(
+                        is_array($char) &&
+                        array_key_exists('value', $char) &&
+                        $char['value'] === '"' &&
+                        $is_single_quote === false &&
+                        $is_double_quote === true
+                    ){
+                        $is_double_quote = false;
+                    }
+                    elseif(
+                        is_array($char) &&
+                        array_key_exists('value', $char) &&
+                        $char['value'] === ',' &&
+                        $is_single_quote === false &&
+                        $is_double_quote === false
+                    ){
+                        if($argument_list){
+                            ddd($argument_list);
+                            $argument_list = [];
+                        }
+                    } else {
+                        $argument_list[] = $char;
+                    }
+                }
             }
+        }
+        if($argument_list){
+            ddd($argument_list);
         }
     }
 }
