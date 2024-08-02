@@ -271,16 +271,16 @@ class Parse
                             if(array_key_exists($i + 1, $data)){
                                 $next = $data[$i + 1];
                             }
-                            if($char == '\'' && $is_single_quoted === false){
+                            if($char === '\'' && $is_single_quoted === false){
                                 $is_single_quoted = true;
                             }
-                            elseif($char == '\'' && $is_single_quoted === true){
+                            elseif($char === '\'' && $is_single_quoted === true){
                                 $is_single_quoted = false;
                             }
-                            elseif($char == '"' && $is_double_quoted === false){
+                            elseif($char === '"' && $is_double_quoted === false){
                                 $is_double_quoted = true;
                             }
-                            elseif($char == '"' && $is_double_quoted === true){
+                            elseif($char === '"' && $is_double_quoted === true){
                                 $is_double_quoted = false;
                             }
                             elseif(
@@ -292,6 +292,7 @@ class Parse
                                 $is_double_quoted === false
                             ){
                                 $is_modifier = true;
+                                continue;
                             }
                             elseif($modifier_name){
                                 $argument .= $char;
