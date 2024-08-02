@@ -96,7 +96,7 @@ class Method
                         $is_method = false;
                         $argument_list = [];
                         $argument = [];
-                        for($i = $nr - 1; $i >= 0; $i--){
+                        for($i = $is_method - 1; $i >= 0; $i--){
                             if(is_array($input[$i])){
                                 if(
                                     array_key_exists('value', $input[$i]) &&
@@ -132,6 +132,9 @@ class Method
                                     $input[$i] = null;
                                 }
                             }
+                        }
+                        for($i = $nr; $i > $is_method; $i--){
+                            $input[$i] = null;
                         }
                         ddd($input);
                     }
