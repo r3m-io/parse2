@@ -9,7 +9,8 @@ use R3m\Io\Module\File;
 use Exception;
 class Cast
 {
-    public static function define(App $object, $input, $flags, $options){
+    public static function define(App $object, $input, $flags, $options): array
+    {
         $is_collect = false;
         $define = '';
         foreach($input as $nr => $char){
