@@ -35,7 +35,10 @@ class Cast
                     in_array(
                         $char,
                         [
-
+                            ' ',
+                            "\t",
+                            "\n",
+                            "\r",
                         ],
                         true
                     )
