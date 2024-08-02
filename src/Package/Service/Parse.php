@@ -249,7 +249,7 @@ class Parse
                         $length = strlen($content);
                         $data = mb_str_split($content, 1);
                         $operator = false;
-                        $before = '';
+                        $name = '';
                         $after = '';
                         $modifier = '';
                         $modifier_array = [];
@@ -300,7 +300,7 @@ class Parse
                                     if($operator === '.' && $char === '='){
                                         //fix false positives
                                     } elseif($operator === '.'){
-                                        $before .= $operator . $char;
+                                        $name .= $operator . $char;
                                         $operator = false;
                                     }
                                 }
@@ -326,12 +326,12 @@ class Parse
                                 $char !== "\r" &&
                                 $char !== "\n"
                             ){
-                                $before .= $char;
+                                $name .= $char;
                             }
                         }
                         d($modifier_list);
                         d($argument_list);
-                        d($before);
+                        d($name);
                         $list = Parse::value(
                             $object,
                             [
@@ -344,7 +344,7 @@ class Parse
                         $tags[$line][$nr]['variable'] = [
                             'is_assign' => true,
                             'operator' => $operator,
-                            'name' => substr($before, 1),
+                            'name' => substr($name, 1),
                             'value' => $list,
                             'modifier' => $modifier_list,
                             'argument' => $argument_list
