@@ -64,6 +64,7 @@ class Variable
                         $has_modifier = false;
                         $has_name = false;
                         $modifier = [];
+                        $argument = [];
                         $modifier_name = '';
                         for($i = $is_variable + 1; $i < $count; $i++){
                             $previous = $input[$i - 1] ?? null;
@@ -112,7 +113,12 @@ class Variable
                             elseif($has_modifier === true){
                                 if(is_array($input[$i])){
                                     if($input[$i]['value'] === ':'){
-                                        $has_name = true;
+                                        if($has_name === true) {
+                                            $argument_list[] = $argument;
+                                            $argument = [];
+                                        } else {
+                                            $has_name = true;
+                                        }
                                     }
                                     if($has_name === false){
                                         $modifier_name .= $input[$i]['value'];
