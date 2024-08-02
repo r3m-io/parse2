@@ -1001,6 +1001,8 @@ class Parse
 
                     $symbol = $previous_char . $char;
                     switch($symbol) {
+                        case '{{':
+                        case '}}':
                         case '++':
                         case '--':
                         case '<<':
