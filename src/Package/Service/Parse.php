@@ -24,7 +24,7 @@ class Parse
         $template = File::read($options->source);
 
         $tags = Parse::tags($object, $template, $flags, $options);
-        d($tags);
+        ddd($tags);
         $tags = Parse::tags_remove($object, $tags, $flags, $options);
         d($tags);
         $tags = Parse::assign($object, $tags, $flags, $options);
