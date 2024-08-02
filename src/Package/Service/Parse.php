@@ -314,6 +314,7 @@ class Parse
                                 $before .= $char;
                             }
                         }
+                        d($before);
                         $list = Parse::value(
                             $object,
                             [
