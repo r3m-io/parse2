@@ -96,7 +96,7 @@ class Method
                         $is_method = false;
                         $argument_list = [];
                         $argument = [];
-                        for($i = $is_method - 1; $i >= 0; $i--){
+                        for($i = $nr - 1; $i >= 0; $i--){
                             if(is_array($input[$i])){
                                 if(
                                     array_key_exists('value', $input[$i]) &&
@@ -123,6 +123,11 @@ class Method
                                     ) === true
                                 ){
                                     break;
+                                }
+                                elseif(
+                                    array_key_exists('method', $input[$i])
+                                ) {
+                                    //continue
                                 } else {
                                     $input[$i] = null;
                                 }
