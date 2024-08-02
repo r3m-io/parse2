@@ -105,7 +105,7 @@ class Variable
                                     break;
                                 }
                                 elseif($has_modifier === true){
-                                    $modifier[] = $input[$i];
+                                    $argument[] = $input[$i];
                                 }
                             }
                             elseif($has_modifier !== true) {
