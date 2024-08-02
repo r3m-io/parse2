@@ -283,7 +283,7 @@ class Parse
                             elseif($char === '"' && $is_double_quoted === true){
                                 $is_double_quoted = false;
                             }
-                            elseif(
+                            if(
                                 $variable_name &&
                                 $char === '|' &&
                                 $next !== '|' &&
