@@ -271,6 +271,13 @@ class Parse
                                 $next = $data[$i + 1];
                             }
                             if(
+                                $name &&
+                                $char === '|' &&
+                                $next !== '|'
+                            ){
+                                ddd($name);
+                            }
+                            elseif(
                                 !$operator &&
                                 in_array(
                                     $char,
