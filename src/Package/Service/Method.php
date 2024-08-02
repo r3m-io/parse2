@@ -93,6 +93,9 @@ class Method
                             'name' => $name,
                             'argument' => $argument_list
                         ];
+                        $input[$is_method]['is_method'] = true;
+                        unset($input[$is_method]['is_symbol']);
+                        unset($input[$is_method]['value']);
                         $argument_list = [];
                         $argument = [];
                         for($i = $is_method - 1; $i >= 0; $i--){
