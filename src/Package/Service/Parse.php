@@ -267,6 +267,7 @@ class Parse
                         $next = false;
                         $previous = false;
                         $argument_nr = 0;
+                        $set_depth = 0;
                         for($i=0; $i < $length; $i++){
                             $char = $data[$i];
                             if(array_key_exists($i - 1, $data)){
@@ -292,6 +293,7 @@ class Parse
                                 $char === '|' &&
                                 $next !== '|' &&
                                 $previous !== '|' &&
+                                $set_depth === 0 &&
                                 $is_modifier === false &&
                                 $is_single_quoted === false &&
                                 $is_double_quoted === false
@@ -331,6 +333,8 @@ class Parse
                                     elseif(
                                         $char === '|' &&
                                         $next !== '|' &&
+                                        $previous !== '|' &&
+                                        $set_depth === 0 &&
                                         $is_single_quoted === false &&
                                         $is_double_quoted === false
                                     ){
@@ -348,6 +352,12 @@ class Parse
                                         $modifier_name = false;
                                         $argument_list = [];
                                     } else {
+                                        if($char === '('){
+                                            $set_depth++;
+                                        }
+                                        elseif($char === ')'){
+                                            $set_depth--;
+                                        }
                                         $argument .= $char;
                                         $argument_array[] = $char;
                                     }
