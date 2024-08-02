@@ -269,7 +269,7 @@ class Parse
                         for($i=0; $i < $length; $i++){
                             $char = $data[$i];
                             if(array_key_exists($i + 1, $data)){
-                                $next = $data[$i] + 1;
+                                $next = $data[$i + 1];
                             }
                             if(
                                 !$operator &&
