@@ -94,6 +94,8 @@ class Method
                             'argument' => $argument_list
                         ];
                         $is_method = false;
+                        $argument_list = [];
+                        $argument = [];
                         ddd($input);
                     }
                 }
