@@ -14,7 +14,10 @@ class Variable
         $is_variable = false;
         foreach($input as $nr => $char){
             $previous = $input[$nr - 1] ?? null;
-            if(is_array($char) && array_key_exists('value', $char)){
+            if(
+                is_array($char) &&
+                array_key_exists('value', $char)
+            ){
                 if($char['value'] === '$'){
                     $is_variable = $nr;
                     $name = '';
@@ -38,14 +41,13 @@ class Variable
                             }
                         } else {
                             if(
-                                is_array($char) &&
-                                array_key_exists('value', $char)
+                                is_array($input[$i]) &&
+                                array_key_exists('value', $input[$i])
                             ){
-                                $name .= $char['value'];
+                                $name .= $input[$i]['value'];
                             } else {
-                                $name .= $char;
+                                $name .= $input[$i];
                             }
-
                         }
                     }
                     if($name){
