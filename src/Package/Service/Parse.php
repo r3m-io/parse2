@@ -959,6 +959,7 @@ class Parse
 
         $counter = 0;
         $input = Symbol::define($object, $input, $flags, $options);
+        $input = Cast::define($object, $input, $flags, $options);
         ddd($input);
 
 
