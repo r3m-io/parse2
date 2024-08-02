@@ -63,8 +63,8 @@ class Variable
                         ];
                         $has_modifier = false;
                         $has_name = false;
-                        $modifier = [];
                         $argument = [];
+                        $argument_list = [];
                         $modifier_name = '';
                         for($i = $is_variable + 1; $i < $count; $i++){
                             $previous = $input[$i - 1] ?? null;
