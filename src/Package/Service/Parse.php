@@ -489,7 +489,10 @@ class Parse
                             }
                         }
                         if($argument){
-                            d($argument_array);
+                            if($modifier_name === 'default1'){
+                                ddd($argument_array);
+                            }
+
                             $argument_list[] = Parse::value_split(
                                 $object,
                                 $argument_array,
