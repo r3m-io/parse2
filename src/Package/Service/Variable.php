@@ -40,7 +40,20 @@ class Variable
                                 break;
                             }
                         } else {
-                            $name .= $input[$i];
+                            if(
+                                !in_array(
+                                    $input[$i],
+                                    [
+                                        ' ',
+                                        "\n",
+                                        "\r",
+                                        "\t"
+                                    ]
+                                )
+                            ){
+                                $name .= $input[$i];
+                            }
+
                         }
                     }
                     if($name){
