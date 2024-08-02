@@ -25,7 +25,7 @@ class Parse
 
         $tags = Parse::tags($object, $template, $flags, $options);
         $tags = Parse::tags_remove($object, $tags, $flags, $options);
-        $tags = Parse::assign($object, $tags, $flags, $options);
+        $tags = Parse::variable($object, $tags, $flags, $options);
         ddd($tags);
 
         // Step 2: Define the placeholder values
@@ -235,7 +235,7 @@ class Parse
         return $tags;
     }
 
-    public static function assign(App $object, $tags, $flags, $options): array
+    public static function variable(App $object, $tags, $flags, $options): array
     {
         foreach($tags as $line => $tag){
             foreach($tag as $nr => $record){
