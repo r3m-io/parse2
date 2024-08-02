@@ -193,7 +193,26 @@ class Method
                             $argument = [];
                         }
                     } else {
-                        $argument[] = $char;
+                        if(
+                            is_string($char) &&
+                            in_array(
+                                $char,
+                                [
+                                    ' ',
+                                    "\n",
+                                    "\r",
+                                    "\t"
+                                ],
+                                true
+                            ) &&
+                            $is_single_quote === false &&
+                            $is_double_quote === false
+                        ){
+                            //nothing
+                        } else {
+                            $argument[] = $char;
+                        }
+
                     }
                 }
             }
