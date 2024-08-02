@@ -1029,15 +1029,19 @@ class Parse
                         case '!==':
                         case '!!!':
                         case '!!!!':
-                            ddd($symbol);
+                            $input[$previous_nr] = [
+                                'value' => $symbol,
+                                'is_symbol' => true
+                            ];
+                            $input[$nr] = null;
                             break;
                     }
+                } else {
+                    $input[$nr] = [
+                        'value' => $char,
+                        'is_symbol' => true
+                    ];
                 }
-
-                $input[$nr] = [
-                    'value' => $char,
-                    'is_symbol' => true
-                ];
             }
             $previous_nr = $nr;
         }
