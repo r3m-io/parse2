@@ -948,6 +948,59 @@ class Parse
         return $code;
     }
 
+    public static function token_define(App $object, $input, $flags, $options){
+        $previous_nr = false;
+        foreach($input as $nr => $char){
+            if(
+                in_array(
+                    $char,
+                    [
+                        '`',
+                        '~',
+                        '!',
+                        '@',
+                        '#',
+                        '$',
+                        '%',
+                        '^',
+                        '&',
+                        '*',
+                        '(',
+                        ')',
+                        '-',
+                        '_',
+                        '=',
+                        '+',
+                        '[',
+                        ']',
+                        '{',
+                        '}',
+                        '|',
+                        '\\',
+                        ':',
+                        ';',
+                        '"',
+                        "'",
+                        ',',
+                        '.',
+                        '<',
+                        '>',
+                        '/',
+                        '?',
+                    ],
+                    true
+                )
+            ){
+                $input[$nr] = [
+                    'value' => $char,
+                    'is_symbol' => true
+                ];
+            }
+            $previous_nr = $nr;
+        }
+        return $input;
+    }
+
 
     public static function value_split(App $object, $input, $flags, $options){
         $set_depth = 0;
