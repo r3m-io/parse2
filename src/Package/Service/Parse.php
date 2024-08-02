@@ -56,20 +56,35 @@ class Parse
         $tag = false;
         $tag_list = [];
         $is_literal = false;
+        $is_single_quoted = false;
         $next = false;
         foreach($split as $nr => $char){
             if(array_key_exists($nr + 1, $split)){
                 $next = $split[$nr + 1];
             }
             if(
+                $char === '\'' &&
+                $is_single_quoted === false
+            ){
+                $is_single_quoted = true;
+            }
+            elseif(
+                $char === '\'' &&
+                $is_single_quoted === true
+            ){
+                $is_single_quoted = false;
+            }
+            elseif(
                 $char === '{' &&
-                $next === '{'
+                $next === '{' &&
+                $is_single_quoted === false
             ){
                 $curly_count++;
             }
             elseif(
                 $char === '}' &&
-                $next === '}'
+                $next === '}' &&
+                $is_single_quoted === false
             ){
                 $curly_count--;
             }
