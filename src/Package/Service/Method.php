@@ -96,7 +96,22 @@ class Method
                         $argument_list = [];
                         $argument = [];
                         for($i = $is_method - 1; $i >= 0; $i--){
-                            if(is_array($input[$i])){
+                            if(
+                                !is_array($input[$i]) &&
+                                in_array(
+                                    $input[$i],
+                                    [
+                                        null,
+                                        ' ',
+                                        "\n",
+                                        "\r",
+                                        "\t"
+                                    ]
+                                )
+                            ){
+                                break;
+                            }
+                            elseif(is_array($input[$i])){
                                 if(
                                     array_key_exists('value', $input[$i]) &&
                                     in_array(
@@ -109,22 +124,9 @@ class Method
                                 ){
                                     $input[$i] = null;
                                 }
-                                elseif(
-                                    in_array(
-                                        $input[$i],
-                                        [
-                                            null,
-                                            ' ',
-                                            "\n",
-                                            "\r",
-                                            "\t"
-                                        ]
-                                    )
-                                ){
-                                    break;
-                                } else {
-                                    $input[$i] = null;
-                                }
+
+                            } else {
+                                $input[$i] = null;
                             }
                         }
                         for($i = $is_method + 1; $i <= $nr; $i++){
