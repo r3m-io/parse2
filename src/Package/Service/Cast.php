@@ -11,7 +11,7 @@ class Cast
 {
     public static function define(App $object, $input, $flags, $options){
         $is_collect = false;
-        $define = [];
+        $define = '';
         foreach($input as $nr => $char){
             if(
                 is_array($char) &&
@@ -25,13 +25,24 @@ class Cast
                 array_key_exists('value', $char) &&
                 $char['value'] === ')'
             ){
-                if(array_key_exists(0, $define)){
+                if(strlen($define) > 1){
                     ddd($define);
                 }
                 $is_collect = false;
             }
             elseif($is_collect){
-                $define[] = $char;
+                if(
+                    in_array(
+                        $char,
+                        [
+
+                        ],
+                        true
+                    )
+                ){
+                    continue;
+                }
+                $define .= $char;
             }
         }
         return $input;
