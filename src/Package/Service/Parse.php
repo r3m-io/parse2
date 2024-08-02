@@ -1342,6 +1342,7 @@ class Parse
         $argument_nr = 0;
         $is_single_quote = false;
         $is_double_quote = false;
+        $before_count = 0;
         foreach($input as $nr => $char){
             if(
                 $char === '(' &&
@@ -1353,6 +1354,9 @@ class Parse
                     'value' => implode('', $before),
                     'is_method' => true
                 ];
+                for($i = $nr -1; $i >= $nr - $before_count; $i--){
+                    $input[$i] = null;
+                }
                 continue;
             }
             if(
@@ -1381,12 +1385,12 @@ class Parse
             }
             if($is_method === false){
                 $before[] = $char;
+                $before_count++;
             } else {
                 if(
                     $is_single_quote === false &&
                     $is_double_quote === false
                 ){
-
                     if($char === ','){
                         $argument_nr++;
                         $arguments[$argument_nr] = [];
