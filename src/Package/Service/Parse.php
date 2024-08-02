@@ -991,6 +991,49 @@ class Parse
                     true
                 )
             ){
+                if(
+                    $previous_nr !== false &&
+                    array_key_exists($previous_nr, $input) &&
+                    is_array($input[$previous_nr]) &&
+                    array_key_exists('is_symbol', $input[$previous_nr])
+                ){
+                    $previous_char = $input[$previous_nr]['value'];
+
+                    $symbol = $previous_char . $char;
+                    switch($symbol) {
+                        case '++':
+                        case '--':
+                        case '<<':
+                        case '>>':
+                        case '<=':
+                        case '>=':
+                        case '==':
+                        case '!=':
+                        case '!!':
+                        case '??':
+                        case '&&':
+                        case '||':
+                        case '+=':
+                        case '-=':
+                        case '*=':
+                        case '/=':
+                        case '.=':
+                        case '=>':
+                        case '->':
+                        case '::':
+                        case '..':
+                        case '...':
+                        case '===':
+                        case '<<=':
+                        case '=>>':
+                        case '!==':
+                        case '!!!':
+                        case '!!!!':
+                            ddd($symbol);
+                            break;
+                    }
+                }
+
                 $input[$nr] = [
                     'value' => $char,
                     'is_symbol' => true
