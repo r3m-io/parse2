@@ -98,8 +98,7 @@ class Parse
             }
             elseif($curly_count === 0){
                 if($tag){
-                    ddd($tag);
-                    $tag .= $char;
+                    $tag .= $char . $char;
                     $column[$line]++;
                     if(empty($tag_list[$line])){
                         $tag_list[$line] = [];
