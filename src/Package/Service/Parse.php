@@ -466,6 +466,8 @@ class Parse
                                 'modifier' => $modifier_list,
                             ];
                         } else {
+                            $list = [];
+                            /*
                             $list = Parse::value(
                                 $object,
                                 [
@@ -475,6 +477,7 @@ class Parse
                                 $flags,
                                 $options
                             );
+                            */
                             $tags[$line][$nr]['variable'] = [
                                 'is_assign' => true,
                                 'operator' => $operator,
