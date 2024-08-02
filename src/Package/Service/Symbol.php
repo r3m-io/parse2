@@ -11,8 +11,22 @@ class Symbol
 {
     public static function define(App $object, $input, $flags, $options){
         $previous_nr = false;
+        $is_single_quote = false;
         foreach($input as $nr => $char){
             if(
+                $char === '\'' &&
+                $is_single_quote === false
+            ){
+                $is_single_quote = true;
+            }
+            elseif(
+                $char === '\'' &&
+                $is_single_quote === true
+            ){
+                $is_single_quote = false;
+            }
+            if(
+                $is_single_quote === false &&
                 in_array(
                     $char,
                     [
@@ -59,7 +73,6 @@ class Symbol
                     array_key_exists('is_symbol', $input[$previous_nr])
                 ){
                     $previous_char = $input[$previous_nr]['value'];
-
                     $symbol = $previous_char . $char;
                     switch($symbol) {
                         case '{{':
