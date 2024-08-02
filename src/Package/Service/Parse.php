@@ -275,7 +275,11 @@ class Parse
                                 $char === '|' &&
                                 $next !== '|'
                             ){
-                                ddd($name);
+                                $is_modifier = true;
+                            }
+                            elseif($is_modifier){
+                                $modifier .= $char;
+                                $modifier_array[] = $char;
                             }
                             elseif(
                                 !$operator &&
