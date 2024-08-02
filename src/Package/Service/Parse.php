@@ -449,7 +449,6 @@ class Parse
                                 }
                                 if(
                                     $char === ',' &&
-                                    $set_depth === 0 &&
                                     $is_single_quoted === false &&
                                     $is_double_quoted === false
                                 ){
