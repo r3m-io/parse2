@@ -21,9 +21,31 @@ class Method
                 for($i = $nr - 1; $i >= 0; $i--){
                     if($input[$i] !== null){
                         if(is_array($input[$i])){
-
+                            if(
+                                array_key_exists('value', $input[$i]) &&
+                                $input[$i]['value'] === '.'
+                            ){
+                                $name .= $input[$i];
+                            } else {
+                                ddd($name);
+                            }
                         } else {
-                            $name .= $input[$i];
+                            if(
+                                in_array(
+                                    $input[$i],
+                                    [
+                                        ' ',
+                                        "\n",
+                                        "\r",
+                                        "\t"
+                                    ]
+                                ) === true
+                            ){
+                                ddd($name);
+                            } else {
+                                $name .= $input[$i];
+                            }
+
                         }
 
                     }
