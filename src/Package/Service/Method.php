@@ -119,7 +119,7 @@ class Method
                                             "\r",
                                             "\t"
                                         ]
-                                    ) === true
+                                    )
                                 ){
                                     break;
                                 } else {
