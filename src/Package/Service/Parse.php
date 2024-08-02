@@ -135,6 +135,7 @@ class Parse
                 if($tag){
                     $tag .= $char . $char;
                     $column[$line]++;
+                    $column[$line]++;
                     if(empty($tag_list[$line])){
                         $tag_list[$line] = [];
                     }
@@ -200,6 +201,7 @@ class Parse
                     }
                     $tag_list[$line][] = $record;
                     $tag = false;
+                    $column[$line]--;
                     $column[$line]--;
                 }
             }
