@@ -25,6 +25,7 @@ class Parse
 
         $tags = Parse::tags($object, $template, $flags, $options);
         $tags = Parse::tags_remove($object, $tags, $flags, $options);
+        ddd($tags);
         $tags = Parse::variable($object, $tags, $flags, $options);
         ddd($tags);
 
