@@ -55,6 +55,7 @@ class Parse
         $tag_list = [];
         $is_literal = false;
         $is_single_quoted = false;
+        $is_double_quoted = false;
         $next = false;
         foreach($split as $nr => $char){
             if(array_key_exists($nr + 1, $split)){
@@ -72,17 +73,31 @@ class Parse
             ){
                 $is_single_quoted = false;
             }
+            if(
+                $char === '"' &&
+                $is_double_quoted === false
+            ){
+                $is_double_quoted = true;
+            }
+            elseif(
+                $char === '"' &&
+                $is_double_quoted === true
+            ){
+                $is_double_quoted = false;
+            }
             elseif(
                 $char === '{' &&
                 $next === '{' &&
-                $is_single_quoted === false
+                $is_single_quoted === false &&
+                $is_double_quoted === false
             ){
                 $curly_count++;
             }
             elseif(
                 $char === '}' &&
                 $next === '}' &&
-                $is_single_quoted === false
+                $is_single_quoted === false &&
+                $is_double_quoted === false
             ){
                 $curly_count--;
             }
