@@ -746,6 +746,7 @@ class Parse
             case '?':
             case '??':
             case '.':
+            case ',':
             case '.=':
             case '+=':
             case '-=':
