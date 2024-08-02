@@ -250,6 +250,7 @@ class Parse
                         $data = mb_str_split($content, 1);
                         $operator = false;
                         $before = '';
+                        $before_array = [];
                         $after = '';
                         $modifier = '';
                         $modifier_array = [];
@@ -382,9 +383,12 @@ class Parse
                                     }
                                 } else {
                                     $before .= $char;
+                                    $before_array[] = $char;
                                 }
                             }
                         }
+                        d($modifier_list);
+                        d($argument_list);
                         d($before);
                         $list = Parse::value(
                             $object,
