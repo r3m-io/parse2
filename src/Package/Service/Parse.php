@@ -1037,6 +1037,11 @@ class Parse
                             ];
                             $input[$nr] = null;
                             break;
+                        default:
+                            $input[$nr] = [
+                                'value' => $char,
+                                'is_symbol' => true
+                            ];
                     }
                 } else {
                     $input[$nr] = [
