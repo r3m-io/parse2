@@ -10,6 +10,7 @@ use Exception;
 class Method
 {
     public static function define(App $object, $input, $flags, $options){
+        d($input);
         foreach($input as $nr => $char){
             if(
                 is_array($char) &&
