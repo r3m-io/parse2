@@ -30,7 +30,10 @@ class Cast
                 }
                 $is_collect = false;
             }
-            elseif($is_collect){
+            elseif(
+                $is_collect &&
+                !is_array($char)
+            ){
                 if(
                     in_array(
                         $char,
