@@ -245,7 +245,7 @@ class Parse
                     $content = trim(substr($record['tag'], 2, -2));
                     d($content);
                     if(substr($content, 0, 1) === '$'){
-                        //we have a variable assign
+                        //we have a variable assign or define
                         $length = strlen($content);
                         $data = mb_str_split($content, 1);
                         $operator = false;
@@ -326,63 +326,7 @@ class Parse
                                 $char !== "\r" &&
                                 $char !== "\n"
                             ){
-                                if($char === '|' && $next !== '|'){
-                                    $is_modifier = true;
-                                }
-                                elseif($is_modifier || $is_argument){
-                                    if($char === '\'' && $is_single_quoted === false){
-                                        $is_single_quoted = true;
-                                    }
-                                    elseif($char === '\'' && $is_single_quoted === true){
-                                        $is_single_quoted = false;
-                                    }
-                                    elseif($char === '"' && $is_double_quoted === false){
-                                        $is_double_quoted = true;
-                                    }
-                                    elseif($char === '"' && $is_double_quoted === true){
-                                        $is_double_quoted = false;
-                                    }
-                                    if(
-                                        $is_single_quoted === false &&
-                                        $is_double_quoted === false &&
-                                        $char === '|' &&
-                                        $next !== '|'
-                                    ){
-                                        if($modifier){
-                                            $modifier_list[] = [
-                                                'string' => $modifier,
-                                                'array' => $modifier_array
-                                            ];
-                                            $modifier = '';
-                                            $modifier_array = [];
-                                        }
-                                        $is_argument = false;
-                                    }
-                                    if(
-                                        $is_single_quoted === false &&
-                                        $is_double_quoted === false &&
-                                        $char === ':'
-                                    ){
-                                        if($argument){
-                                            $argument_list[] = [
-                                                'string' => $argument,
-                                                'array' => $argument_array,
-                                            ];
-                                            $argument = '';
-                                            $argument_array = [];
-                                        }
-                                        $is_argument = true;
-                                    }
-                                    if($is_argument){
-                                        $argument .= $char;
-                                        $argument_array[] = $char;
-                                    } else {
-                                        $modifier .= $char;
-                                        $modifier_array[] = $char;
-                                    }
-                                } else {
-                                    $before .= $char;
-                                }
+                                $before .= $char;
                             }
                         }
                         d($modifier_list);
