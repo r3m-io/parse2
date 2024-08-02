@@ -451,10 +451,15 @@ class Parse
                             $argument = '';
                             $argument_array = [];
                         }
-                        d($modifier_name);
-                        d($modifier_list);
-                        d($argument_list);
-                        d($variable_name);
+                        if($modifier_name){
+                            $modifier_list[] = [
+                                'name' => $modifier_name,
+                                'argument' => $argument_list
+                            ];
+                            $modifier_name = false;
+                            $argument_list = [];
+                        }
+                        ddd($modifier_list);
                         $list = Parse::value(
                             $object,
                             [
