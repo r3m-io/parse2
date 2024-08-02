@@ -293,6 +293,11 @@ class Parse
                             ){
                                 $is_modifier = true;
                             }
+                            elseif($modifier_name){
+                                $argument .= $char;
+                                $argument_array[] = $char;
+                                continue;
+                            }
                             elseif($is_modifier){
                                 if(
                                     $char === ':' &&
@@ -304,12 +309,7 @@ class Parse
                                             $modifier_name = $modifier;
                                             $modifier = '';
                                             $modifier_array = [];
-                                        } else {
-                                            d($modifier_name);
-                                            d($modifier_array);
-                                            ddd($modifier);
                                         }
-
                                     }
                                 }
                                 elseif(
@@ -392,6 +392,7 @@ class Parse
                                 $variable_name .= $char;
                             }
                         }
+                        d($argument);
                         d($modifier_list);
                         d($argument_list);
                         d($variable_name);
