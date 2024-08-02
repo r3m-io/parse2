@@ -336,19 +336,16 @@ class Parse
                                         $argument = '';
                                         $argument_array = [];
 
-                                        d($modifier_name);
-                                        d($modifier_list);
-                                        d($argument_list);
-                                        ddd($variable_name);
-
-
-                                    }
-
-                                    else {
+                                        $modifier_list[] = [
+                                            'name' => $modifier_name,
+                                            'argument' => $argument_list
+                                        ];
+                                        $modifier_name = false;
+                                        $argument_list = [];
+                                    } else {
                                         $argument .= $char;
                                         $argument_array[] = $char;
                                     }
-
                                 }
                                 continue;
                             }
