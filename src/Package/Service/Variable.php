@@ -37,6 +37,9 @@ class Variable
                                 break;
                             }
                         } else {
+                            if(is_array($char)){
+                                ddd($char);
+                            }
                             $name .= $char;
                         }
                     }
