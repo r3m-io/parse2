@@ -156,6 +156,8 @@ class Method
                     ){
                         $is_single_quote = false;
                         $argument[] = $char;
+                        $argument_list[] = $argument;
+                        $argument = [];
                     }
                     elseif(
                         is_array($char) &&
@@ -176,6 +178,8 @@ class Method
                     ){
                         $is_double_quote = false;
                         $argument[] = $char;
+                        $argument_list[] = $argument;
+                        $argument = [];
                     }
                     elseif(
                         is_array($char) &&
