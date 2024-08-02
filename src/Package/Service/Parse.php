@@ -251,10 +251,25 @@ class Parse
                         $operator = false;
                         $before = '';
                         $after = '';
+                        $modifier = '';
+                        $modifier_array = [];
+                        $modifier_list = [];
+                        $argument = '';
+                        $argument_array = [];
+                        $argument_list = [];
                         $is_after = false;
+                        $is_modifier = false;
+                        $is_argument = false;
+                        $is_single_quoted = false;
+                        $is_double_quoted = false;
                         $after_array = [];
+                        $next = false;
+                        $argument_nr = 0;
                         for($i=0; $i < $length; $i++){
                             $char = $data[$i];
+                            if(array_key_exists($i + 1, $data)){
+                                $next = $data[$i] + 1;
+                            }
                             if(
                                 !$operator &&
                                 in_array(
@@ -311,7 +326,63 @@ class Parse
                                 $char !== "\r" &&
                                 $char !== "\n"
                             ){
-                                $before .= $char;
+                                if($char === '|' && $next !== '|'){
+                                    $is_modifier = true;
+                                }
+                                elseif($is_modifier || $is_argument){
+                                    if($char === '\'' && $is_single_quoted === false){
+                                        $is_single_quoted = true;
+                                    }
+                                    elseif($char === '\'' && $is_single_quoted === true){
+                                        $is_single_quoted = false;
+                                    }
+                                    elseif($char === '"' && $is_double_quoted === false){
+                                        $is_double_quoted = true;
+                                    }
+                                    elseif($char === '"' && $is_double_quoted === true){
+                                        $is_double_quoted = false;
+                                    }
+                                    if(
+                                        $is_single_quoted === false &&
+                                        $is_double_quoted === false &&
+                                        $char === '|' &&
+                                        $next !== '|'
+                                    ){
+                                        if($modifier){
+                                            $modifier_list[] = [
+                                                'string' => $modifier,
+                                                'array' => $modifier_array
+                                            ];
+                                            $modifier = '';
+                                            $modifier_array = [];
+                                        }
+                                        $is_argument = false;
+                                    }
+                                    if(
+                                        $is_single_quoted === false &&
+                                        $is_double_quoted === false &&
+                                        $char === ':'
+                                    ){
+                                        if($argument){
+                                            $argument_list[] = [
+                                                'string' => $argument,
+                                                'array' => $argument_array,
+                                            ];
+                                            $argument = '';
+                                            $argument_array = [];
+                                        }
+                                        $is_argument = true;
+                                    }
+                                    if($is_argument){
+                                        $argument .= $char;
+                                        $argument_array[] = $char;
+                                    } else {
+                                        $modifier .= $char;
+                                        $modifier_array[] = $char;
+                                    }
+                                } else {
+                                    $before .= $char;
+                                }
                             }
                         }
                         d($before);
@@ -329,6 +400,8 @@ class Parse
                             'operator' => $operator,
                             'name' => substr($before, 1),
                             'value' => $list,
+                            'modifier' => $modifier_list,
+                            'argument' => $argument_list
                         ];
                     }
                 }
