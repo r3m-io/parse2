@@ -224,6 +224,6 @@ class Method
             $argument_list[] = $argument;
             ddd($argument_list);
         }
-        ddd($input);
+        return $input;
     }
 }
