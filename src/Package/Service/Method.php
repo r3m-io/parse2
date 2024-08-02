@@ -11,15 +11,20 @@ class Method
 {
     public static function define(App $object, $input, $flags, $options){
         d($input);
+        $has_name = false;
+        $name = false;
+        $is_method = false;
+        $set_depth = 0;
         foreach($input as $nr => $char){
             if(
                 is_array($char) &&
                 array_key_exists('value', $char) &&
-                $char['value'] === '('
+                $char['value'] === '(' &&
+                $is_method === false
             ){
-                $is_method = $nr;
+                $set_depth++;
                 $name = '';
-                $has_name = false;
+                $is_method = $nr;
                 for($i = $nr - 1; $i >= 0; $i--){
                     if($input[$i] !== null){
                         if(is_array($input[$i])){
@@ -35,7 +40,6 @@ class Method
                             ){
                                 $name .= $input[$i]['value'];
                             } else {
-                                $has_name = true;
                                 break;
                             }
                         } else {
@@ -43,6 +47,7 @@ class Method
                                 in_array(
                                     $input[$i],
                                     [
+                                        null,
                                         ' ',
                                         "\n",
                                         "\r",
@@ -50,7 +55,6 @@ class Method
                                     ]
                                 ) === true
                             ){
-                                $has_name = true;
                                 break;
                             } else {
                                 $name .= $input[$i];
@@ -58,9 +62,34 @@ class Method
                         }
                     }
                 }
-                if($has_name){
+                if($name && $has_name === false){
                     $name = strrev($name);
+                    $has_name = true;
                     ddd($name);
+                }
+            }
+            if(
+                $is_method !== false &&
+                $name &&
+                $has_name === true
+            ){
+                if(
+                    is_array($char) &&
+                    array_key_exists('value', $char) &&
+                    $char['value'] === '('
+                ) {
+                    $set_depth++;
+                }
+                elseif(
+                    is_array($char) &&
+                    array_key_exists('value', $char) &&
+                    $char['value'] === ')'
+                ){
+                    $set_depth--;
+                    if($set_depth === 0){
+                        $is_method = false;
+                        ddd($name);
+                    }
                 }
             }
         }
