@@ -122,11 +122,6 @@ class Method
                                     ) === true
                                 ){
                                     break;
-                                }
-                                elseif(
-                                    array_key_exists('method', $input[$i])
-                                ) {
-                                    //continue
                                 } else {
                                     $input[$i] = null;
                                 }
