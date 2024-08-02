@@ -56,7 +56,9 @@ class Method
                                         "\r",
                                         "\t"
                                     ]
-                                ) === true
+                                ) &&
+                                $is_single_quote === false &&
+                                $is_double_quote === false
                             ){
                                 break;
                             } else {
@@ -110,7 +112,9 @@ class Method
                                         "\r",
                                         "\t"
                                     ]
-                                )
+                                ) &&
+                                $is_single_quote === false &&
+                                $is_double_quote === false
                             ){
                                 break;
                             }
@@ -127,7 +131,6 @@ class Method
                                 ){
                                     $input[$i] = null;
                                 }
-
                             } else {
                                 $input[$i] = null;
                             }
