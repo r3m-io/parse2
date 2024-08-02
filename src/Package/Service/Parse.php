@@ -303,8 +303,25 @@ class Parse
                                         ddd($modifier_name);
                                     }
                                 }
-                                $modifier .= $char;
-                                $modifier_array[] = $char;
+                                elseif(
+                                    in_array(
+                                        $char,
+                                        [
+                                            " ",
+                                            "\t",
+                                            "\n",
+                                            "\r"
+                                        ],
+                                        true
+                                    ) &&
+                                    $is_single_quoted === false &&
+                                    $is_double_quoted === false
+                                ){
+                                    //nothing
+                                } else {
+                                    $modifier .= $char;
+                                    $modifier_array[] = $char;
+                                }
                                 continue;
                             }
                             elseif(
