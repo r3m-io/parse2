@@ -62,7 +62,9 @@ class Variable
                             'reference' => $is_reference
                         ];
                         $has_modifier = false;
+                        $has_name = false;
                         $modifier = [];
+                        $modifier_name = '';
                         for($i = $is_variable + 1; $i < $count; $i++){
                             $previous = $input[$i - 1] ?? null;
                             $next = $input[$i + 1] ?? null;
@@ -88,9 +90,13 @@ class Variable
                                     $next !== '|'
                                 ){
                                     $has_modifier = true;
-                                    if(array_key_exists(0, $modifier)){
-                                        $input[$is_variable]['modifier'][] = $modifier;
-                                        $modifier = [];
+                                    if(array_key_exists(0, $argument_list)){
+                                        $input[$is_variable]['modifier'][] = [
+                                            'name' => $modifier_name,
+                                            'argument' => $argument_list
+                                        ];
+                                        $argument_list = [];
+                                        $argument = [];
                                     }
                                 }
                                 elseif($has_modifier !== true) {
@@ -104,12 +110,24 @@ class Variable
                                 $input[$i] = null;
                             }
                             elseif($has_modifier === true){
-                                $modifier[] = $input[$i];
+                                if(is_array($input[$i])){
+                                    if($input[$i]['value'] === ':'){
+                                        $has_name = true;
+                                    }
+                                    if($has_name === false){
+                                        $modifier_name .= $input[$i]['value'];
+                                    }
+                                }
+                                elseif($has_name === false) {
+                                    $modifier_name .= $input[$i];
+                                } else {
+                                    $argument[] = $input[$i];
+                                }
                             }
                         }
-                        if(array_key_exists(0, $modifier)){
-                            $input[$is_variable]['modifier'][] = $modifier;
-                            $modifier = [];
+                        if(array_key_exists(0, $argument)){
+                            $argument_list[] = $argument;
+                            $argument = [];
                         }
                         d($input[$is_variable]);
                     }
