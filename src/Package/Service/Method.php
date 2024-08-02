@@ -181,6 +181,9 @@ class Method
                     ){
                         $is_double_quote = false;
                         $argument[] = $char;
+
+                        $argument = Parse::value_split($object, $argument, $flags, $options);
+
                         $argument_list[] = $argument;
                         $argument = [];
                     }
@@ -192,6 +195,7 @@ class Method
                         $is_double_quote === false
                     ){
                         if(array_key_exists(0, $argument)){
+                            $argument = Parse::value_split($object, $argument, $flags, $options);
                             $argument_list[] = $argument;
                             $argument = [];
                         }
@@ -221,6 +225,7 @@ class Method
             }
         }
         if(array_key_exists(0, $argument)){
+            $argument = Parse::value_split($object, $argument, $flags, $options);
             $argument_list[] = $argument;
             ddd($argument_list);
         }
