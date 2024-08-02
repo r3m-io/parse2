@@ -505,6 +505,7 @@ class Parse
                                 'modifier' => $modifier_list,
                             ];
                         } else {
+                            d($after);
                             d($modifier_list);
                             $list = Parse::value(
                                 $object,
