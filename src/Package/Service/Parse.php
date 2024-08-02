@@ -339,6 +339,9 @@ class Parse
                                         $is_single_quoted === false &&
                                         $is_double_quoted === false
                                     ){
+                                        if($modifier_name === 'default1'){
+                                            ddd($argument_list);
+                                        }
                                         $argument_list[] = Parse::value_split(
                                             $object,
                                             [
