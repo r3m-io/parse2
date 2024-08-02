@@ -89,9 +89,12 @@ class Method
                 ){
                     $set_depth--;
                     if($set_depth === 0){
+                        $input[$is_method]['method'] = [
+                            'name' => $name,
+                            'argument' => $argument_list
+                        ];
                         $is_method = false;
-                        d($argument_list);
-                        ddd($name);
+                        ddd($input);
                     }
                 }
                 elseif($set_depth > 0){
