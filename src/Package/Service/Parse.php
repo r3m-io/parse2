@@ -1409,8 +1409,9 @@ class Parse
                             $argument_nr = 0;
                             $arguments[$argument_nr] = [];
                             $is_method = false;
+                            $before = [];
+                            $before_count = 0;
                         }
-
                     }
                 }
                 $arguments[$argument_nr][] = $char;
