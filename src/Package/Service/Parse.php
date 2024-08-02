@@ -506,7 +506,6 @@ class Parse
                 }
             }
         }
-        ddd($tags);
         return $tags;
     }
 
