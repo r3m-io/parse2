@@ -445,6 +445,7 @@ class Parse
                                     $char === "\r"
                                 ) {
                                     $is_after = true;
+                                    d('yes');
                                 } else {
                                     if($operator === '.' && $char === '='){
                                         //fix false positives
