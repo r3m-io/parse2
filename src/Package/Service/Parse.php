@@ -320,7 +320,7 @@ class Parse
                                 } else {
                                     if(
                                         $char === ':' &&
-                                        $set_depth >= 0 &&
+                                        $set_depth === 0 &&
                                         $is_single_quoted === false &&
                                         $is_double_quoted === false
                                     ){
@@ -335,7 +335,7 @@ class Parse
                                         $char === '|' &&
                                         $next !== '|' &&
                                         $previous !== '|' &&
-                                        $set_depth >= 0 &&
+                                        $set_depth === 0 &&
                                         $is_single_quoted === false &&
                                         $is_double_quoted === false
                                     ){
@@ -359,7 +359,6 @@ class Parse
                                         elseif($char === ')'){
                                             $set_depth--;
                                         }
-
                                         $argument .= $char;
                                         $argument_array[] = $char;
                                     }
@@ -398,8 +397,6 @@ class Parse
                                 } else {
                                     $modifier .= $char;
                                     $modifier_array[] = $char;
-                                    $after .= $char;
-                                    $after_array[] = $char;
                                 }
                                 continue;
                             }
