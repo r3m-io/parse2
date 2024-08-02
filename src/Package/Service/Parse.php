@@ -56,6 +56,7 @@ class Parse
         $is_literal = false;
         $is_single_quoted = false;
         $is_double_quoted = false;
+        $is_tag_in_double_quoted = false;
         $next = false;
         foreach($split as $nr => $char){
             if(array_key_exists($nr + 1, $split)){
@@ -98,6 +99,25 @@ class Parse
                 $next === '}' &&
                 $is_single_quoted === false &&
                 $is_double_quoted === false
+            ){
+                $curly_count--;
+            }
+            elseif(
+                $char === '{' &&
+                $next === '{' &&
+                $is_single_quoted === false &&
+                $is_double_quoted === true &&
+                $curly_count === 0
+            ){
+                $is_tag_in_double_quoted = true;
+                $curly_count++;
+            }
+            elseif(
+                $char === '}' &&
+                $next === '}' &&
+                $is_single_quoted === false &&
+                $is_double_quoted === true &&
+                $is_tag_in_double_quoted === true
             ){
                 $curly_count--;
             }
