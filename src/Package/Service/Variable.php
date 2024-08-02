@@ -96,6 +96,7 @@ class Variable
                                             'name' => $modifier_name,
                                             'argument' => $argument_list
                                         ];
+                                        ddd($input[$is_variable]);
                                         $argument_list = [];
                                         $argument = [];
                                     }
