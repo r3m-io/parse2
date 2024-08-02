@@ -24,7 +24,13 @@ class Method
                         if(is_array($input[$i])){
                             if(
                                 array_key_exists('value', $input[$i]) &&
-                                $input[$i]['value'] === '.'
+                                in_array(
+                                    $input[$i]['value'],
+                                    [
+                                        '.',
+                                        "_",
+                                    ]
+                                )
                             ){
                                 $name .= $input[$i]['value'];
                             } else {
