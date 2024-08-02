@@ -40,14 +40,7 @@ class Variable
                                 break;
                             }
                         } else {
-                            if(
-                                is_array($input[$i]) &&
-                                array_key_exists('value', $input[$i])
-                            ){
-                                $name .= $input[$i]['value'];
-                            } else {
-                                $name .= $input[$i];
-                            }
+                            $name .= $input[$i];
                         }
                     }
                     if($name){
@@ -68,7 +61,11 @@ class Variable
                             'name' => substr($name, 1),
                             'reference' => $is_reference
                         ];
+                        $has_modifier = false;
+                        $modifier = [];
                         for($i = $is_variable + 1; $i < $count; $i++){
+                            $previous = $input[$i - 1] ?? null;
+                            $next = $input[$i + 1] ?? null;
                             if(
                                 is_array($input[$i]) &&
                                 array_key_exists('value', $input[$i])
@@ -80,16 +77,33 @@ class Variable
                                             '_',
                                             '.'
                                         ]
-                                    )
+                                    ) &&
+                                    $has_modifier === false
                                 ){
                                     $input[$i] = null;
-                                } else {
+                                }
+                                elseif(
+                                    $input[$i]['value'] === '|' &&
+                                    $previous !== '|' &&
+                                    $next !== '|'
+                                ){
+                                    $has_modifier = true;
+                                }
+                                elseif($has_modifier !== true) {
                                     break;
                                 }
-                            } else {
+                                elseif($has_modifier === true){
+                                    $modifier[] = $input[$i];
+                                }
+                            }
+                            elseif($has_modifier !== true) {
                                 $input[$i] = null;
                             }
+                            elseif($has_modifier === true){
+                                $modifier[] = $input[$i];
+                            }
                         }
+                        d($modifier);
                     }
                 }
             }
