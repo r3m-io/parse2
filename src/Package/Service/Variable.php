@@ -88,6 +88,10 @@ class Variable
                                     $next !== '|'
                                 ){
                                     $has_modifier = true;
+                                    if(array_key_exists(0, $modifier)){
+                                        $input[$is_variable]['modifier'][] = $modifier;
+                                        $modifier = [];
+                                    }
                                 }
                                 elseif($has_modifier !== true) {
                                     break;
@@ -104,9 +108,10 @@ class Variable
                             }
                         }
                         if(array_key_exists(0, $modifier)){
-                            $input[$is_variable]['modifier'] = $modifier;
+                            $input[$is_variable]['modifier'][] = $modifier;
+                            $modifier = [];
                         }
-                        d($modifier);
+                        d($input[$is_variable]);
                     }
                 }
             }
