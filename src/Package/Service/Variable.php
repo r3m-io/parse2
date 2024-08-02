@@ -91,6 +91,7 @@ class Variable
                                     $next !== '|'
                                 ){
                                     $has_modifier = true;
+                                    /*
                                     if(array_key_exists(0, $argument)){
                                         $argument_list[] = Parse::value_split(
                                             $object,
@@ -109,11 +110,12 @@ class Variable
                                         $argument_list = [];
                                         $argument = [];
                                     }
+                                    */
                                 }
                                 elseif($has_modifier !== true) {
                                     break;
                                 }
-                                elseif($has_modifier === true){
+                                if($has_modifier === true){
                                     $argument[] = $input[$i];
                                 }
                             }
@@ -122,6 +124,9 @@ class Variable
                             }
                             elseif($has_modifier === true){
                                 if(is_array($input[$i])){
+                                    d($input[$i]);
+                                    d($modifier_name);
+                                    /*
                                     if($input[$i]['value'] === ':'){
                                         if($has_name === true) {
                                             $argument_list[] = Parse::value_split(
@@ -139,12 +144,15 @@ class Variable
                                     if($has_name === false){
                                         $modifier_name .= $input[$i]['value'];
                                     }
+                                    */
                                 }
+                                /*
                                 elseif($has_name === false) {
                                     $modifier_name .= $input[$i];
                                 } else {
                                     $argument[] = $input[$i];
                                 }
+                                */
                             }
                         }
                         if(array_key_exists(0, $argument)){
