@@ -95,7 +95,10 @@ class Parse
                     $row = '';
                 }
             }
-            if($curly_count === 1){
+            if(
+                $curly_count === 1 &&
+                $tag === false
+            ){
                 $tag = '{';
             }
             elseif($curly_count === 0){
