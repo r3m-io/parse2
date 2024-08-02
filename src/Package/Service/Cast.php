@@ -10,7 +10,30 @@ use Exception;
 class Cast
 {
     public static function define(App $object, $input, $flags, $options){
-        ddd($input);
+        $is_collect = false;
+        $define = [];
+        foreach($input as $nr => $char){
+            if(
+                is_array($char) &&
+                array_key_exists('value', $char) &&
+                $char['value'] === '('
+            ){
+                $is_collect = true;
+            }
+            elseif(
+                is_array($char) &&
+                array_key_exists('value', $char) &&
+                $char['value'] === ')'
+            ){
+                if(array_key_exists(0, $define)){
+                    ddd($define);
+                }
+                $is_collect = false;
+            }
+            elseif($is_collect){
+                $define[] = $char;
+            }
+        }
         return $input;
     }
 }
