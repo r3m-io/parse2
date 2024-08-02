@@ -51,10 +51,15 @@ class Variable
                         }
                     }
                     if($name){
+                        $is_reference = $input[$previous] ?? null;
+                        if($is_reference){
+                            $is_reference = $is_reference['value'] ?? null;
+                        }
                         $input[$is_variable] = [
                             'type' => 'variable',
                             'value' => $name,
-                            'name' => substr($name, 1)
+                            'name' => substr($name, 1),
+                            'reference' => $is_reference === '&'
                         ];
                         for($i = $is_variable + 1; $i < $count; $i++){
                             if(
