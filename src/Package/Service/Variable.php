@@ -91,6 +91,15 @@ class Variable
                                     $next !== '|'
                                 ){
                                     $has_modifier = true;
+                                    if(array_key_exists(0, $argument)){
+                                        $argument_list[] = Parse::value_split(
+                                            $object,
+                                            $argument,
+                                            $flags,
+                                            $options
+                                        );
+                                        $argument = [];
+                                    }
                                     if(array_key_exists(0, $argument_list)){
                                         $input[$is_variable]['modifier'][] = [
                                             'name' => $modifier_name,
