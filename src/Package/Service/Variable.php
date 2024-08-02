@@ -114,7 +114,12 @@ class Variable
                                 if(is_array($input[$i])){
                                     if($input[$i]['value'] === ':'){
                                         if($has_name === true) {
-                                            $argument_list[] = $argument;
+                                            $argument_list[] = Parse::value_split(
+                                                $object,
+                                                $argument,
+                                                $flags,
+                                                $options
+                                            );
                                             $argument = [];
                                         } else {
                                             $has_name = true;
@@ -132,7 +137,12 @@ class Variable
                             }
                         }
                         if(array_key_exists(0, $argument)){
-                            $argument_list[] = $argument;
+                            $argument_list[] = Parse::value_split(
+                                $object,
+                                $argument,
+                                $flags,
+                                $options
+                            );
                             $argument = [];
                         }
                         d($input[$is_variable]);
