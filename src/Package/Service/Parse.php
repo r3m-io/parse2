@@ -393,7 +393,10 @@ class Parse
                                 $variable_name .= $char;
                             }
                         }
-                        d($argument);
+                        if($argument){
+                            $argument_list[] = $argument;
+                            $argument = '';
+                        }
                         d($modifier_list);
                         d($argument_list);
                         d($variable_name);
