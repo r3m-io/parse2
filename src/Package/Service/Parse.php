@@ -293,9 +293,6 @@ class Parse
                                 $is_modifier = true;
                             }
                             elseif($is_modifier){
-                                $modifier .= $char;
-                                $modifier_array[] = $char;
-
                                 if(
                                     $char === ':' &&
                                     $is_single_quoted === false &&
@@ -305,6 +302,8 @@ class Parse
                                         ddd($modifier);
                                     }
                                 }
+                                $modifier .= $char;
+                                $modifier_array[] = $char;
                                 continue;
                             }
                             elseif(
