@@ -459,24 +459,26 @@ class Parse
                             $modifier_name = false;
                             $argument_list = [];
                         }
-                        ddd($modifier_list);
-                        $list = Parse::value(
-                            $object,
-                            [
-                                'string' => $after,
-                                'array' => $after_array
-                            ],
-                            $flags,
-                            $options
-                        );
-                        $tags[$line][$nr]['variable'] = [
-                            'is_assign' => true,
-                            'operator' => $operator,
-                            'name' => substr($variable_name, 1),
-                            'value' => $list,
-                            'modifier' => $modifier_list,
-                            'argument' => $argument_list
-                        ];
+                        if(!$after){
+                            ddd('is.define');
+                        } else {
+                            $list = Parse::value(
+                                $object,
+                                [
+                                    'string' => $after,
+                                    'array' => $after_array
+                                ],
+                                $flags,
+                                $options
+                            );
+                            $tags[$line][$nr]['variable'] = [
+                                'is_assign' => true,
+                                'operator' => $operator,
+                                'name' => substr($variable_name, 1),
+                                'value' => $list,
+                                'modifier' => $modifier_list,
+                            ];
+                        }
                     }
                 }
             }
