@@ -956,10 +956,7 @@ class Parse
         $list = [];
 
         $counter = 0;
-        d($input);
-
         $input = Parse::operator_define($object, $input, $flags, $options);
-
         ddd($input);
 
 
