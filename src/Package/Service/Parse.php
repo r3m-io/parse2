@@ -460,7 +460,11 @@ class Parse
                             $argument_list = [];
                         }
                         if(!$after){
-                            ddd('is.define');
+                            $tags[$line][$nr]['variable'] = [
+                                'is_define' => true,
+                                'name' => substr($variable_name, 1),
+                                'modifier' => $modifier_list,
+                            ];
                         } else {
                             $list = Parse::value(
                                 $object,
@@ -483,6 +487,7 @@ class Parse
                 }
             }
         }
+        ddd($tags);
         return $tags;
     }
 
