@@ -25,7 +25,7 @@ class Cast
                 array_key_exists('value', $char) &&
                 $char['value'] === ')'
             ){
-                if(strlen($define) > 1){
+                if(strlen($define) > 0){
                     ddd($define);
                 }
                 $is_collect = false;
