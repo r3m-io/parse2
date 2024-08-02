@@ -20,7 +20,7 @@ class Variable
             ){
                 if($char['value'] === '$'){
                     $is_variable = $nr;
-                    $name = '';
+                    $name = '$';
                     for($i = $nr + 1; $i < $count; $i++){
                         if(
                             is_array($input[$i]) &&
@@ -53,7 +53,8 @@ class Variable
                     if($name){
                         $input[$is_variable] = [
                             'type' => 'variable',
-                            'value' => $name
+                            'value' => $name,
+                            'name' => substr($name, 1)
                         ];
                         for($i = $is_variable + 1; $i < $count; $i++){
                             if(
