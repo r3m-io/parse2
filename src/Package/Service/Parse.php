@@ -489,7 +489,7 @@ class Parse
                             }
                         }
                         if($argument){
-                            ddd($argument_array);
+                            d($argument_array);
                             $argument_list[] = Parse::value_split(
                                 $object,
                                 $argument_array,
