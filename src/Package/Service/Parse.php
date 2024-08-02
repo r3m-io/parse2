@@ -44,7 +44,7 @@ class Parse
         dd($template);
     }
 
-    public static function tags(App $object, $string=''): array
+    public static function tags(App $object, $string='', $flags, $options): array
     {
         $split = mb_str_split($string, 1);
         $token = [];
@@ -85,6 +85,7 @@ class Parse
             }
             elseif($curly_count === 0){
                 if($tag){
+                    ddd($tag);
                     $tag .= $char;
                     $column[$line]++;
                     if(empty($tag_list[$line])){
