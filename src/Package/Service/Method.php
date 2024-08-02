@@ -93,7 +93,6 @@ class Method
                             'name' => $name,
                             'argument' => $argument_list
                         ];
-                        $is_method = false;
                         $argument_list = [];
                         $argument = [];
                         for($i = $is_method - 1; $i >= 0; $i--){
@@ -133,9 +132,10 @@ class Method
                                 }
                             }
                         }
-                        for($i = $nr; $i > $is_method; $i--){
+                        for($i = $is_method + 1; $i <= $nr; $i++){
                             $input[$i] = null;
                         }
+                        $is_method = false;
                         ddd($input);
                     }
                 }
