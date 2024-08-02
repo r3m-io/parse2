@@ -956,6 +956,7 @@ class Parse
         $list = [];
 
         $counter = 0;
+        d($input);
         $input = Parse::method_get($object, $input, $flags, $options);
         while(Parse::set_has($object, $input, $flags, $options)){
             $set = Parse::set_get($object, $input, $flags, $options);
