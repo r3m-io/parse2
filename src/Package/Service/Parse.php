@@ -302,9 +302,14 @@ class Parse
                                     if($modifier){
                                         if($modifier_name === false){
                                             $modifier_name = $modifier;
+                                            $modifier = '';
+                                            $modifier_array = [];
+                                        } else {
+                                            d($modifier_name);
+                                            d($modifier_array);
+                                            ddd($modifier);
                                         }
-                                        $modifier_name = $modifier;
-                                        ddd($modifier_name);
+
                                     }
                                 }
                                 elseif(
