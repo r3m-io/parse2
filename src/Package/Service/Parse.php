@@ -462,6 +462,7 @@ class Parse
                                 ) {
                                     continue;
                                 }
+                                /*
                                 if(
                                     $char === ',' &&
                                     $is_single_quoted === false &&
@@ -469,7 +470,7 @@ class Parse
                                 ){
                                     d($after);
                                     ddd('found');
-                                }
+                                }*/
                                 $after .= $char;
                                 $after_array[] = $char;
                             }
