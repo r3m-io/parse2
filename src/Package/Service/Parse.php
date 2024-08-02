@@ -249,7 +249,7 @@ class Parse
                         $length = strlen($content);
                         $data = mb_str_split($content, 1);
                         $operator = false;
-                        $name = '';
+                        $variable_name = '';
                         $after = '';
                         $modifier = '';
                         $modifier_array = [];
@@ -283,7 +283,7 @@ class Parse
                                 $is_double_quoted = false;
                             }
                             elseif(
-                                $name &&
+                                $variable_name &&
                                 $char === '|' &&
                                 $next !== '|' &&
                                 $is_modifier === false &&
@@ -299,7 +299,8 @@ class Parse
                                     $is_double_quoted === false
                                 ){
                                     if($modifier){
-                                        ddd($modifier);
+                                        $modifier_name = $modifier;
+                                        ddd($modifier_name);
                                     }
                                 }
                                 $modifier .= $char;
@@ -336,7 +337,7 @@ class Parse
                                     if($operator === '.' && $char === '='){
                                         //fix false positives
                                     } elseif($operator === '.'){
-                                        $name .= $operator . $char;
+                                        $variable_name .= $operator . $char;
                                         $operator = false;
                                     }
                                 }
@@ -362,12 +363,12 @@ class Parse
                                 $char !== "\r" &&
                                 $char !== "\n"
                             ){
-                                $name .= $char;
+                                $variable_name .= $char;
                             }
                         }
                         d($modifier_list);
                         d($argument_list);
-                        d($name);
+                        d($variable_name);
                         $list = Parse::value(
                             $object,
                             [
@@ -380,7 +381,7 @@ class Parse
                         $tags[$line][$nr]['variable'] = [
                             'is_assign' => true,
                             'operator' => $operator,
-                            'name' => substr($name, 1),
+                            'name' => substr($variable_name, 1),
                             'value' => $list,
                             'modifier' => $modifier_list,
                             'argument' => $argument_list
