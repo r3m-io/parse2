@@ -302,6 +302,7 @@ class Parse
                                 continue;
                             }
                             elseif($modifier_name){
+                                d($modifier_name);
                                 if(
                                     in_array(
                                         $char,
