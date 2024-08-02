@@ -115,9 +115,11 @@ class Variable
                                 elseif($has_modifier !== true) {
                                     break;
                                 }
+                                /*
                                 if($has_modifier === true){
                                     $argument[] = $input[$i];
                                 }
+                                */
                             }
                             elseif($has_modifier !== true) {
                                 $input[$i] = null;
