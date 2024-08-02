@@ -500,6 +500,7 @@ class Parse
                             $argument_array = [];
                         }
                         if($modifier_name){
+                            d($modifier_name);
                             d($argument_list);
                             $modifier_list[] = [
                                 'name' => $modifier_name,
