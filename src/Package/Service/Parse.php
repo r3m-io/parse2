@@ -513,6 +513,7 @@ class Parse
                             ];
                         } else {
                             d($after);
+                            /*
                             foreach($modifier_list as $modifier){
                                 if(array_key_exists('name', $modifier)){
                                     $after . '|' . $modifier['name'];
@@ -529,6 +530,7 @@ class Parse
                                     }
                                 }
                             }
+                            */
                             d($modifier_list);
                             $list = Parse::value(
                                 $object,
