@@ -250,6 +250,7 @@ class Parse
                         $data = mb_str_split($content, 1);
                         $operator = false;
                         $variable_name = '';
+                        $modifier_name = false;
                         $after = '';
                         $modifier = '';
                         $modifier_array = [];
@@ -299,6 +300,9 @@ class Parse
                                     $is_double_quoted === false
                                 ){
                                     if($modifier){
+                                        if($modifier_name === false){
+                                            $modifier_name = $modifier;
+                                        }
                                         $modifier_name = $modifier;
                                         ddd($modifier_name);
                                     }
