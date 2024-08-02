@@ -188,7 +188,7 @@ class Method
                         $is_single_quote === false &&
                         $is_double_quote === false
                     ){
-                        if($argument){
+                        if(array_key_exists(0, $argument)){
                             $argument_list[] = $argument;
                             $argument = [];
                         }
