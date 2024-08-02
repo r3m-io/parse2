@@ -160,6 +160,7 @@ class Method
                     ){
                         $is_single_quote = false;
                         $argument[] = $char;
+                        $argument = Parse::value_split($object, $argument, $flags, $options);
                         $argument_list[] = $argument;
                         $argument = [];
                     }
