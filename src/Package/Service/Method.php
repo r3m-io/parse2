@@ -133,7 +133,6 @@ class Method
                             $input[$i] = null;
                         }
                         $is_method = false;
-                        ddd($input);
                     }
                 }
                 elseif($set_depth > 0){
