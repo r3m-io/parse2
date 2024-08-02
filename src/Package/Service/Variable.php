@@ -7,7 +7,7 @@ use R3m\Io\Module\Core;
 use R3m\Io\Module\File;
 
 use Exception;
-class Method
+class Variable
 {
     public static function define(App $object, $input, $flags, $options){
         d($input);
