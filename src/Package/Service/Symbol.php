@@ -13,6 +13,9 @@ class Symbol
         $previous_nr = false;
         $is_single_quote = false;
         foreach($input as $nr => $char){
+            if(is_array($char)){
+                continue;
+            }
             if(
                 $char === '\'' &&
                 $is_single_quote === false
