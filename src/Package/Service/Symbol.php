@@ -26,7 +26,14 @@ class Symbol
                 $is_single_quote = false;
             }
             if(
-                $is_single_quote === false &&
+                (
+                    $is_single_quote === false ||
+                    (
+                        $char === '\'' &&
+                        $is_single_quote === true
+                    )
+                )
+                &&
                 in_array(
                     $char,
                     [
