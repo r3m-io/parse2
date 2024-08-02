@@ -359,6 +359,7 @@ class Parse
                                         elseif($char === ')'){
                                             $set_depth--;
                                         }
+
                                         $argument .= $char;
                                         $argument_array[] = $char;
                                     }
@@ -397,6 +398,8 @@ class Parse
                                 } else {
                                     $modifier .= $char;
                                     $modifier_array[] = $char;
+                                    $after .= $char;
+                                    $after_array[] = $char;
                                 }
                                 continue;
                             }
