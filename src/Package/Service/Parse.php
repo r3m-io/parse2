@@ -265,9 +265,13 @@ class Parse
                         $is_double_quoted = false;
                         $after_array = [];
                         $next = false;
+                        $previous = false;
                         $argument_nr = 0;
                         for($i=0; $i < $length; $i++){
                             $char = $data[$i];
+                            if(array_key_exists($i - 1, $data)){
+                                $previous = $data[$i - 1];
+                            }
                             if(array_key_exists($i + 1, $data)){
                                 $next = $data[$i + 1];
                             }
@@ -287,6 +291,7 @@ class Parse
                                 $variable_name &&
                                 $char === '|' &&
                                 $next !== '|' &&
+                                $previous !== '|' &&
                                 $is_modifier === false &&
                                 $is_single_quoted === false &&
                                 $is_double_quoted === false
