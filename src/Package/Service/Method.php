@@ -96,6 +96,38 @@ class Method
                         $is_method = false;
                         $argument_list = [];
                         $argument = [];
+                        for($i = $is_method - 1; $i >= 0; $i--){
+                            if(is_array($input[$i])){
+                                if(
+                                    array_key_exists('value', $input[$i]) &&
+                                    in_array(
+                                        $input[$i]['value'],
+                                        [
+                                            '.',
+                                            "_",
+                                        ]
+                                    )
+                                ){
+                                    $input[$i] = null;
+                                }
+                                elseif(
+                                    in_array(
+                                        $input[$i],
+                                        [
+                                            null,
+                                            ' ',
+                                            "\n",
+                                            "\r",
+                                            "\t"
+                                        ]
+                                    ) === true
+                                ){
+                                    break;
+                                } else {
+                                    $input[$i] = null;
+                                }
+                            }
+                        }
                         ddd($input);
                     }
                 }
