@@ -56,11 +56,21 @@ class Parse
         $tag = false;
         $tag_list = [];
         $is_literal = false;
+        $next = false;
         foreach($split as $nr => $char){
-            if($char === '{'){
+            if(array_key_exists($nr + 1, $split)){
+                $next = $split[$nr + 1];
+            }
+            if(
+                $char === '{' &&
+                $next === '{'
+            ){
                 $curly_count++;
             }
-            elseif($char === '}'){
+            elseif(
+                $char === '}' &&
+                $next === '}'
+            ){
                 $curly_count--;
             }
             elseif($char === "\n"){
@@ -70,10 +80,7 @@ class Parse
                     $row = '';
                 }
             }
-            if(
-                $curly_count === 2 &&
-                $char == '{'
-            ){
+            if($curly_count === 1){
                 $tag = '{';
             }
             elseif($curly_count === 0){
