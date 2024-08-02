@@ -65,7 +65,6 @@ class Method
                 if($name && $has_name === false){
                     $name = strrev($name);
                     $has_name = true;
-                    ddd($name);
                 }
             }
             if(
