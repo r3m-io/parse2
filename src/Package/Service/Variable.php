@@ -180,6 +180,7 @@ class Variable
                                     d($input['array'][$i]);
                                 }
                                 elseif($modifier_name){
+                                    d($input['array'][$i]);
                                     $argument_array[] = $input['array'][$i];
                                     if(is_array($input['array'][$i])){
                                         if(array_key_exists('execute', $input['array'][$i])){
