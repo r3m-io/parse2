@@ -17,7 +17,8 @@ class Method
         $set_depth = 0;
         $is_single_quote = false;
         $is_double_quote = false;
-        $argument = [];
+        $argument = '';
+        $argument_array = [];
         $argument_list = [];
         foreach($input['array'] as $nr => $char){
             if(
@@ -99,7 +100,8 @@ class Method
                         unset($input['array'][$is_method]['is_symbol']);
                         unset($input['array'][$is_method]['value']);
                         $argument_list = [];
-                        $argument = [];
+                        $argument_array = [];
+                        $argument = '';
                         for($i = $is_method - 1; $i >= 0; $i--){
                             if(
                                 !is_array($input['array'][$i]) &&
@@ -151,7 +153,8 @@ class Method
                         $is_double_quote === false
                     ){
                         $is_single_quote = true;
-                        $argument[] = $char;
+                        $argument_array[] = $char;
+                        $argument .= $char['value'];
                     }
                     elseif(
                         is_array($char) &&
@@ -161,10 +164,20 @@ class Method
                         $is_double_quote === false
                     ){
                         $is_single_quote = false;
-                        $argument[] = $char;
-                        $argument = Parse::value_split($object, $argument, $flags, $options);
-                        $argument_list[] = $argument;
-                        $argument = [];
+                        $argument_array[] = $char;
+                        $argument .= $char['value'];
+                        $argument_value = Parse::value(
+                            $object,
+                            [
+                                'string' => $argument,
+                                'array' => $argument_array
+                            ],
+                            $flags,
+                            $options
+                        );
+                        $argument_list[] = $argument_value;
+                        $argument_array = [];
+                        $argument = '';
                     }
                     elseif(
                         is_array($char) &&
@@ -174,7 +187,8 @@ class Method
                         $is_double_quote === false
                     ){
                         $is_double_quote = true;
-                        $argument[] = $char;
+                        $argument_array[] = $char;
+                        $argument .= $char['value'];
                     }
                     elseif(
                         is_array($char) &&
@@ -184,12 +198,20 @@ class Method
                         $is_double_quote === true
                     ){
                         $is_double_quote = false;
-                        $argument[] = $char;
-
-                        $argument = Parse::value_split($object, $argument, $flags, $options);
-
-                        $argument_list[] = $argument;
-                        $argument = [];
+                        $argument_array[] = $char;
+                        $argument .= $char['value'];
+                        $argument_value = Parse::value(
+                            $object,
+                            [
+                                'string' => $argument,
+                                'array' => $argument_array
+                            ],
+                            $flags,
+                            $options
+                        );
+                        $argument_list[] = $argument_value;
+                        $argument_array = [];
+                        $argument = '';
                     }
                     elseif(
                         is_array($char) &&
@@ -199,9 +221,18 @@ class Method
                         $is_double_quote === false
                     ){
                         if(array_key_exists(0, $argument)){
-                            $argument = Parse::value_split($object, $argument, $flags, $options);
-                            $argument_list[] = $argument;
-                            $argument = [];
+                            $argument_value = Parse::value(
+                                $object,
+                                [
+                                    'string' => $argument,
+                                    'array' => $argument_array
+                                ],
+                                $flags,
+                                $options
+                            );
+                            $argument_list[] = $argument_value;
+                            $argument_array = [];
+                            $argument = '';
                         }
                     } else {
                         if(
@@ -221,16 +252,25 @@ class Method
                         ){
                             //nothing
                         } else {
-                            $argument[] = $char;
+                            $argument_array[] = $char;
+                            $argument .= $char;
                         }
 
                     }
                 }
             }
         }
-        if(array_key_exists(0, $argument)){
-            $argument = Parse::value_split($object, $argument, $flags, $options);
-            $argument_list[] = $argument;
+        if(array_key_exists(0, $argument_array)){
+            $argument_value = Parse::value(
+                $object,
+                [
+                    'string' => $argument,
+                    'array' => $argument_array
+                ],
+                $flags,
+                $options
+            );
+            $argument_list[] = $argument_value;
             ddd($argument_list);
         }
         return $input;
