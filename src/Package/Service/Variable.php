@@ -34,7 +34,6 @@ class Variable
             ){
                 if($char['value'] === '$'){
                     d('yes');
-                    d($name);
                     $is_variable = $nr;
                     $name = '$';
                     for($i = $nr + 1; $i < $count; $i++){
@@ -85,6 +84,7 @@ class Variable
                             }
                         }
                         if($name === '$'){
+                            ddd($input['array'][$is_variable]);
                             trace();
                             d($input);
                             ddd($is_variable);
