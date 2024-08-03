@@ -61,6 +61,8 @@ class Parse
         $length = mb_strlen($string);
         $start = microtime(true);
         $split = mb_str_split($string, 1);
+        d($length);
+        ddd($count);
         $curly_count = 0;
         $line = 1;
         $column = [];
