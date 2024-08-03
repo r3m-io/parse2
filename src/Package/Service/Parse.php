@@ -24,6 +24,13 @@ class Parse
         $start = microtime(true);
         $template = File::read($options->source);
 
+        $data = [];
+        for($i=0; $i < 1000; $i++){
+            $content = '{{$config.load =    (  object   ) load_config(&$test.testsome.more, \'{{' . $i . '}}\', "{{$test2 | default : ($test8 | default : true)}}") || config(\'par se\') | default: ($test5|default:($test6|default1:"alles bon")) }}';
+            $data[] = $content;
+        }
+        File::write($options->source, implode(PHP_EOL, $data));
+
         $tags = Parse::tags($object, $template, $flags, $options);
         $tags = Parse::tags_remove($object, $tags, $flags, $options);
         $duration = (microtime(true) - $start) * 1000 . ' msec';
