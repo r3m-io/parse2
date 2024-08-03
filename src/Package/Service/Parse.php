@@ -678,7 +678,8 @@ class Parse
                     substr($value, -1) === '\''
                 ){
                     $input['array'] = [[
-                        'value' => substr($value, 1, -1),
+                        'value' => $value,
+                        'execute' => substr($value, 1, -1),
                         'is_single_quoted' => true
                     ]];
                 }
