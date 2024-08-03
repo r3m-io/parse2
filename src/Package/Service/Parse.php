@@ -58,8 +58,12 @@ class Parse
 
     public static function tags(App $object, $string='', $flags, $options): array
     {
+        $length = mb_strlen($string);
         $start = microtime(true);
         $split = mb_str_split($string, 1);
+        $count = count($split);
+        d($length);
+        ddd($count);
         $curly_count = 0;
         $line = 1;
         $column = [];
