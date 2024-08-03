@@ -651,8 +651,6 @@ class Parse
     public static function value(App $object, $input, $flags, $options): mixed
     {
         $value = $input['string'] ?? null;
-        d($value);
-        trace();
         switch($value){
             case '[]':
                 return [[
