@@ -580,8 +580,6 @@ class Parse
                         'is_single_quoted' => true
                     ]];
                 }
-                d($input);
-                trace();
                 return Parse::value_split($object, $input['array'], $flags, $options);
         }
     }
