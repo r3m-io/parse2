@@ -252,10 +252,6 @@ class Parse
                 ){
                     $content = trim(substr($record['tag'], 2, -2));
                     $hash = hash('sha256', $content);
-
-//                    d($content);
-                    //make cache per content
-
                     if(substr($content, 0, 1) === '$'){
                         if($cache->has($hash)){
                             $variable = $cache->get($hash);
