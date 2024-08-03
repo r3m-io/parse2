@@ -70,6 +70,10 @@ class Variable
                                 $input['array'][$nr - 1] = null;
                             }
                         }
+                        if($name === '$'){
+                            d($input);
+                            ddd($is_variable);
+                        }
                         $input['array'][$is_variable] = [
                             'type' => 'variable',
                             'value' => $name,
