@@ -152,7 +152,28 @@ class Variable
                                 }
                                 elseif($has_modifier === false) {
                                     break;
-                                } else {
+                                } elseif(
+                                    $input['array'][$i]['value'] === ':' &&
+                                    $previous !== ':' &&
+                                    $next !== ':' &&
+                                    $modifier_name
+                                ) {
+                                    if($has_name === true) {
+                                        $argument_list[] = Parse::value(
+                                            $object,
+                                            [
+                                                'string' => $argument,
+                                                'array' => $argument_array
+                                            ],
+                                            $flags,
+                                            $options
+                                        );
+                                        ddd($argument_list);
+                                        $argument_array = [];
+                                    } else {
+                                        $has_name = true;
+                                        d($modifier_name);
+                                    }
                                     d($input['array'][$i]);
                                 }
                             }
