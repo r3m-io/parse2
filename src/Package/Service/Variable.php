@@ -170,6 +170,7 @@ class Variable
                                 */
                             }
                         }
+                        /*
                         if(array_key_exists(0, $argument)){
                             ddd($argument);
                             $argument_list[] = Parse::value_split(
@@ -181,7 +182,8 @@ class Variable
                             ddd($argument_list);
                             $argument = [];
                         }
-                        d($input[$is_variable]);
+                        */
+//                        d($input[$is_variable]);
                     }
                 }
             }
