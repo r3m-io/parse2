@@ -13,7 +13,7 @@ class Symbol
     {
         $previous_nr = false;
         $is_single_quote = false;
-        foreach($input as $nr => $char){
+        foreach($input['array'] as $nr => $char){
             if(is_array($char)){
                 continue;
             }
@@ -79,11 +79,11 @@ class Symbol
             ){
                 if(
                     $previous_nr !== false &&
-                    array_key_exists($previous_nr, $input) &&
-                    is_array($input[$previous_nr]) &&
-                    array_key_exists('is_symbol', $input[$previous_nr])
+                    array_key_exists($previous_nr, $input['array']) &&
+                    is_array($input['array'][$previous_nr]) &&
+                    array_key_exists('is_symbol', $input['array'][$previous_nr])
                 ){
-                    $previous_char = $input[$previous_nr]['value'];
+                    $previous_char = $input['array'][$previous_nr]['value'];
                     $symbol = $previous_char . $char;
                     switch($symbol) {
                         case '{{':
@@ -116,20 +116,20 @@ class Symbol
                         case '!==':
                         case '!!!':
                         case '!!!!':
-                            $input[$previous_nr] = [
+                            $input['array'][$previous_nr] = [
                                 'value' => $symbol,
                                 'is_symbol' => true
                             ];
                             $input[$nr] = null;
                             break;
                         default:
-                            $input[$nr] = [
+                            $input['array'][$nr] = [
                                 'value' => $char,
                                 'is_symbol' => true
                             ];
                     }
                 } else {
-                    $input[$nr] = [
+                    $input['array'][$nr] = [
                         'value' => $char,
                         'is_symbol' => true
                     ];

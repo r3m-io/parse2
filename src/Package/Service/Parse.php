@@ -667,7 +667,7 @@ class Parse
                         'is_single_quoted' => true
                     ]];
                 }
-                return Parse::value_split($object, $input['array'], $flags, $options);
+                return Parse::value_split($object, $input, $flags, $options);
         }
     }
 
@@ -874,13 +874,13 @@ class Parse
         $code_right = '';
         if(!empty($input['left'])){
             $left = Parse::value_split($object, $input['left'], $flags, $options);
-            if(is_array($left)){
+            if(is_array($left['array'])){
                 $code_left = Parse::value_code($object, $left, $flags, $options);
             }
         }
         if(!empty($input['right'])){
             $right = Parse::value_split($object, $input['right'], $flags, $options);
-            if(is_array($right)){
+            if(is_array($right['array'])){
                 $code_right = Parse::value_code($object, $right, $flags, $options);
             }
         }
@@ -1015,10 +1015,12 @@ class Parse
 
     public static function operator_get(App $object, $input, $flags, $options): array
     {
-        $left = [];
-        $right = [];
+        $left_array = [];
+        $right_array = [];
+        $left = '';
+        $right = '';
         $operator  = false;
-        foreach($input as $nr => $char){
+        foreach($input['array'] as $nr => $char){
             if(
                 is_array($char) &&
                 array_key_exists('is_operator', $char)
@@ -1032,15 +1034,23 @@ class Parse
                 !$operator &&
                 $char !== null
             ){
-                $left[] = $char;
+                $left_array[] = $char;
+                $left .= $char;
             } elseif($char !== null) {
-                $right[] = $char;
+                $right_array[] = $char;
+                $right .= $char;
             }
         }
         return [
             'operator' => $operator,
-            'left' => $left,
-            'right' => $right
+            'left' => [
+                'string' => $left,
+                'array' => $left_array
+            ],
+            'right' => [
+                'string' => $right,
+                'array' => $right_array
+            ]
         ];
     }
 
@@ -1328,7 +1338,7 @@ class Parse
     public static function value_code(App $object, $input, $flags, $options): string
     {
         $code = '';
-        foreach($input as $nr => $record){
+        foreach($input['array'] as $nr => $record){
             if(!is_array($record)){
                 $code .= $record;
                 continue;
@@ -1375,12 +1385,12 @@ class Parse
 
         $counter = 0;
         $input = Symbol::define($object, $input, $flags, $options);
-        $input = Cast::define($object, $input, $flags, $options);
-        $input = Method::define($object, $input, $flags, $options);
+        $input['array'] = Cast::define($object, $input['array'], $flags, $options);
+        $input['array'] = Method::define($object, $input['array'], $flags, $options);
 //        d($input);
-        $input = Variable::define($object, $input, $flags, $options);
+        $input['array'] = Variable::define($object, $input['array'], $flags, $options);
 //        d($input);
-        $input = Parse::remove_whitespace($object, $input, $flags, $options);
+        $input['array'] = Parse::remove_whitespace($object, $input['array'], $flags, $options);
         return $input;
         ddd($input);
 
