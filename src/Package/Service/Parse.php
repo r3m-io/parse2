@@ -60,7 +60,11 @@ class Parse
         if($cache_url){
             Dir::create($cache_dir, Dir::CHMOD);
             d($cache_url);
-            File::write($cache_url, Core::object($tags, Core::OBJECT_JSON_LINE));
+            if($object->config('framework.environment') === Config::MODE_DEVELOPMENT){
+                File::write($cache_url, Core::object($tags, Core::OBJECT_JSON));
+            } else {
+                File::write($cache_url, Core::object($tags, Core::OBJECT_JSON_LINE));
+            }
             File::touch($cache_url, $mtime);
         }
         /*
