@@ -251,7 +251,14 @@ class Parse
                     array_key_exists('tag', $record)
                 ){
                     $content = trim(substr($record['tag'], 2, -2));
-                    $hash = hash('sha256', $content);
+
+                    $start = microtime(true);
+                    for($i = 0; $i < 1000; $i++){
+                        $hash = hash('sha256', $content . $i);
+                    }
+                    $duration = (microtime(true) - $start) * 1000 . ' msec';
+                    ddd($duration);
+
                     if(substr($content, 0, 1) === '$'){
                         if($cache->has($hash)){
                             $variable = $cache->get($hash);
@@ -353,10 +360,11 @@ class Parse
                                             if($modifier_name === 'default1'){
                                                 ddd($argument_list);
                                             }
-                                            $argument_list[] = Parse::value_split(
+                                            $argument_list[] = Parse::value(
                                                 $object,
                                                 [
-                                                    $argument_array
+                                                    'string' => $argument,
+                                                    'array' => $argument_array
                                                 ],
                                                 $flags,
                                                 $options
@@ -513,9 +521,12 @@ class Parse
                                     ddd($argument_array);
                                 }
 
-                                $argument_list[] = Parse::value_split(
+                                $argument_list[] = Parse::value(
                                     $object,
-                                    $argument_array,
+                                    [
+                                        'string' => $argument,
+                                        'array' => $argument_array
+                                    ],
                                     $flags,
                                     $options
                                 );
