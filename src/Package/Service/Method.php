@@ -11,6 +11,7 @@ class Method
 {
     public static function define(App $object, $input, $flags, $options): array
     {
+        d($input['string']);
         $has_name = false;
         $name = false;
         $is_method = false;
