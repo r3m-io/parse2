@@ -36,13 +36,20 @@ class Parse
             $object->config('ds')
         ;
         $cache_url = $cache_dir . $hash . $object->config('extension.json');
+        $mtime = File::mtime($options->source);
         if(
             property_exists($options, 'ramdisk') &&
             $options->ramdisk === true
         ){
-            if(File::exist($cache_url)){
+            if(
+                File::exist($cache_url) &&
+                $mtime === File::mtime($cache_url)
+            ){
                 $tags = File::read($cache_url);
                 $tags = Core::object($tags, Core::OBJECT_ARRAY);
+            }
+            elseif(File::exist($cache_url)){
+                File::delete($cache_url);
             }
         }
         if($tags === false){
@@ -54,6 +61,7 @@ class Parse
             Dir::create($cache_dir, Dir::CHMOD);
             d($cache_url);
             File::write($cache_url, Core::object($tags, Core::OBJECT_JSON_LINE));
+            File::touch($cache_url, $mtime);
         }
         /*
         $data = [];
