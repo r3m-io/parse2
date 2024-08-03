@@ -452,6 +452,7 @@ class Parse
                                     $is_double_quoted === false
                                 ) {
                                     $is_after = true;
+                                    d($char);
                                     ddd($operator);
                                 } else {
                                     if($operator === '.' && $char === '='){
