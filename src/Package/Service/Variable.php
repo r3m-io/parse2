@@ -176,6 +176,19 @@ class Variable
                                     }
                                     d($input['array'][$i]);
                                 }
+                                elseif($modifier_name){
+                                    $argument_array[] = $input['array'][$i];
+                                    if(is_array($input['array'][$i])){
+                                        if(array_key_exists('execute', $input['array'][$i])){
+                                            $argument .= $input['array'][$i]['execute'];
+                                        }
+                                        elseif(array_key_exists('value', $input['array'][$i])){
+                                            $argument .= $input['array'][$i]['value'];
+                                        }
+                                    } else {
+                                        $argument .= $input['array'][$i];
+                                    }
+                                }
                             }
                             elseif($has_modifier === false) {
                                 $input['array'][$i] = null;
