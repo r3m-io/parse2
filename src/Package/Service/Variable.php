@@ -31,7 +31,7 @@ class Variable
                 is_array($char) &&
                 array_key_exists('value', $char)
             ){
-                if($char['value'] === '$' && $input['array'][$nr] !== null){
+                if($char['value'] === '$' && $input['array'][$nr] !== null){ // null check needed
                     $is_variable = $nr;
                     $name = '$';
                     for($i = $nr + 1; $i < $count; $i++){
