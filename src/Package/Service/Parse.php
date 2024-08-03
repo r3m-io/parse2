@@ -238,8 +238,13 @@ class Parse
         return $tags;
     }
 
+    /**
+     * @throws Exception
+     */
     public static function variable(App $object, $tags, $flags, $options): array
     {
+        $cache = $object->get(App::CACHE);
+
         foreach($tags as $line => $tag){
             foreach($tag as $nr => $record){
                 if(
@@ -247,7 +252,10 @@ class Parse
                 ){
                     $content = trim(substr($record['tag'], 2, -2));
                     $hash = hash('sha256', $content);
-                    ddd($hash);
+
+                    if($cache->has($hash)){
+                        ddd($cache->get($hash));
+                    }
 
 //                    d($content);
                     //make cache per content
@@ -530,7 +538,7 @@ class Parse
                             $argument_list = [];
                         }
                         if(!$after){
-                            $tags[$line][$nr]['variable'] = [
+                            $variable = [
                                 'is_define' => true,
                                 'name' => substr($variable_name, 1),
                                 'modifier' => $modifier_list,
@@ -545,7 +553,7 @@ class Parse
                                 $flags,
                                 $options
                             );
-                            $tags[$line][$nr]['variable'] = [
+                            $variable = [
                                 'is_assign' => true,
                                 'operator' => $operator,
                                 'name' => substr($variable_name, 1),
@@ -553,6 +561,8 @@ class Parse
                                 'modifier' => $modifier_list,
                             ];
                         }
+                        $tags[$line][$nr]['variable'] = $variable;
+                        $cache->set($hash, $variable);
                     }
                 }
             }
