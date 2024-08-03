@@ -166,6 +166,7 @@ class Variable
                                 $input['array'][$i] = null;
                             }
                             elseif($has_modifier === true){
+                                d($input);
                                 ddd('yes');
                                 if(is_array($input['array'][$i])){
                                     d($input['array'][$i]);
