@@ -170,7 +170,7 @@ class Parse
                     $curly_count === 1 &&
                     $tag === false
                 ){
-                    $tag = '{';
+                    $tag = '{{';
                 }
                 elseif($curly_count === 0){
                     if($tag){
