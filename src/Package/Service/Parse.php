@@ -522,27 +522,6 @@ class Parse
                                 'modifier' => $modifier_list,
                             ];
                         } else {
-                            // missing modifier
-                            ddd($after);
-                            /*
-                            foreach($modifier_list as $modifier){
-                                if(array_key_exists('name', $modifier)){
-                                    $after . '|' . $modifier['name'];
-                                    $temp = mb_str_split($modifier['name']);
-                                    $argument_array[] = '|';
-                                    foreach($temp as $char){
-                                        $after_array[] = $char;
-                                    }
-                                    foreach($modifier['argument'] as $argument){
-                                        $after .= $argument['string'];
-                                        foreach($argument['array'] as $char){
-                                            $after_array[] = $char;
-                                        }
-                                    }
-                                }
-                            }
-                            */
-                            d($modifier_list);
                             $list = Parse::value(
                                 $object,
                                 [
