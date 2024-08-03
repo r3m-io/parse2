@@ -13,6 +13,7 @@ class Variable
         $count = count($input['array']);
         $is_variable = false;
         d($input['string']);
+        $set_depth = 0;
         foreach($input['array'] as $nr => $char){
             $previous = $input['array'][$nr - 1] ?? null;
             if(
@@ -180,14 +181,23 @@ class Variable
                                     d($input['array'][$i]);
                                 }
                                 elseif($modifier_name){
-                                    d($input['array'][$i]);
-                                    $argument_array[] = $input['array'][$i];
+
                                     if(is_array($input['array'][$i])){
                                         if(array_key_exists('execute', $input['array'][$i])){
                                             $argument .= $input['array'][$i]['execute'];
+                                            $argument_array[] = $input['array'][$i];
                                         }
                                         elseif(array_key_exists('value', $input['array'][$i])){
-                                            $argument .= $input['array'][$i]['value'];
+                                            if($set_depth >= 0){
+                                                $argument .= $input['array'][$i]['value'];
+                                                $argument_array[] = $input['array'][$i];
+                                            }
+                                            if($input['array'][$i]['value'] === '('){
+                                                $set_depth++;
+                                            }
+                                            elseif($input['array'][$i]['value'] === ')'){
+                                                $set_depth--;
+                                            }
                                         }
                                     } else {
                                         $argument .= $input['array'][$i];
