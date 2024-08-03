@@ -12,7 +12,7 @@ class Variable
     public static function define(App $object, $input, $flags, $options){
         $count = count($input['array']);
         $is_variable = false;
-        d($input);
+        d($input['string']);
         foreach($input['array'] as $nr => $char){
             $previous = $input['array'][$nr - 1] ?? null;
             if(
