@@ -263,6 +263,7 @@ class Method
                 }
             }
         }
+        /*
         if(array_key_exists(0, $argument_array)){
             $argument_value = Parse::value(
                 $object,
@@ -276,6 +277,7 @@ class Method
             $argument_list[] = $argument_value;
             ddd($argument_list);
         }
+        */
         return $input;
     }
 }
