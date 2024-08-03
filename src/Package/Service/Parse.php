@@ -42,7 +42,7 @@ class Parse
             $cache_url = $cache_dir . $hash . $object->config('extension.json');
             if(File::exist($cache_url)){
                 $tags = File::read($cache_url);
-                $tags = Core::object($tags, Core::OBJECT_JSON_LINE);
+                $tags = Core::object($tags, Core::OBJECT_ARRAY);
                 $duration = (microtime(true) - $start) * 1000 . ' msec';
                 d($cache_url);
                 ddd($duration);
