@@ -33,7 +33,7 @@ class Variable
                 array_key_exists('value', $char)
             ){
                 d($char);
-                if($char['value'] === '$'){
+                if($char['value'] === '$' && $input['array'][$nr] !== null){
                     d($nr);
                     d($count);
                     d('yes');
