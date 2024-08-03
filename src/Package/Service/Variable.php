@@ -234,18 +234,6 @@ class Variable
                                             $argument_array[] = $input['array'][$i];
                                         }
                                         elseif(array_key_exists('value', $input['array'][$i])){
-                                            if($input['array'][$i]['value'] === '('){
-                                                $set_depth++;
-                                            }
-                                            elseif($input['array'][$i]['value'] === ')'){
-                                                $set_depth--;
-                                                if($set_depth < 0){
-                                                    break;
-                                                }
-                                            }
-                                            elseif($input['array'][$i]['value'] === '}}'){
-                                                break;
-                                            }
                                             $argument .= $input['array'][$i]['value'];
                                             $argument_array[] = $input['array'][$i];
                                         }
