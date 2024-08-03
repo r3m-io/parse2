@@ -174,7 +174,7 @@ class Parse
                 }
                 elseif($curly_count === 0){
                     if($tag){
-                        $tag .= $char . $char;
+                        $tag .= $char;
                         ddd($tag);
                         $column[$line]++;
                         $column[$line]++;
