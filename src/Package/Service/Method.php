@@ -203,6 +203,7 @@ class Method
                         $argument_array[] = $char;
                         $argument .= $char['value'];
                         d($argument);
+                        ddd($argument_array);
                         $argument_value = Parse::value(
                             $object,
                             [
