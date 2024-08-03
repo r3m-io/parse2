@@ -435,7 +435,9 @@ class Parse
 //                                        '/', //++ -- ** // (// is always =1)
                                     ],
                                     true
-                                )
+                                ) &&
+                                $is_single_quoted === false &&
+                                $is_double_quoted === false
                             ){
                                 $operator = $char;
                                 continue;
@@ -453,6 +455,7 @@ class Parse
                                 ) {
                                     $is_after = true;
                                     d($char);
+                                    d($after);
                                     ddd($operator);
                                 } else {
                                     if($operator === '.' && $char === '='){
