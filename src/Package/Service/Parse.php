@@ -83,10 +83,15 @@ class Parse
                     $column[$line] = 1;
                 }
                 if($char !== "\n"){
+                    if($column[$line] > 212){
+                        d($char);
+                    }
                     $column[$line]++;
                 }
             }
         }
+        $duration = (microtime(true) - $start) * 1000 . ' msec';
+        ddd($duration);
         ddd($column);
 
 
