@@ -150,6 +150,7 @@ class Variable
                                     $has_modifier === false
                                 ){
                                     $has_modifier = true;
+                                    $input['array'][$i] = null;
                                 }
                                 elseif($has_modifier === false) {
                                     break;
@@ -160,6 +161,7 @@ class Variable
                                     $modifier_name && $has_name === false
                                 ) {
                                     $has_name = true;
+                                    $input['array'][$i] = null;
                                     /*
                                     if($has_name === true) {
                                         $argument_list[] = Parse::value(
@@ -212,6 +214,7 @@ class Variable
                                 $input['array'][$i] = null;
                             }
                             elseif($has_modifier === true){
+                                /*
                                 if(
                                     is_array($input['array'][$i]) &&
                                     array_key_exists('value', $input['array'][$i])
@@ -247,7 +250,8 @@ class Variable
                                         }
                                     }
                                 }
-                                elseif($has_name === false) {
+                                */
+                                if($has_name === false) {
                                     if(is_array($input['array'][$i])){
                                         if(array_key_exists('execute', $input['array'][$i])){
                                             $modifier_name .= $input['array'][$i]['execute'];
@@ -258,6 +262,7 @@ class Variable
                                     } else {
                                         $modifier_name .= $input['array'][$i];
                                     }
+                                    $input['array'][$i] = null;
                                 } else {
                                     $argument_array[] = $input['array'][$i];
                                     if(is_array($input['array'][$i])){
