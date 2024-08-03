@@ -1058,7 +1058,7 @@ class Parse
     {
         $is_single_quote = false;
         $is_double_quote = false;
-        foreach($input as $nr => $char){
+        foreach($input['array'] as $nr => $char){
             if(
                 (
                     (
@@ -1129,11 +1129,12 @@ class Parse
                 $is_single_quote === false &&
                 $is_double_quote === false
             ){
-                unset($input[$nr]);
+                unset($input['array'][$nr]);
             }
         }
         //re-index from 0
-        return array_values($input);
+        $input['array'] = array_values($input['array']);
+        return $input;
     }
 
     public static function operator_symbol(App $object, $input, $flags, $options): bool | string
@@ -1387,10 +1388,9 @@ class Parse
         $input = Symbol::define($object, $input, $flags, $options);
         $input = Cast::define($object, $input, $flags, $options);
         $input = Method::define($object, $input, $flags, $options);
-        ddd($input);
-        $input['array'] = Variable::define($object, $input['array'], $flags, $options);
+        $input = Variable::define($object, $input, $flags, $options);
 //        d($input);
-        $input['array'] = Parse::remove_whitespace($object, $input['array'], $flags, $options);
+        $input = Parse::remove_whitespace($object, $input, $flags, $options);
         return $input;
         ddd($input);
 

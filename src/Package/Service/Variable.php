@@ -10,10 +10,10 @@ use Exception;
 class Variable
 {
     public static function define(App $object, $input, $flags, $options){
-        $count = count($input);
+        $count = count($input['array']);
         $is_variable = false;
-        foreach($input as $nr => $char){
-            $previous = $input[$nr - 1] ?? null;
+        foreach($input['array'] as $nr => $char){
+            $previous = $input['array'][$nr - 1] ?? null;
             if(
                 is_array($char) &&
                 array_key_exists('value', $char)
@@ -23,26 +23,26 @@ class Variable
                     $name = '$';
                     for($i = $nr + 1; $i < $count; $i++){
                         if(
-                            is_array($input[$i]) &&
-                            array_key_exists('value', $input[$i])
+                            is_array($input['array'][$i]) &&
+                            array_key_exists('value', $input['array'][$i])
                         ){
                             if(
                                 in_array(
-                                    $input[$i]['value'],
+                                    $input['array'][$i]['value'],
                                     [
                                         '_',
                                         '.'
                                     ]
                                 )
                             ){
-                                $name .= $input[$i]['value'];
+                                $name .= $input['array'][$i]['value'];
                             } else {
                                 break;
                             }
                         } else {
                             if(
                                 !in_array(
-                                    $input[$i],
+                                    $input['array'][$i],
                                     [
                                         ' ',
                                         "\n",
@@ -51,7 +51,7 @@ class Variable
                                     ]
                                 )
                             ){
-                                $name .= $input[$i];
+                                $name .= $input['array'][$i];
                             }
 
                         }
@@ -65,10 +65,10 @@ class Variable
                         ){
                             $is_reference = $previous['value'] === '&';
                             if($is_reference){
-                                $input[$nr - 1] = null;
+                                $input['array'][$nr - 1] = null;
                             }
                         }
-                        $input[$is_variable] = [
+                        $input['array'][$is_variable] = [
                             'type' => 'variable',
                             'value' => $name,
                             'name' => substr($name, 1),
@@ -80,15 +80,15 @@ class Variable
                         $argument_list = [];
                         $modifier_name = '';
                         for($i = $is_variable + 1; $i < $count; $i++){
-                            $previous = $input[$i - 1] ?? null;
-                            $next = $input[$i + 1] ?? null;
+                            $previous = $input['array'][$i - 1] ?? null;
+                            $next = $input['array'][$i + 1] ?? null;
                             if(
-                                is_array($input[$i]) &&
-                                array_key_exists('value', $input[$i])
+                                is_array($input['array'][$i]) &&
+                                array_key_exists('value', $input['array'][$i])
                             ){
                                 if(
                                     in_array(
-                                        $input[$i]['value'],
+                                        $input['array'][$i]['value'],
                                         [
                                             '_',
                                             '.'
@@ -96,10 +96,10 @@ class Variable
                                     ) &&
                                     $has_modifier === false
                                 ){
-                                    $input[$i] = null;
+                                    $input['array'][$i] = null;
                                 }
                                 elseif(
-                                    $input[$i]['value'] === '|' &&
+                                    $input['array'][$i]['value'] === '|' &&
                                     $previous !== '|' &&
                                     $next !== '|'
                                 ){
@@ -135,11 +135,11 @@ class Variable
                                 */
                             }
                             elseif($has_modifier !== true) {
-                                $input[$i] = null;
+                                $input['array'][$i] = null;
                             }
                             elseif($has_modifier === true){
-                                if(is_array($input[$i])){
-                                    d($input[$i]);
+                                if(is_array($input['array'][$i])){
+                                    d($input['array'][$i]);
                                     d($modifier_name);
                                     /*
                                     if($input[$i]['value'] === ':'){
