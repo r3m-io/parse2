@@ -57,7 +57,7 @@ class Parse
         if($tags === false){
             $tags = Parse::tags($object, $template, $flags, $options);
             $tags = Parse::tags_remove($object, $tags, $flags, $options);
-            $tags = Parse::variable($object, $tags, $flags, $options);
+            $tags = Parse::ast($object, $tags, $flags, $options);
             $is_new = true;
         }
         if($cache_url && $is_new === true){
@@ -319,7 +319,7 @@ class Parse
     /**
      * @throws Exception
      */
-    public static function variable(App $object, $tags, $flags, $options): array
+    public static function ast(App $object, $tags, $flags, $options): array
     {
         $cache = $object->get(App::CACHE);
 
