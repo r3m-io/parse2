@@ -60,8 +60,6 @@ class Parse
     {
         $start = microtime(true);
         $split = mb_str_split($string, 1);
-        $duration = (microtime(true) - $start) * 1000 . ' msec';
-        ddd($duration);
         $curly_count = 0;
         $line = 1;
         $column = [];
@@ -227,8 +225,9 @@ class Parse
             if($char !== "\n"){
                 $column[$line]++;
             }
-
         }
+        $duration = (microtime(true) - $start) * 1000 . ' msec';
+        ddd($duration);
         return $tag_list;
     }
 
