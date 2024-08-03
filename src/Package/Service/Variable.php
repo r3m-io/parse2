@@ -15,7 +15,10 @@ class Variable
         d($input['array']);
         $set_depth = 0;
         foreach($input['array'] as $nr => $char){
-            if(is_array($input['array'][$nr - 1])){
+            if(
+                array_key_exists($nr - 1,$input['array']) &&
+                is_array($input['array'][$nr - 1])
+            ){
                 if(array_key_exists('execute', $input['array'][$nr - 1])){
                     $previous = $input['array'][$nr - 1]['execute'] ?? null;
                 }
