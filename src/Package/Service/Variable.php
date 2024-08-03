@@ -187,10 +187,7 @@ class Variable
                                             $argument_array[] = $input['array'][$i];
                                         }
                                         elseif(array_key_exists('value', $input['array'][$i])){
-                                            if($set_depth >= 0){
-                                                $argument .= $input['array'][$i]['value'];
-                                                $argument_array[] = $input['array'][$i];
-                                            }
+
                                             if($input['array'][$i]['value'] === '('){
                                                 $set_depth++;
                                             }
@@ -199,6 +196,10 @@ class Variable
                                                 if($set_depth < 0){
                                                     ddd($argument);
                                                 }
+                                            }
+                                            if($set_depth >= 0){
+                                                $argument .= $input['array'][$i]['value'];
+                                                $argument_array[] = $input['array'][$i];
                                             }
                                         }
                                     } else {
