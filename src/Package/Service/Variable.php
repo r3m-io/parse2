@@ -152,6 +152,8 @@ class Variable
                                 }
                                 elseif($has_modifier === false) {
                                     break;
+                                } else {
+                                    d($input['array'][$i]);
                                 }
                             }
                             elseif($has_modifier === false) {
