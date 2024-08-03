@@ -12,6 +12,7 @@ class Variable
     public static function define(App $object, $input, $flags, $options){
         $count = count($input['array']);
         $is_variable = false;
+        d($input);
         foreach($input['array'] as $nr => $char){
             $previous = $input['array'][$nr - 1] ?? null;
             if(
@@ -144,15 +145,16 @@ class Variable
                                 elseif(
                                     $input['array'][$i]['value'] === '|' &&
                                     $previous !== '|' &&
-                                    $next !== '|'
+                                    $next !== '|' &&
+                                    $has_modifier === false
                                 ){
                                     $has_modifier = true;
                                 }
-                                elseif($has_modifier !== true) {
+                                elseif($has_modifier === false) {
                                     break;
                                 }
                             }
-                            elseif($has_modifier !== true) {
+                            elseif($has_modifier === false) {
                                 $input['array'][$i] = null;
                             }
                             elseif($has_modifier === true){
@@ -204,6 +206,7 @@ class Variable
                                         $modifier_name .= $input['array'][$i];
                                     }
                                 } else {
+                                    d($input['array'][$i]);
                                     $argument_array[] = $input['array'][$i];
                                     if(is_array($input['array'][$i])){
                                         if(array_key_exists('execute', $input['array'][$i])){
