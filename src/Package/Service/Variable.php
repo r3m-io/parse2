@@ -71,6 +71,7 @@ class Variable
                             }
                         }
                         if($name === '$'){
+                            trace();
                             d($input);
                             ddd($is_variable);
                         }
