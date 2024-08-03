@@ -87,8 +87,6 @@ class Parse
                 elseif($char === "\n"){
                     $line++;
                     $column[$line] = 1;
-                } else {
-                    $column[$line]++;
                 }
                 if(
                     $char === '\'' &&
@@ -246,6 +244,9 @@ class Parse
                 }
                 elseif($tag){
                     $tag .= $char;
+                }
+                if($char !== "\n") {
+                    $column[$line]++;
                 }
             }
         }
