@@ -57,10 +57,15 @@ class Parse
         if($tags === false){
             $tags = Parse::tags($object, $template, $flags, $options);
             $tags = Parse::tags_remove($object, $tags, $flags, $options);
-            $tags = Parse::ast($object, $tags, $flags, $options);
+            $tags = Parse::abstract_syntax_tree($object, $tags, $flags, $options);
             $is_new = true;
         }
-        if($cache_url && $is_new === true){
+        if(
+            property_exists($options, 'ramdisk') &&
+            $options->ramdisk === true &&
+            $cache_url &&
+            $is_new === true
+        ){
             Dir::create($cache_dir, Dir::CHMOD);
             if($object->config('framework.environment') === Config::MODE_DEVELOPMENT){
                 File::write($cache_url, Core::object($tags, Core::OBJECT_JSON));
@@ -319,7 +324,7 @@ class Parse
     /**
      * @throws Exception
      */
-    public static function ast(App $object, $tags, $flags, $options): array
+    public static function abstract_syntax_tree(App $object, $tags, $flags, $options): array
     {
         $cache = $object->get(App::CACHE);
 
