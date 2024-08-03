@@ -72,7 +72,7 @@ class Variable
                             'type' => 'variable',
                             'value' => $name,
                             'name' => substr($name, 1),
-                            'reference' => $is_reference
+                            'is_reference' => $is_reference
                         ];
                         $has_modifier = false;
                         $has_name = false;
