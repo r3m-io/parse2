@@ -37,6 +37,7 @@ class Parse
         ;
         $cache_url = $cache_dir . $hash . $object->config('extension.json');
         $mtime = File::mtime($options->source);
+        $is_new = false;
         if(
             property_exists($options, 'ramdisk') &&
             $options->ramdisk === true
@@ -56,8 +57,9 @@ class Parse
             $tags = Parse::tags($object, $template, $flags, $options);
             $tags = Parse::tags_remove($object, $tags, $flags, $options);
             $tags = Parse::variable($object, $tags, $flags, $options);
+            $is_new = true;
         }
-        if($cache_url){
+        if($cache_url && $is_new === true){
             Dir::create($cache_dir, Dir::CHMOD);
             d($cache_url);
             if($object->config('framework.environment') === Config::MODE_DEVELOPMENT){
