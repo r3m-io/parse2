@@ -120,7 +120,7 @@ class Symbol
                                 'value' => $symbol,
                                 'is_symbol' => true
                             ];
-                            $input[$nr] = null;
+                            $input['array'][$nr] = null;
                             break;
                         default:
                             $input['array'][$nr] = [
