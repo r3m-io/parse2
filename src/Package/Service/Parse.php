@@ -110,6 +110,8 @@ class Parse
         $is_single_quoted = false;
         $is_double_quoted = false;
         $is_tag_in_double_quoted = false;
+        $is_curly_open_in_double_quoted = false;
+        $is_curly_close_in_double_quoted = false;
         $is_curly_open = false;
         $is_curly_close = false;
         $next = false;
@@ -160,12 +162,28 @@ class Parse
                     $is_curly_open = true;
                 }
                 elseif(
+                    $char === '{' &&
+                    $is_curly_open_in_double_quoted === false &&
+                    $is_single_quoted === false &&
+                    $is_double_quoted === false
+                ){
+                    $is_curly_open_in_double_quoted = true;
+                }
+                elseif(
                     $char === '}' &&
                     $is_curly_close === false &&
                     $is_single_quoted === false &&
                     $is_double_quoted === false
                 ){
                     $is_curly_close = true;
+                }
+                elseif(
+                    $char === '}' &&
+                    $is_curly_close_in_double_quoted === false &&
+                    $is_single_quoted === false &&
+                    $is_double_quoted === false
+                ){
+                    $is_curly_close_in_double_quoted = true;
                 }
                 elseif(
                     $char === '{' &&
@@ -187,7 +205,7 @@ class Parse
                 }
                 elseif(
                     $char === '{' &&
-                    $is_curly_open === true &&
+                    $is_curly_open_in_double_quoted === true &&
                     $is_single_quoted === false &&
                     $is_double_quoted === true &&
                     $curly_count === 0
@@ -197,7 +215,7 @@ class Parse
                 }
                 elseif(
                     $char === '}' &&
-                    $is_curly_close === true &&
+                    $is_curly_close_in_double_quoted === true &&
                     $is_single_quoted === false &&
                     $is_double_quoted === true &&
                     $is_tag_in_double_quoted === true
@@ -535,8 +553,8 @@ class Parse
                                 if($operator && $is_after === false){
                                     if($operator === '.' && $char === '='){
                                         $is_after = true;
-                                        //fix false positives
                                     } elseif($operator === '.'){
+                                        //fix false positives
                                         $variable_name .= $operator . $char;
                                         $operator = false;
                                     } elseif(
