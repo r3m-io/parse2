@@ -1073,6 +1073,7 @@ class Parse
     {
         $is_single_quote = false;
         $is_double_quote = false;
+        $is_parse = false;
         foreach($input['array'] as $nr => $char){
             if(
                 (
@@ -1131,6 +1132,21 @@ class Parse
                 $is_double_quote = false;
             }
             elseif(
+                is_array($char) &&
+                array_key_exists('value', $char) &&
+                $char['value'] === '{{'
+            ){
+                $is_parse = true;
+            }
+            elseif(
+                $is_parse === true &&
+                is_array($char) &&
+                array_key_exists('value', $char) &&
+                $char['value'] === '}}'
+            ){
+                $is_parse = false;
+            }
+            elseif(
                 in_array(
                     $char,
                     [
@@ -1141,8 +1157,17 @@ class Parse
                         "\r"
                     ], true
                 ) &&
-                $is_single_quote === false &&
-                $is_double_quote === false
+                (
+                    (
+                        $is_single_quote === false &&
+                        $is_double_quote === false
+                    ) ||
+                    (
+                        $is_single_quote === false &&
+                        $is_double_quote === true &&
+                        $is_parse === true
+                    )
+                )
             ){
                 unset($input['array'][$nr]);
             }
