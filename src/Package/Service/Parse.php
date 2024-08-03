@@ -24,12 +24,14 @@ class Parse
         $start = microtime(true);
         $template = File::read($options->source);
 
+        /*
         $data = [];
         for($i=0; $i < 1000; $i++){
             $content = '{{$config.load =    (  object   ) load_config(&$test.testsome.more, \'{{' . $i . '}}\', "{{$test2 | default : ($test8 | default : true)}}") || config(\'par se\') | default: ($test5|default:($test6|default1:"alles bon")) }}';
             $data[] = $content;
         }
         File::write($options->source, implode(PHP_EOL, $data));
+        */
 
         $tags = Parse::tags($object, $template, $flags, $options);
         $tags = Parse::tags_remove($object, $tags, $flags, $options);
@@ -56,7 +58,10 @@ class Parse
 
     public static function tags(App $object, $string='', $flags, $options): array
     {
+        $start = microtime(true);
         $split = mb_str_split($string, 1);
+        $duration = (microtime(true) - $start) * 1000 . ' msec';
+        ddd($duration);
         $curly_count = 0;
         $line = 1;
         $column = [];
@@ -260,14 +265,7 @@ class Parse
                     array_key_exists('tag', $record)
                 ){
                     $content = trim(substr($record['tag'], 2, -2));
-
-                    $start = microtime(true);
-                    for($i = 0; $i < 1000; $i++){
-                        $hash = hash('sha256', $content . $i);
-                    }
-                    $duration = (microtime(true) - $start) * 1000 . ' msec';
-                    ddd($duration);
-
+                    $hash = hash('sha256', $content);
                     if(substr($content, 0, 1) === '$'){
                         if($cache->has($hash)){
                             $variable = $cache->get($hash);
