@@ -72,28 +72,36 @@ class Parse
         $is_double_quoted = false;
         $is_tag_in_double_quoted = false;
         $next = false;
-        $char = [];
+        $char_list = [];
         for($i = 0; $i < $length; $i+=16){
-            $char[] = $split[$i] ?? null;
-            $char[] = $split[$i+1] ?? null;
-            $char[] = $split[$i+2] ?? null;
-            $char[] = $split[$i+3] ?? null;
-            $char[] = $split[$i+4] ?? null;
-            $char[] = $split[$i+5] ?? null;
-            $char[] = $split[$i+6] ?? null;
-            $char[] = $split[$i+7] ?? null;
-            $char[] = $split[$i+8] ?? null;
-            $char[] = $split[$i+9] ?? null;
-            $char[] = $split[$i+10] ?? null;
-            $char[] = $split[$i+11] ?? null;
-            $char[] = $split[$i+12] ?? null;
-            $char[] = $split[$i+13] ?? null;
-            $char[] = $split[$i+14] ?? null;
-            $char[] = $split[$i+15] ?? null;
+            $char_list[] = $split[$i] ?? null;
+            $char_list[] = $split[$i+1] ?? null;
+            $char_list[] = $split[$i+2] ?? null;
+            $char_list[] = $split[$i+3] ?? null;
+            $char_list[] = $split[$i+4] ?? null;
+            $char_list[] = $split[$i+5] ?? null;
+            $char_list[] = $split[$i+6] ?? null;
+            $char_list[] = $split[$i+7] ?? null;
+            $char_list[] = $split[$i+8] ?? null;
+            $char_list[] = $split[$i+9] ?? null;
+            $char_list[] = $split[$i+10] ?? null;
+            $char_list[] = $split[$i+11] ?? null;
+            $char_list[] = $split[$i+12] ?? null;
+            $char_list[] = $split[$i+13] ?? null;
+            $char_list[] = $split[$i+14] ?? null;
+            $char_list[] = $split[$i+15] ?? null;
 
-            ddd($char);
+            foreach($char_list as $nr => $char){
+                if($char === "\n"){
+                    $line++;
+                    $column[$line] = 1;
+                }
+                if($char !== "\n"){
+                    $column[$line]++;
+                }
+            }
         }
-
+        ddd($column);
 
 
 
