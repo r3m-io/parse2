@@ -27,34 +27,33 @@ class Parse
         $template = File::read($options->source);
         $cache_url = false;
         $cache_dir = false;
+        $tags = false;
+        $hash = hash('sha256', $template);
+        $cache_dir = $object->config('ramdisk.url') .
+            $object->config(Config::POSIX_ID) .
+            $object->config('ds') .
+            'Parse' .
+            $object->config('ds')
+        ;
+        $cache_url = $cache_dir . $hash . $object->config('extension.json');
         if(
             property_exists($options, 'ramdisk') &&
             $options->ramdisk === true
         ){
-            $hash = hash('sha256', $template);
-
-            $cache_dir = $object->config('ramdisk.url') .
-                $object->config(Config::POSIX_ID) .
-                $object->config('ds') .
-                'Parse' .
-                $object->config('ds')
-            ;
-            $cache_url = $cache_dir . $hash . $object->config('extension.json');
             if(File::exist($cache_url)){
                 $tags = File::read($cache_url);
                 $tags = Core::object($tags, Core::OBJECT_ARRAY);
-                $duration = (microtime(true) - $start) * 1000 . ' msec';
-                d($cache_url);
-                ddd($duration);
-                ddd($tags);
             }
-
         }
-
-
-
-
-
+        if($tags === false){
+            $tags = Parse::tags($object, $template, $flags, $options);
+            $tags = Parse::tags_remove($object, $tags, $flags, $options);
+            $tags = Parse::variable($object, $tags, $flags, $options);
+        }
+        if($cache_url){
+            Dir::create($cache_dir, Dir::CHMOD);
+            File::write($cache_url, Core::object($tags, Core::OBJECT_JSON_LINE));
+        }
         /*
         $data = [];
         for($i=0; $i < 1000; $i++){
@@ -63,16 +62,6 @@ class Parse
         }
         File::write($options->source, implode(PHP_EOL, $data));
         */
-
-        $tags = Parse::tags($object, $template, $flags, $options);
-        $tags = Parse::tags_remove($object, $tags, $flags, $options);
-        $duration = (microtime(true) - $start) * 1000 . ' msec';
-        $tags = Parse::variable($object, $tags, $flags, $options);
-
-        if($cache_url){
-            Dir::create($cache_dir, Dir::CHMOD);
-            File::write($cache_url, Core::object($tags, Core::OBJECT_JSON_LINE));
-        }
         $duration = (microtime(true) - $start) * 1000 . ' msec';
         ddd($duration);
         ddd($tags);
