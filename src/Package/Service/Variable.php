@@ -28,6 +28,7 @@ class Variable
             } else {
                 $previous = $input['array'][$nr - 1] ?? null;
             }
+            d($char);
             if(
                 is_array($char) &&
                 array_key_exists('value', $char)
