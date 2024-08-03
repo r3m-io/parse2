@@ -1183,6 +1183,13 @@ class Parse
             ){
                 unset($input['array'][$nr]);
             }
+            elseif(
+                $char === null &&
+                $is_single_quote === false &&
+                $is_double_quote === true
+            ){
+                unset($input['array'][$nr]);
+            }
         }
         //re-index from 0
         $input['array'] = array_values($input['array']);
