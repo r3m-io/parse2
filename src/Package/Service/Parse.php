@@ -2,8 +2,10 @@
 namespace Package\R3m\Io\Parse\Service;
 
 use R3m\Io\App;
+use R3m\Io\Config;
 
 use R3m\Io\Module\Core;
+use R3m\Io\Module\Dir;
 use R3m\Io\Module\File;
 
 use Exception;
@@ -23,6 +25,28 @@ class Parse
         // Step 1: Read the template file
         $start = microtime(true);
         $template = File::read($options->source);
+        $cache_url = false;
+        $cache_dir = false;
+        if(
+            property_exists($options, 'ramdisk') &&
+            $options->ramdisk === true
+        ){
+            $hash = hash('sha256', $template);
+
+            $cache_dir = $object->config('ramdisk.url') .
+                $object->config(Config::POSIX_ID) .
+                $object->config('ds') .
+                'Parse' .
+                $object->config('ds')
+            ;
+            $cache_url = $cache_dir . $hash . $object->config('extension.json');
+            d($cache_url);
+            d(File::exist($cache_url));
+        }
+
+
+
+
 
         /*
         $data = [];
@@ -37,6 +61,11 @@ class Parse
         $tags = Parse::tags_remove($object, $tags, $flags, $options);
         $duration = (microtime(true) - $start) * 1000 . ' msec';
         $tags = Parse::variable($object, $tags, $flags, $options);
+
+        if($cache_url){
+            Dir::create($cache_dir, Dir::CHMOD);
+            File::write($cache_url, Core::object($tags, Core::OBJECT_JSON_LINE));
+        }
         $duration = (microtime(true) - $start) * 1000 . ' msec';
         ddd($duration);
         ddd($tags);
