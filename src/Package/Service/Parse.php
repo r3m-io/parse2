@@ -76,6 +76,7 @@ class Parse
         $next = false;
         $chunk = 64;
         for($i = 0; $i < $length; $i+=$chunk){
+            echo 'i: ' . $i . PHP_EOL;
             $char_list = [];
             for($j = 0; $j < $chunk; $j++){
                 $char_list[] = $split[$i + $j] ?? null;
@@ -165,6 +166,8 @@ class Parse
                 ){
                     $curly_count--;
                     $is_tag_in_double_quoted = false;
+                    $is_curly_open = false;
+                    $is_curly_close = false;
                 }
                 if(
                     $curly_count === 1 &&
