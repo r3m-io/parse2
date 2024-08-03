@@ -12,7 +12,6 @@ class Variable
     public static function define(App $object, $input, $flags, $options){
         $count = count($input['array']);
         $is_variable = false;
-        d($input['string']);
         $set_depth = 0;
         foreach($input['array'] as $nr => $char){
             if(
@@ -32,12 +31,7 @@ class Variable
                 is_array($char) &&
                 array_key_exists('value', $char)
             ){
-                d($char);
                 if($char['value'] === '$' && $input['array'][$nr] !== null){
-                    d($nr);
-                    d($count);
-                    d('yes');
-                    d($input['array']);
                     $is_variable = $nr;
                     $name = '$';
                     for($i = $nr + 1; $i < $count; $i++){
