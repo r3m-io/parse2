@@ -72,7 +72,7 @@ class Parse
         $is_double_quoted = false;
         $is_tag_in_double_quoted = false;
         $next = false;
-        $chunk = 32;
+        $chunk = 256;
         for($i = 0; $i < $length; $i+=$chunk){
             $char_list = [];
             for($j = 0; $j < $chunk; $j++){
