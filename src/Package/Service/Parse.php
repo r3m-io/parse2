@@ -46,6 +46,7 @@ class Parse
                 File::exist($cache_url) &&
                 $mtime === File::mtime($cache_url)
             ){
+                d($cache_url);
                 $tags = File::read($cache_url);
                 $tags = Core::object($tags, Core::OBJECT_ARRAY);
             }
@@ -61,7 +62,6 @@ class Parse
         }
         if($cache_url && $is_new === true){
             Dir::create($cache_dir, Dir::CHMOD);
-            d($cache_url);
             if($object->config('framework.environment') === Config::MODE_DEVELOPMENT){
                 File::write($cache_url, Core::object($tags, Core::OBJECT_JSON));
             } else {
