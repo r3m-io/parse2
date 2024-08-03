@@ -72,9 +72,10 @@ class Parse
         $is_double_quoted = false;
         $is_tag_in_double_quoted = false;
         $next = false;
-        for($i = 0; $i < $length; $i+=16){
+        $chunk = 64;
+        for($i = 0; $i < $length; $i+=$chunk){
             $char_list = [];
-            for($j = 0; $j < 16; $j++){
+            for($j = 0; $j < $chunk; $j++){
                 $char_list[] = $split[$i + $j] ?? null;
             }
             foreach($char_list as $nr => $char){
