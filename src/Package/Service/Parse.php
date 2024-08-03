@@ -1402,6 +1402,10 @@ class Parse
         $list = [];
 
         $counter = 0;
+        if($input['string'] === '(  object   ) load_config(&$test.testsome.more, \'{{0}}\', "{{$test2 | default : ($test8 | default : true)}}") || config(\'par se\') '){
+            d($input);
+            ddd('yes');
+        }
         d($input);
         trace();
         $input = Symbol::define($object, $input, $flags, $options);
