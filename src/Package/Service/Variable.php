@@ -10,11 +10,6 @@ use Exception;
 class Variable
 {
     public static function define(App $object, $input, $flags, $options){
-        $cache = $object->get(App::CACHE);
-        $hash = hash('sha256', $input['string']);
-        if($cache->has($hash)){
-            return $cache->get($hash);
-        }
         $count = count($input['array']);
         $is_variable = false;
         $set_depth = 0;
@@ -215,6 +210,43 @@ class Variable
                                 $input['array'][$i] = null;
                             }
                             elseif($has_modifier === true){
+                                /*
+                                if(
+                                    is_array($input['array'][$i]) &&
+                                    array_key_exists('value', $input['array'][$i])
+                                ){
+                                    d($input['array'][$i]);
+                                    if($input['array'][$i]['value'] === ':'){
+                                        if($has_name === true) {
+                                            $argument_list[] = Parse::value(
+                                                $object,
+                                                [
+                                                    'string' => $argument,
+                                                    'array' => $argument_array
+                                                ],
+                                                $flags,
+                                                $options
+                                            );
+                                            ddd($argument_list);
+                                            $argument_array = [];
+                                        } else {
+                                            $has_name = true;
+                                        }
+                                    }
+                                    if($has_name === false){
+                                        if(is_array($input['array'][$i])){
+                                            if(array_key_exists('execute', $input['array'][$i])){
+                                                $modifier_name .= $input['array'][$i]['execute'];
+                                            }
+                                            elseif(array_key_exists('value', $input['array'][$i])){
+                                                $modifier_name .= $input['array'][$i]['value'];
+                                            }
+                                        } else {
+                                            $modifier_name .= $input['array'][$i];
+                                        }
+                                    }
+                                }
+                                */
                                 if($has_name === false) {
                                     if(is_array($input['array'][$i])){
                                         if(array_key_exists('execute', $input['array'][$i])){
@@ -265,7 +297,6 @@ class Variable
             }
 
         }
-        $cache->set($hash, $input);
 //        $input = Parse::remove_whitespace($object, $input, $flags, $options);
         return $input;
     }
