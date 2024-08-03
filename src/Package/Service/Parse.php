@@ -246,7 +246,9 @@ class Parse
                     array_key_exists('tag', $record)
                 ){
                     $content = trim(substr($record['tag'], 2, -2));
-                    d($content);
+//                    d($content);
+                    //make cache per content
+
                     if(substr($content, 0, 1) === '$'){
                         //we have a variable assign or define
                         $length = strlen($content);
