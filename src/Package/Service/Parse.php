@@ -1385,9 +1385,9 @@ class Parse
 
         $counter = 0;
         $input = Symbol::define($object, $input, $flags, $options);
-        $input['array'] = Cast::define($object, $input['array'], $flags, $options);
-        $input['array'] = Method::define($object, $input['array'], $flags, $options);
-//        d($input);
+        $input = Cast::define($object, $input, $flags, $options);
+        $input = Method::define($object, $input, $flags, $options);
+        ddd($input);
         $input['array'] = Variable::define($object, $input['array'], $flags, $options);
 //        d($input);
         $input['array'] = Parse::remove_whitespace($object, $input['array'], $flags, $options);

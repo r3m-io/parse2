@@ -19,7 +19,7 @@ class Method
         $is_double_quote = false;
         $argument = [];
         $argument_list = [];
-        foreach($input as $nr => $char){
+        foreach($input['array'] as $nr => $char){
             if(
                 is_array($char) &&
                 array_key_exists('value', $char) &&
@@ -29,26 +29,26 @@ class Method
                 $name = '';
                 $is_method = $nr;
                 for($i = $nr - 1; $i >= 0; $i--){
-                    if($input[$i] !== null){
-                        if(is_array($input[$i])){
+                    if($input['array'][$i] !== null){
+                        if(is_array($input['array'][$i])){
                             if(
-                                array_key_exists('value', $input[$i]) &&
+                                array_key_exists('value', $input['array'][$i]) &&
                                 in_array(
-                                    $input[$i]['value'],
+                                    $input['array'][$i]['value'],
                                     [
                                         '.',
                                         "_",
                                     ]
                                 )
                             ){
-                                $name .= $input[$i]['value'];
+                                $name .= $input['array'][$i]['value'];
                             } else {
                                 break;
                             }
                         } else {
                             if(
                                 in_array(
-                                    $input[$i],
+                                    $input['array'][$i],
                                     [
                                         null,
                                         ' ',
@@ -62,7 +62,7 @@ class Method
                             ){
                                 break;
                             } else {
-                                $name .= $input[$i];
+                                $name .= $input['array'][$i];
                             }
                         }
                     }
@@ -91,20 +91,20 @@ class Method
                 ){
                     $set_depth--;
                     if($set_depth === 0){
-                        $input[$is_method]['method'] = [
+                        $input['array'][$is_method]['method'] = [
                             'name' => $name,
                             'argument' => $argument_list
                         ];
-                        $input[$is_method]['is_method'] = true;
-                        unset($input[$is_method]['is_symbol']);
-                        unset($input[$is_method]['value']);
+                        $input['array'][$is_method]['is_method'] = true;
+                        unset($input['array'][$is_method]['is_symbol']);
+                        unset($input['array'][$is_method]['value']);
                         $argument_list = [];
                         $argument = [];
                         for($i = $is_method - 1; $i >= 0; $i--){
                             if(
-                                !is_array($input[$i]) &&
+                                !is_array($input['array'][$i]) &&
                                 in_array(
-                                    $input[$i],
+                                    $input['array'][$i],
                                     [
                                         null,
                                         ' ',
@@ -118,25 +118,25 @@ class Method
                             ){
                                 break;
                             }
-                            elseif(is_array($input[$i])){
+                            elseif(is_array($input['array'][$i])){
                                 if(
-                                    array_key_exists('value', $input[$i]) &&
+                                    array_key_exists('value', $input['array'][$i]) &&
                                     in_array(
-                                        $input[$i]['value'],
+                                        $input['array'][$i]['value'],
                                         [
                                             '.',
                                             "_",
                                         ]
                                     )
                                 ){
-                                    $input[$i] = null;
+                                    $input['array'][$i] = null;
                                 }
                             } else {
-                                $input[$i] = null;
+                                $input['array'][$i] = null;
                             }
                         }
                         for($i = $is_method + 1; $i <= $nr; $i++){
-                            $input[$i] = null;
+                            $input['array'][$i] = null;
                         }
                         $is_method = false;
                         $has_name = false;

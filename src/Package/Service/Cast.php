@@ -13,7 +13,7 @@ class Cast
     {
         $is_collect = false;
         $define = '';
-        foreach($input as $nr => $char){
+        foreach($input['array'] as $nr => $char){
             if(
                 is_array($char) &&
                 array_key_exists('value', $char) &&
@@ -31,7 +31,7 @@ class Cast
                     switch(strtolower($define)){
                         case 'int':
                         case 'integer':
-                            $input[$is_collect] = [
+                            $input['array'][$is_collect] = [
                                 'value' => $define,
                                 'is_cast' => true,
                                 'cast' => 'integer'
@@ -40,7 +40,7 @@ class Cast
                         break;
                         case 'float':
                         case 'double':
-                            $input[$is_collect] = [
+                            $input['array'][$is_collect] = [
                                 'value' => $define,
                                 'is_cast' => true,
                                 'cast' => 'float'
@@ -49,7 +49,7 @@ class Cast
                         break;
                         case 'boolean':
                         case 'bool':
-                            $input[$is_collect] = [
+                            $input['array'][$is_collect] = [
                                 'value' => $define,
                                 'is_cast' => true,
                                 'cast' => 'boolean'
@@ -57,7 +57,7 @@ class Cast
                             $is_define = true;
                         break;
                         case 'array':
-                            $input[$is_collect] = [
+                            $input['array'][$is_collect] = [
                                 'value' => $define,
                                 'is_cast' => true,
                                 'cast' => 'array'
@@ -65,7 +65,7 @@ class Cast
                             $is_define = true;
                         break;
                         case 'object':
-                            $input[$is_collect] = [
+                            $input['array'][$is_collect] = [
                                 'value' => $define,
                                 'is_cast' => true,
                                 'cast' => 'object'
@@ -73,7 +73,7 @@ class Cast
                             $is_define = true;
                         break;
                         case 'clone':
-                            $input[$is_collect] = [
+                            $input['array'][$is_collect] = [
                                 'value' => $define,
                                 'is_cast' => true,
                                 'cast' => 'clone'
@@ -83,7 +83,7 @@ class Cast
                     }
                     if($is_define){
                         for($i = $is_collect + 1; $i <= $nr; $i++){
-                            $input[$i] = null;
+                            $input['array'][$i] = null;
                         }
                     }
                 }
