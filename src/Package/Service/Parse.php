@@ -522,7 +522,8 @@ class Parse
                                 'modifier' => $modifier_list,
                             ];
                         } else {
-                            d($after);
+                            // missing modifier
+                            ddd($after);
                             /*
                             foreach($modifier_list as $modifier){
                                 if(array_key_exists('name', $modifier)){
