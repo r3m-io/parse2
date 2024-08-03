@@ -256,12 +256,7 @@ class Parse
             }
         }
         $duration = (microtime(true) - $start) * 1000 . ' msec';
-        d($tag_list);
         ddd($duration);
-
-
-
-
         foreach($split as $nr => $char){
             if(array_key_exists($nr + 1, $split)){
                 $next = $split[$nr + 1];
