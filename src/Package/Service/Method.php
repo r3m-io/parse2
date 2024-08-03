@@ -20,7 +20,8 @@ class Method
         $argument = '';
         $argument_array = [];
         $argument_list = [];
-        d($input['array']);
+        d($input);
+        trace();
         foreach($input['array'] as $nr => $char){
             if(
                 is_array($char) &&
