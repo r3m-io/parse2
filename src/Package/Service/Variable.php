@@ -198,7 +198,6 @@ class Variable
                                                 }
                                             }
                                             elseif($input['array'][$i]['value'] === '}}'){
-                                                $input['array'][$i] = null;
                                                 break;
                                             }
                                             if($set_depth >= 0){
