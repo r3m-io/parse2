@@ -456,6 +456,8 @@ class Parse
                                     $is_after = true;
                                     d($char);
                                     d($after);
+                                    d($i);
+                                    d($data);
                                     ddd($operator);
                                 } else {
                                     if($operator === '.' && $char === '='){
