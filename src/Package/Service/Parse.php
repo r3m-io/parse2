@@ -443,29 +443,16 @@ class Parse
                                 continue;
                             }
                             if($operator && $is_after === false){
-                                if(
-                                    (
-                                        $char === ' ' ||
-                                        $char === "\t" ||
-                                        $char === "\n" ||
-                                        $char === "\r"
-                                    ) &&
-                                    $is_single_quoted === false &&
-                                    $is_double_quoted === false
-                                ) {
+                                if($operator === '.' && $char === '='){
                                     $is_after = true;
-                                    d($char);
-                                    d($after);
-                                    d($i);
-                                    d($data);
-                                    ddd($operator);
+                                    //fix false positives
+                                } elseif($operator === '.'){
+                                    $variable_name .= $operator . $char;
+                                    $operator = false;
                                 } else {
-                                    if($operator === '.' && $char === '='){
-                                        //fix false positives
-                                    } elseif($operator === '.'){
-                                        $variable_name .= $operator . $char;
-                                        $operator = false;
-                                    }
+                                    $is_after = true;
+                                    $after .= $char;
+                                    $after_array[] = $char;
                                 }
                             }
                             elseif($is_after) {
