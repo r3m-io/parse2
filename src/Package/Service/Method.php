@@ -11,7 +11,11 @@ class Method
 {
     public static function define(App $object, $input, $flags, $options): array
     {
-        d($input['string']);
+        $cache = $object->get('cache');
+        $hash = hash('sha256', $input['string']);
+        if($cache->has($hash)){
+            return $cache->get($hash);
+        }
         $has_name = false;
         $name = false;
         $is_method = false;
