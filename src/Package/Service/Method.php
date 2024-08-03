@@ -283,6 +283,7 @@ class Method
             ddd($argument_list);
         }
         */
+        $cache->set($hash, $input);
         return $input;
     }
 }
