@@ -253,9 +253,12 @@ class Method
                             //nothing
                         } else {
                             $argument_array[] = $char;
-                            $argument .= $char;
+                            if(is_array($char) && array_key_exists('value', $char)){
+                                $argument .= $char['value'];
+                            } else {
+                                $argument .= $char;
+                            }
                         }
-
                     }
                 }
             }
