@@ -52,6 +52,7 @@ class Parse
         }
         if($cache_url){
             Dir::create($cache_dir, Dir::CHMOD);
+            d($cache_url);
             File::write($cache_url, Core::object($tags, Core::OBJECT_JSON_LINE));
         }
         /*
