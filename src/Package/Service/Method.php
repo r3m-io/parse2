@@ -220,7 +220,7 @@ class Method
                         $is_single_quote === false &&
                         $is_double_quote === false
                     ){
-                        if(array_key_exists(0, $argument)){
+                        if(array_key_exists(0, $argument_array)){
                             $argument_value = Parse::value(
                                 $object,
                                 [
