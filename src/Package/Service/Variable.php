@@ -87,12 +87,6 @@ class Variable
                                 $input['array'][$nr - 1] = null;
                             }
                         }
-                        if($name === '$'){
-                            ddd($input['array'][$is_variable]);
-                            trace();
-                            d($input);
-                            ddd($is_variable);
-                        }
                         $input['array'][$is_variable] = [
                             'type' => 'variable',
                             'value' => $name,
@@ -177,7 +171,8 @@ class Variable
                                 }
                                 elseif($has_modifier === false) {
                                     break;
-                                } elseif(
+                                }
+                                elseif(
                                     $input['array'][$i]['value'] === ':' &&
                                     $previous !== ':' &&
                                     $next !== ':' &&
@@ -185,25 +180,6 @@ class Variable
                                 ) {
                                     $has_name = true;
                                     $input['array'][$i] = null;
-                                    /*
-                                    if($has_name === true) {
-                                        $argument_list[] = Parse::value(
-                                            $object,
-                                            [
-                                                'string' => $argument,
-                                                'array' => $argument_array
-                                            ],
-                                            $flags,
-                                            $options
-                                        );
-                                        ddd($argument_list);
-                                        $argument_array = [];
-                                    } else {
-
-                                        d($modifier_name);
-                                    }
-                                    */
-                                    d($input['array'][$i]);
                                 }
                                 elseif($modifier_name){
                                     if(is_array($input['array'][$i])){
@@ -221,7 +197,10 @@ class Variable
                                                     break;
                                                 }
                                             }
-                                            if($set_depth >= 0){
+                                            if($input['array'][$i]['value'] === '}}'){
+                                                //nothing
+                                            }
+                                            elseif($set_depth >= 0){
                                                 $argument .= $input['array'][$i]['value'];
                                                 $argument_array[] = $input['array'][$i];
                                             }
@@ -287,13 +266,28 @@ class Variable
                                     }
                                     $input['array'][$i] = null;
                                 } else {
-                                    $argument_array[] = $input['array'][$i];
                                     if(is_array($input['array'][$i])){
                                         if(array_key_exists('execute', $input['array'][$i])){
                                             $argument .= $input['array'][$i]['execute'];
+                                            $argument_array[] = $input['array'][$i];
                                         }
                                         elseif(array_key_exists('value', $input['array'][$i])){
-                                            $argument .= $input['array'][$i]['value'];
+                                            if($input['array'][$i]['value'] === '('){
+                                                $set_depth++;
+                                            }
+                                            elseif($input['array'][$i]['value'] === ')'){
+                                                $set_depth--;
+                                                if($set_depth < 0){
+                                                    break;
+                                                }
+                                            }
+                                            if($input['array'][$i]['value'] === '}}'){
+                                                //nothing
+                                            }
+                                            elseif($set_depth >= 0){
+                                                $argument .= $input['array'][$i]['value'];
+                                                $argument_array[] = $input['array'][$i];
+                                            }
                                         }
                                     } else {
                                         $argument .= $input['array'][$i];
