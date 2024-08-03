@@ -71,6 +71,8 @@ class Parse
         $is_single_quoted = false;
         $is_double_quoted = false;
         $is_tag_in_double_quoted = false;
+        $is_curly_open = false;
+        $is_curly_close = false;
         $next = false;
         $chunk = 64;
         for($i = 0; $i < $length; $i+=$chunk){
@@ -82,12 +84,171 @@ class Parse
                 if($char === null){
                     break;
                 }
-                if($char === "\n"){
+                elseif($char === "\n"){
                     $line++;
                     $column[$line] = 1;
-                }
-                if($char !== "\n"){
+                } else {
                     $column[$line]++;
+                }
+                if(
+                    $char === '\'' &&
+                    $is_single_quoted === false
+                ){
+                    $is_single_quoted = true;
+                }
+                elseif(
+                    $char === '\'' &&
+                    $is_single_quoted === true
+                ){
+                    $is_single_quoted = false;
+                }
+                elseif(
+                    $char === '"' &&
+                    $is_double_quoted === false
+                ){
+                    $is_double_quoted = true;
+                }
+                elseif(
+                    $char === '"' &&
+                    $is_double_quoted === true
+                ){
+                    $is_double_quoted = false;
+                }
+                elseif(
+                    $char === '{' &&
+                    $is_curly_open === false &&
+                    $is_single_quoted === false &&
+                    $is_double_quoted === false
+                ){
+                    $is_curly_open = true;
+                }
+                elseif(
+                    $char === '}' &&
+                    $is_curly_close === false &&
+                    $is_single_quoted === false &&
+                    $is_double_quoted === false
+                ){
+                    $is_curly_close = true;
+                }
+                elseif(
+                    $char === '{' &&
+                    $is_curly_open === true &&
+                    $is_single_quoted === false &&
+                    $is_double_quoted === false
+                ){
+                    $curly_count++;
+                }
+                elseif(
+                    $char === '}' &&
+                    $is_curly_close === true &&
+                    $is_single_quoted === false &&
+                    $is_double_quoted === false
+                ){
+                    $curly_count--;
+                }
+                elseif(
+                    $char === '{' &&
+                    $is_curly_open === true &&
+                    $is_single_quoted === false &&
+                    $is_double_quoted === true &&
+                    $curly_count === 0
+                ){
+                    $is_tag_in_double_quoted = true;
+                    $curly_count++;
+                }
+                elseif(
+                    $char === '}' &&
+                    $is_curly_close === true &&
+                    $is_single_quoted === false &&
+                    $is_double_quoted === true &&
+                    $is_tag_in_double_quoted === true
+                ){
+                    $curly_count--;
+                    $is_tag_in_double_quoted = false;
+                }
+                if(
+                    $curly_count === 1 &&
+                    $tag === false
+                ){
+                    $tag = '{';
+                }
+                elseif($curly_count === 0){
+                    if($tag){
+                        $tag .= $char . $char;
+                        ddd($tag);
+                        $column[$line]++;
+                        $column[$line]++;
+                        if(empty($tag_list[$line])){
+                            $tag_list[$line] = [];
+                        }
+                        $explode = explode("\n", $tag);
+                        $count = count($explode);
+                        if($count > 1){
+                            $content = trim(substr($tag, 2, -2));
+                            $length = strlen($explode[0]);
+                            $record = [
+                                'tag' => $tag,
+                                'is_multiline' => true,
+                                'line' => [
+                                    'start' => $line - $count + 1,
+                                    'end' => $line
+                                ],
+                                'length' => [
+                                    'start' => $length,
+                                    'end' => strlen($explode[$count - 1])
+                                ],
+                                'column' => [
+                                    ($line - $count + 1) => [
+                                        'start' => $column[$line - $count + 1] - $length,
+                                        'end' => $column[$line - $count + 1]
+                                    ],
+                                    $line => [
+                                        'start' => $column[$line] - strlen($explode[$count - 1]),
+                                        'end' => $column[$line]
+                                    ]
+                                ]
+                            ];
+                        } else {
+                            $length = strlen($explode[0]);
+                            $record = [
+                                'tag' => $tag,
+                                'line' => $line,
+                                'length' => $length,
+                                'column' => [
+                                    'start' => $column[$line] - $length,
+                                    'end' => $column[$line]
+                                ]
+                            ];
+                            $content = trim(substr($tag, 2, -2));
+                            if(strtoupper(substr($content, 0, 3)) === 'R3M'){
+                                $record['is_header'] = true;
+                                $record['content'] = $content;
+                            }
+                            elseif(
+                                strtoupper($content) === 'LITERAL' ||
+                                $is_literal === true
+                            ){
+                                $is_literal = true;
+                                $record['is_literal'] = true;
+                                $record['is_literal_start'] = true;
+                            }
+                            elseif(
+                                strtoupper($content) === '/LITERAL' ||
+                                $is_literal === true
+                            ){
+                                $is_literal = false;
+                                $record['is_literal'] = true;
+                                $record['is_literal_end'] = true;
+                            }
+                        }
+                        $tag_list[$line][] = $record;
+                        $tag = false;
+                        $column[$line]--;
+                        $column[$line]--;
+                    }
+                }
+                elseif($tag){
+                    $tag .= $char;
                 }
             }
         }
