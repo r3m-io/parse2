@@ -27,7 +27,7 @@ class Parse
         $tags = Parse::tags($object, $template, $flags, $options);
         $tags = Parse::tags_remove($object, $tags, $flags, $options);
         $tags = Parse::variable($object, $tags, $flags, $options);
-        $duration = microtime(true) - $start;
+        $duration = (microtime(true) - $start) * 1000 . ' msec';
         ddd($duration);
         ddd($tags);
 
