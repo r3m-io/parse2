@@ -72,8 +72,8 @@ class Parse
         $is_double_quoted = false;
         $is_tag_in_double_quoted = false;
         $next = false;
-        $char_list = [];
         for($i = 0; $i < $length; $i+=16){
+            $char_list = [];
             for($j = 0; $j < 16; $j++){
                 $char_list[] = $split[$i + $j] ?? null;
             }
@@ -86,7 +86,6 @@ class Parse
                     $column[$line]++;
                 }
             }
-            $char_list = [];
         }
         ddd($column);
 
