@@ -76,11 +76,19 @@ class Variable
                         ];
                         $has_modifier = false;
                         $has_name = false;
-                        $argument = [];
+                        $argument = '';
+                        $argument_array = [];
                         $argument_list = [];
                         $modifier_name = '';
                         for($i = $is_variable + 1; $i < $count; $i++){
                             if(
+                                array_key_exists($i - 1, $input['array']) &&
+                                is_array($input['array'][$i - 1]) &&
+                                array_key_exists('execute', $input['array'][$i - 1])
+                            ){
+                                $previous = $input['array'][$i - 1]['execute'];
+                            }
+                            elseif(
                                 array_key_exists($i - 1, $input['array']) &&
                                 is_array($input['array'][$i - 1]) &&
                                 array_key_exists('value', $input['array'][$i - 1])
@@ -96,6 +104,13 @@ class Variable
                                 $previous = null;
                             }
                             if(
+                                array_key_exists($i + 1, $input['array']) &&
+                                is_array($input['array'][$i + 1]) &&
+                                array_key_exists('execute', $input['array'][$i + 1])
+                            ){
+                                $next = $input['array'][$i + 1]['execute'];
+                            }
+                            elseif(
                                 array_key_exists($i + 1, $input['array']) &&
                                 is_array($input['array'][$i + 1]) &&
                                 array_key_exists('value', $input['array'][$i + 1])
@@ -132,88 +147,83 @@ class Variable
                                     $next !== '|'
                                 ){
                                     $has_modifier = true;
-                                    /*
-                                    if(array_key_exists(0, $argument)){
-                                        $argument_list[] = Parse::value_split(
-                                            $object,
-                                            $argument,
-                                            $flags,
-                                            $options
-                                        );
-                                        $argument = [];
-                                    }
-                                    if(array_key_exists(0, $argument_list)){
-                                        $input[$is_variable]['modifier'][] = [
-                                            'name' => $modifier_name,
-                                            'argument' => $argument_list
-                                        ];
-                                        ddd($input[$is_variable]);
-                                        $argument_list = [];
-                                        $argument = [];
-                                    }
-                                    */
                                 }
                                 elseif($has_modifier !== true) {
                                     break;
                                 }
-                                /*
-                                if($has_modifier === true){
-                                    $argument[] = $input[$i];
-                                }
-                                */
                             }
                             elseif($has_modifier !== true) {
                                 $input['array'][$i] = null;
                             }
                             elseif($has_modifier === true){
-                                d($input);
-                                d($i);
-                                ddd('yes');
-                                if(is_array($input['array'][$i])){
-                                    d($input['array'][$i]);
-                                    d($modifier_name);
-                                    /*
-                                    if($input[$i]['value'] === ':'){
+                                if(
+                                    is_array($input['array'][$i]) &&
+                                    array_key_exists('value', $input['array'][$i])
+                                ){
+                                    if($input['array'][$i]['value'] === ':'){
                                         if($has_name === true) {
-                                            $argument_list[] = Parse::value_split(
+                                            $argument_list[] = Parse::value(
                                                 $object,
-                                                $argument,
+                                                [
+                                                    'string' => $argument,
+                                                    'array' => $argument_array
+                                                ],
                                                 $flags,
                                                 $options
                                             );
                                             ddd($argument_list);
-                                            $argument = [];
+                                            $argument_array = [];
                                         } else {
                                             $has_name = true;
                                         }
                                     }
                                     if($has_name === false){
-                                        $modifier_name .= $input[$i]['value'];
+                                        $modifier_name .= $input['array'][$i]['value'];
                                     }
-                                    */
                                 }
-                                /*
                                 elseif($has_name === false) {
-                                    $modifier_name .= $input[$i];
+                                    if(is_array($input['array'][$i])){
+                                        if(array_key_exists('execute', $input['array'][$i])){
+                                            $modifier_name .= $input['array'][$i]['execute'];
+                                        }
+                                        elseif(array_key_exists('value', $input['array'][$i])){
+                                            $modifier_name .= $input['array'][$i]['value'];
+                                        }
+                                    } else {
+                                        $modifier_name .= $input['array'][$i];
+                                    }
                                 } else {
-                                    $argument[] = $input[$i];
+                                    $argument_array[] = $input['array'][$i];
+                                    if(is_array($input['array'][$i])){
+                                        if(array_key_exists('execute', $input['array'][$i])){
+                                            $argument .= $input['array'][$i]['execute'];
+                                        }
+                                        elseif(array_key_exists('value', $input['array'][$i])){
+                                            $argument .= $input['array'][$i]['value'];
+                                        }
+                                    } else {
+                                        $argument .= $input['array'][$i];
+                                    }
                                 }
-                                */
                             }
                         }
-                        /*
-                        if(array_key_exists(0, $argument)){
-                            ddd($argument);
-                            $argument_list[] = Parse::value_split(
+                        if(array_key_exists(0, $argument_array)){
+                            $argument_list[] = Parse::value(
                                 $object,
-                                $argument,
+                                [
+                                    'string' => $argument,
+                                    'array' => $argument_array
+                                ],
                                 $flags,
                                 $options
                             );
+                            $input['array'][$is_variable]['modifier'][] = [
+                                'name' => $modifier_name,
+                                'argument' => $argument_list
+                            ];
                             ddd($argument_list);
-                            $argument = [];
+                            $argument_array = [];
                         }
-                        */
 //                        d($input[$is_variable]);
                     }
                 }
