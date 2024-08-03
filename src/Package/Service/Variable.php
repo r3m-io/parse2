@@ -178,7 +178,16 @@ class Variable
                                         }
                                     }
                                     if($has_name === false){
-                                        $modifier_name .= $input['array'][$i]['value'];
+                                        if(is_array($input['array'][$i])){
+                                            if(array_key_exists('execute', $input['array'][$i])){
+                                                $modifier_name .= $input['array'][$i]['execute'];
+                                            }
+                                            elseif(array_key_exists('value', $input['array'][$i])){
+                                                $modifier_name .= $input['array'][$i]['value'];
+                                            }
+                                        } else {
+                                            $modifier_name .= $input['array'][$i];
+                                        }
                                     }
                                 }
                                 elseif($has_name === false) {
