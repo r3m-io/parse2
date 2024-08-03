@@ -449,6 +449,18 @@ class Parse
                                 } elseif($operator === '.'){
                                     $variable_name .= $operator . $char;
                                     $operator = false;
+                                } elseif(
+                                    (
+                                        $char === ' ' ||
+                                        $char === "\t" ||
+                                        $char === "\n" ||
+                                        $char === "\r"
+                                    ) &&
+                                    $is_single_quoted === false &&
+                                    $is_double_quoted === false &&
+                                    $after === ''
+                                ) {
+                                    continue;
                                 } else {
                                     $is_after = true;
                                     $after .= $char;
