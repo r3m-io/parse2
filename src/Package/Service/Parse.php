@@ -211,7 +211,11 @@ class Parse
                     $curly_count === 1 &&
                     $tag === false
                 ){
-                    $tag = '{';
+                    if($is_tag_in_double_quoted === true){
+                        $tag = '{';
+                    } else {
+                        $tag = '{{';
+                    }
                 }
                 elseif($curly_count === 0){
                     if($tag){
