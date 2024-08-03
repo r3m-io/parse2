@@ -156,8 +156,10 @@ class Variable
                                     $input['array'][$i]['value'] === ':' &&
                                     $previous !== ':' &&
                                     $next !== ':' &&
-                                    $modifier_name
+                                    $modifier_name && $has_name === false
                                 ) {
+                                    $has_name = true;
+                                    /*
                                     if($has_name === true) {
                                         $argument_list[] = Parse::value(
                                             $object,
@@ -171,9 +173,10 @@ class Variable
                                         ddd($argument_list);
                                         $argument_array = [];
                                     } else {
-                                        $has_name = true;
+
                                         d($modifier_name);
                                     }
+                                    */
                                     d($input['array'][$i]);
                                 }
                                 elseif($modifier_name){
