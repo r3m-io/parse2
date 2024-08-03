@@ -78,6 +78,9 @@ class Parse
                 $char_list[] = $split[$i + $j] ?? null;
             }
             foreach($char_list as $nr => $char){
+                if($char === null){
+                    break;
+                }
                 if($char === "\n"){
                     $line++;
                     $column[$line] = 1;
