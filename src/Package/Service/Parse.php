@@ -92,7 +92,6 @@ class Parse
             }
         }
         $duration = (microtime(true) - $start) * 1000 . ' msec';
-        d($column);
         ddd($duration);
 
 
