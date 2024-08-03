@@ -110,8 +110,6 @@ class Parse
         $is_single_quoted = false;
         $is_double_quoted = false;
         $is_tag_in_double_quoted = false;
-        $is_curly_open_in_double_quoted = false;
-        $is_curly_close_in_double_quoted = false;
         $is_curly_open = false;
         $is_curly_close = false;
         $next = false;
@@ -162,28 +160,12 @@ class Parse
                     $is_curly_open = true;
                 }
                 elseif(
-                    $char === '{' &&
-                    $is_curly_open_in_double_quoted === false &&
-                    $is_single_quoted === false &&
-                    $is_double_quoted === false
-                ){
-                    $is_curly_open_in_double_quoted = true;
-                }
-                elseif(
                     $char === '}' &&
                     $is_curly_close === false &&
                     $is_single_quoted === false &&
                     $is_double_quoted === false
                 ){
                     $is_curly_close = true;
-                }
-                elseif(
-                    $char === '}' &&
-                    $is_curly_close_in_double_quoted === false &&
-                    $is_single_quoted === false &&
-                    $is_double_quoted === false
-                ){
-                    $is_curly_close_in_double_quoted = true;
                 }
                 elseif(
                     $char === '{' &&
@@ -205,7 +187,7 @@ class Parse
                 }
                 elseif(
                     $char === '{' &&
-                    $is_curly_open_in_double_quoted === true &&
+                    $is_curly_open === true &&
                     $is_single_quoted === false &&
                     $is_double_quoted === true &&
                     $curly_count === 0
@@ -215,7 +197,7 @@ class Parse
                 }
                 elseif(
                     $char === '}' &&
-                    $is_curly_close_in_double_quoted === true &&
+                    $is_curly_close === true &&
                     $is_single_quoted === false &&
                     $is_double_quoted === true &&
                     $is_tag_in_double_quoted === true
