@@ -207,7 +207,7 @@ class Variable
                                 }
                             }
                         }
-                        if(array_key_exists(0, $argument_array)){
+                        if(array_key_exists(0, $argument_array)) {
                             $argument_list[] = Parse::value(
                                 $object,
                                 [
@@ -217,14 +217,13 @@ class Variable
                                 $flags,
                                 $options
                             );
+                        }
+                        if($modifier_name){
                             $input['array'][$is_variable]['modifier'][] = [
                                 'name' => $modifier_name,
                                 'argument' => $argument_list
                             ];
-                            ddd($argument_list);
-                            $argument_array = [];
                         }
-//                        d($input[$is_variable]);
                     }
                 }
             }
