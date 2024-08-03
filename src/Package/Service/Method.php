@@ -20,6 +20,7 @@ class Method
         $argument = '';
         $argument_array = [];
         $argument_list = [];
+        d($input['array']);
         foreach($input['array'] as $nr => $char){
             if(
                 is_array($char) &&
@@ -166,6 +167,7 @@ class Method
                         $is_single_quote = false;
                         $argument_array[] = $char;
                         $argument .= $char['value'];
+                        d($argument);
                         $argument_value = Parse::value(
                             $object,
                             [
@@ -200,6 +202,7 @@ class Method
                         $is_double_quote = false;
                         $argument_array[] = $char;
                         $argument .= $char['value'];
+                        d($argument);
                         $argument_value = Parse::value(
                             $object,
                             [
@@ -221,6 +224,7 @@ class Method
                         $is_double_quote === false
                     ){
                         if(array_key_exists(0, $argument_array)){
+                            d($argument);
                             $argument_value = Parse::value(
                                 $object,
                                 [
