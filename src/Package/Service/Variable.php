@@ -193,7 +193,7 @@ class Variable
                                             elseif($input['array'][$i]['value'] === ')'){
                                                 $set_depth--;
                                                 if($set_depth < 0){
-                                                    ddd($argument);
+                                                    break;
                                                 }
                                             }
                                             if($set_depth >= 0){
