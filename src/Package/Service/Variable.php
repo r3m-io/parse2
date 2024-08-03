@@ -189,7 +189,7 @@ class Variable
             }
 
         }
-        $input = Parse::remove_whitespace($object, $input, $flags, $options);
+//        $input = Parse::remove_whitespace($object, $input, $flags, $options);
         return $input;
     }
 }
