@@ -160,6 +160,7 @@ class Variable
                                     is_array($input['array'][$i]) &&
                                     array_key_exists('value', $input['array'][$i])
                                 ){
+                                    d($input['array'][$i]);
                                     if($input['array'][$i]['value'] === ':'){
                                         if($has_name === true) {
                                             $argument_list[] = Parse::value(
@@ -191,6 +192,7 @@ class Variable
                                     }
                                 }
                                 elseif($has_name === false) {
+                                    d($input['array'][$i]);
                                     if(is_array($input['array'][$i])){
                                         if(array_key_exists('execute', $input['array'][$i])){
                                             $modifier_name .= $input['array'][$i]['execute'];
