@@ -15,12 +15,22 @@ class Variable
         d($input['array']);
         $set_depth = 0;
         foreach($input['array'] as $nr => $char){
-            $previous = $input['array'][$nr - 1] ?? null;
+            if(is_array($input['array'][$nr - 1])){
+                if(array_key_exists('execute', $input['array'][$nr - 1])){
+                    $previous = $input['array'][$nr - 1]['execute'] ?? null;
+                }
+                elseif(array_key_exists('value', $input['array'][$nr - 1])){
+                    $previous = $input['array'][$nr - 1]['value'] ?? null;
+                }
+            } else {
+                $previous = $input['array'][$nr - 1] ?? null;
+            }
             if(
                 is_array($char) &&
                 array_key_exists('value', $char)
             ){
                 if($char['value'] === '$'){
+                    d('yes');
                     $is_variable = $nr;
                     $name = '$';
                     for($i = $nr + 1; $i < $count; $i++){
