@@ -253,316 +253,316 @@ class Parse
                     $content = trim(substr($record['tag'], 2, -2));
                     $hash = hash('sha256', $content);
 
-                    if($cache->has($hash)){
-                        ddd($cache->get($hash));
-                    }
-
 //                    d($content);
                     //make cache per content
 
                     if(substr($content, 0, 1) === '$'){
-                        //we have a variable assign or define
-                        $length = strlen($content);
-                        $data = mb_str_split($content, 1);
-                        $operator = false;
-                        $variable_name = '';
-                        $modifier_name = false;
-                        $after = '';
-                        $modifier = '';
-                        $modifier_array = [];
-                        $modifier_list = [];
-                        $argument = '';
-                        $argument_array = [];
-                        $argument_list = [];
-                        $is_after = false;
-                        $is_modifier = false;
-                        $is_argument = false;
-                        $is_single_quoted = false;
-                        $is_double_quoted = false;
-                        $after_array = [];
-                        $next = false;
-                        $previous = false;
-                        $argument_nr = 0;
-                        $set_depth = 0;
-                        for($i=0; $i < $length; $i++){
-                            $char = $data[$i];
-                            if(array_key_exists($i - 1, $data)){
-                                $previous = $data[$i - 1];
-                            }
-                            if(array_key_exists($i + 1, $data)){
-                                $next = $data[$i + 1];
-                            }
-                            if($char === '\'' && $is_single_quoted === false){
-                                $is_single_quoted = true;
-                            }
-                            elseif($char === '\'' && $is_single_quoted === true){
-                                $is_single_quoted = false;
-                            }
-                            elseif($char === '"' && $is_double_quoted === false){
-                                $is_double_quoted = true;
-                            }
-                            elseif($char === '"' && $is_double_quoted === true){
-                                $is_double_quoted = false;
-                            }
-                            if(
-                                $variable_name &&
-                                $char === '|' &&
-                                $next !== '|' &&
-                                $previous !== '|' &&
-                                $set_depth === 0 &&
-                                $is_modifier === false &&
-                                $is_single_quoted === false &&
-                                $is_double_quoted === false
-                            ){
-                                $is_modifier = true;
-                                continue;
-                            }
-                            elseif($modifier_name){
+                        if($cache->has($hash)){
+                            $variable = $cache->get($hash);
+                        } else {
+                            //we have a variable assign or define
+                            $length = strlen($content);
+                            $data = mb_str_split($content, 1);
+                            $operator = false;
+                            $variable_name = '';
+                            $modifier_name = false;
+                            $after = '';
+                            $modifier = '';
+                            $modifier_array = [];
+                            $modifier_list = [];
+                            $argument = '';
+                            $argument_array = [];
+                            $argument_list = [];
+                            $is_after = false;
+                            $is_modifier = false;
+                            $is_argument = false;
+                            $is_single_quoted = false;
+                            $is_double_quoted = false;
+                            $after_array = [];
+                            $next = false;
+                            $previous = false;
+                            $argument_nr = 0;
+                            $set_depth = 0;
+                            for($i=0; $i < $length; $i++){
+                                $char = $data[$i];
+                                if(array_key_exists($i - 1, $data)){
+                                    $previous = $data[$i - 1];
+                                }
+                                if(array_key_exists($i + 1, $data)){
+                                    $next = $data[$i + 1];
+                                }
+                                if($char === '\'' && $is_single_quoted === false){
+                                    $is_single_quoted = true;
+                                }
+                                elseif($char === '\'' && $is_single_quoted === true){
+                                    $is_single_quoted = false;
+                                }
+                                elseif($char === '"' && $is_double_quoted === false){
+                                    $is_double_quoted = true;
+                                }
+                                elseif($char === '"' && $is_double_quoted === true){
+                                    $is_double_quoted = false;
+                                }
                                 if(
-                                    in_array(
-                                        $char,
-                                        [
-                                            " ",
-                                            "\t",
-                                            "\n",
-                                            "\r"
-                                        ],
-                                        true
-                                    ) &&
+                                    $variable_name &&
+                                    $char === '|' &&
+                                    $next !== '|' &&
+                                    $previous !== '|' &&
+                                    $set_depth === 0 &&
+                                    $is_modifier === false &&
                                     $is_single_quoted === false &&
                                     $is_double_quoted === false
                                 ){
-                                    //nothing
-                                } else {
+                                    $is_modifier = true;
+                                    continue;
+                                }
+                                elseif($modifier_name){
                                     if(
-                                        $char === ':' &&
-                                        $set_depth === 0 &&
-                                        $is_single_quoted === false &&
-                                        $is_double_quoted === false
-                                    ){
-                                        $argument_list[] = [
-                                            'string' => $argument,
-                                            'array' => $argument_array
-                                        ];
-                                        $argument = '';
-                                        $argument_array = [];
-                                    }
-                                    elseif(
-                                        $char === '|' &&
-                                        $next !== '|' &&
-                                        $previous !== '|' &&
-                                        $set_depth === 0 &&
-                                        $is_single_quoted === false &&
-                                        $is_double_quoted === false
-                                    ){
-                                        if($modifier_name === 'default1'){
-                                            ddd($argument_list);
-                                        }
-                                        $argument_list[] = Parse::value_split(
-                                            $object,
+                                        in_array(
+                                            $char,
                                             [
-                                                $argument_array
+                                                " ",
+                                                "\t",
+                                                "\n",
+                                                "\r"
                                             ],
-                                            $flags,
-                                            $options
-                                        );
-                                        $argument = '';
-                                        $argument_array = [];
-
-                                        $modifier_list[] = [
-                                            'name' => $modifier_name,
-                                            'argument' => $argument_list
-                                        ];
-                                        $modifier_name = false;
-                                        $argument_list = [];
+                                            true
+                                        ) &&
+                                        $is_single_quoted === false &&
+                                        $is_double_quoted === false
+                                    ){
+                                        //nothing
                                     } else {
                                         if(
-                                            $char === '(' &&
+                                            $char === ':' &&
+                                            $set_depth === 0 &&
                                             $is_single_quoted === false &&
                                             $is_double_quoted === false
                                         ){
-                                            $set_depth++;
+                                            $argument_list[] = [
+                                                'string' => $argument,
+                                                'array' => $argument_array
+                                            ];
+                                            $argument = '';
+                                            $argument_array = [];
                                         }
                                         elseif(
-                                            $char === ')' &&
+                                            $char === '|' &&
+                                            $next !== '|' &&
+                                            $previous !== '|' &&
+                                            $set_depth === 0 &&
                                             $is_single_quoted === false &&
                                             $is_double_quoted === false
                                         ){
-                                            $set_depth--;
+                                            if($modifier_name === 'default1'){
+                                                ddd($argument_list);
+                                            }
+                                            $argument_list[] = Parse::value_split(
+                                                $object,
+                                                [
+                                                    $argument_array
+                                                ],
+                                                $flags,
+                                                $options
+                                            );
+                                            $argument = '';
+                                            $argument_array = [];
+
+                                            $modifier_list[] = [
+                                                'name' => $modifier_name,
+                                                'argument' => $argument_list
+                                            ];
+                                            $modifier_name = false;
+                                            $argument_list = [];
+                                        } else {
+                                            if(
+                                                $char === '(' &&
+                                                $is_single_quoted === false &&
+                                                $is_double_quoted === false
+                                            ){
+                                                $set_depth++;
+                                            }
+                                            elseif(
+                                                $char === ')' &&
+                                                $is_single_quoted === false &&
+                                                $is_double_quoted === false
+                                            ){
+                                                $set_depth--;
+                                            }
+                                            elseif(
+                                                $char === ',' &&
+                                                $is_single_quoted === false &&
+                                                $is_double_quoted === false
+                                            ){
+                                                break;
+                                            }
+                                            $argument .= $char;
+                                            $argument_array[] = $char;
                                         }
-                                        elseif(
-                                            $char === ',' &&
-                                            $is_single_quoted === false &&
-                                            $is_double_quoted === false
-                                        ){
-                                            break;
-                                        }
-                                        $argument .= $char;
-                                        $argument_array[] = $char;
                                     }
+                                    continue;
                                 }
-                                continue;
-                            }
-                            elseif($is_modifier){
-                                if(
-                                    $char === ':' &&
-                                    $is_single_quoted === false &&
-                                    $is_double_quoted === false
-                                ){
-                                    if($modifier){
-                                        if($modifier_name === false){
-                                            $modifier_name = $modifier;
-                                            $modifier = '';
-                                            $modifier_array = [];
+                                elseif($is_modifier){
+                                    if(
+                                        $char === ':' &&
+                                        $is_single_quoted === false &&
+                                        $is_double_quoted === false
+                                    ){
+                                        if($modifier){
+                                            if($modifier_name === false){
+                                                $modifier_name = $modifier;
+                                                $modifier = '';
+                                                $modifier_array = [];
+                                            }
                                         }
                                     }
+                                    elseif(
+                                        in_array(
+                                            $char,
+                                            [
+                                                " ",
+                                                "\t",
+                                                "\n",
+                                                "\r"
+                                            ],
+                                            true
+                                        ) &&
+                                        $is_single_quoted === false &&
+                                        $is_double_quoted === false
+                                    ){
+                                        //nothing
+                                    } else {
+                                        $modifier .= $char;
+                                        $modifier_array[] = $char;
+                                    }
+                                    continue;
                                 }
                                 elseif(
+                                    !$operator &&
                                     in_array(
                                         $char,
                                         [
-                                            " ",
-                                            "\t",
-                                            "\n",
-                                            "\r"
+                                            '=',
+                                            '.',
+                                            '+',
+                                            '-',
+                                            '*',
+//                                        '/', //++ -- ** // (// is always =1)
                                         ],
                                         true
                                     ) &&
                                     $is_single_quoted === false &&
                                     $is_double_quoted === false
                                 ){
-                                    //nothing
-                                } else {
-                                    $modifier .= $char;
-                                    $modifier_array[] = $char;
-                                }
-                                continue;
-                            }
-                            elseif(
-                                !$operator &&
-                                in_array(
-                                    $char,
-                                    [
-                                        '=',
-                                        '.',
-                                        '+',
-                                        '-',
-                                        '*',
-//                                        '/', //++ -- ** // (// is always =1)
-                                    ],
-                                    true
-                                ) &&
-                                $is_single_quoted === false &&
-                                $is_double_quoted === false
-                            ){
-                                $operator = $char;
-                                continue;
-                            }
-                            if($operator && $is_after === false){
-                                if($operator === '.' && $char === '='){
-                                    $is_after = true;
-                                    //fix false positives
-                                } elseif($operator === '.'){
-                                    $variable_name .= $operator . $char;
-                                    $operator = false;
-                                } elseif(
-                                    (
-                                        $char === ' ' ||
-                                        $char === "\t" ||
-                                        $char === "\n" ||
-                                        $char === "\r"
-                                    ) &&
-                                    $is_single_quoted === false &&
-                                    $is_double_quoted === false &&
-                                    $after === ''
-                                ) {
+                                    $operator = $char;
                                     continue;
-                                } else {
-                                    $is_after = true;
+                                }
+                                if($operator && $is_after === false){
+                                    if($operator === '.' && $char === '='){
+                                        $is_after = true;
+                                        //fix false positives
+                                    } elseif($operator === '.'){
+                                        $variable_name .= $operator . $char;
+                                        $operator = false;
+                                    } elseif(
+                                        (
+                                            $char === ' ' ||
+                                            $char === "\t" ||
+                                            $char === "\n" ||
+                                            $char === "\r"
+                                        ) &&
+                                        $is_single_quoted === false &&
+                                        $is_double_quoted === false &&
+                                        $after === ''
+                                    ) {
+                                        continue;
+                                    } else {
+                                        $is_after = true;
+                                        $after .= $char;
+                                        $after_array[] = $char;
+                                    }
+                                }
+                                elseif($is_after) {
+                                    if(
+                                        (
+                                            $char === ' ' ||
+                                            $char === "\t" ||
+                                            $char === "\n" ||
+                                            $char === "\r"
+                                        ) &&
+                                        $is_single_quoted === false &&
+                                        $is_double_quoted === false &&
+                                        $after === ''
+                                    ) {
+                                        continue;
+                                    }
                                     $after .= $char;
                                     $after_array[] = $char;
                                 }
-                            }
-                            elseif($is_after) {
-                                if(
+                                elseif(
                                     (
-                                        $char === ' ' ||
-                                        $char === "\t" ||
-                                        $char === "\n" ||
-                                        $char === "\r"
+                                        $char !== ' ' &&
+                                        $char !== "\t" &&
+                                        $char !== "\r" &&
+                                        $char !== "\n"
                                     ) &&
                                     $is_single_quoted === false &&
-                                    $is_double_quoted === false &&
-                                    $after === ''
-                                ) {
-                                    continue;
+                                    $is_double_quoted === false
+                                ){
+                                    $variable_name .= $char;
                                 }
-                                $after .= $char;
-                                $after_array[] = $char;
                             }
-                            elseif(
-                                (
-                                    $char !== ' ' &&
-                                    $char !== "\t" &&
-                                    $char !== "\r" &&
-                                    $char !== "\n"
-                                ) &&
-                                $is_single_quoted === false &&
-                                $is_double_quoted === false
-                            ){
-                                $variable_name .= $char;
-                            }
-                        }
-                        if($argument){
-                            if($modifier_name === 'default1'){
-                                ddd($argument_array);
-                            }
+                            if($argument){
+                                if($modifier_name === 'default1'){
+                                    ddd($argument_array);
+                                }
 
-                            $argument_list[] = Parse::value_split(
-                                $object,
-                                $argument_array,
-                                $flags,
-                                $options
-                            );
-                            $argument = '';
-                            $argument_array = [];
-                        }
-                        if($modifier_name){
+                                $argument_list[] = Parse::value_split(
+                                    $object,
+                                    $argument_array,
+                                    $flags,
+                                    $options
+                                );
+                                $argument = '';
+                                $argument_array = [];
+                            }
+                            if($modifier_name){
 //                            d($modifier_name);
 //                            d($argument_list);
-                            $modifier_list[] = [
-                                'name' => $modifier_name,
-                                'argument' => $argument_list
-                            ];
-                            $modifier_name = false;
-                            $argument_list = [];
-                        }
-                        if(!$after){
-                            $variable = [
-                                'is_define' => true,
-                                'name' => substr($variable_name, 1),
-                                'modifier' => $modifier_list,
-                            ];
-                        } else {
-                            $list = Parse::value(
-                                $object,
-                                [
-                                    'string' => $after,
-                                    'array' => $after_array
-                                ],
-                                $flags,
-                                $options
-                            );
-                            $variable = [
-                                'is_assign' => true,
-                                'operator' => $operator,
-                                'name' => substr($variable_name, 1),
-                                'value' => $list,
-                                'modifier' => $modifier_list,
-                            ];
+                                $modifier_list[] = [
+                                    'name' => $modifier_name,
+                                    'argument' => $argument_list
+                                ];
+                                $modifier_name = false;
+                                $argument_list = [];
+                            }
+                            if(!$after){
+                                $variable = [
+                                    'is_define' => true,
+                                    'name' => substr($variable_name, 1),
+                                    'modifier' => $modifier_list,
+                                ];
+                            } else {
+                                $list = Parse::value(
+                                    $object,
+                                    [
+                                        'string' => $after,
+                                        'array' => $after_array
+                                    ],
+                                    $flags,
+                                    $options
+                                );
+                                $variable = [
+                                    'is_assign' => true,
+                                    'operator' => $operator,
+                                    'name' => substr($variable_name, 1),
+                                    'value' => $list,
+                                    'modifier' => $modifier_list,
+                                ];
+                            }
+                            $cache->set($hash, $variable);
                         }
                         $tags[$line][$nr]['variable'] = $variable;
-                        $cache->set($hash, $variable);
                     }
                 }
             }
