@@ -653,25 +653,35 @@ class Parse
         $value = $input['string'] ?? null;
         switch($value){
             case '[]':
-                return [[
+                $input['array'] = [[
+                    'value' => $value,
                     'execute' => [],
                     'is_array' => true
                 ]];
+                return $input;
             case 'true':
-                return [[
+                $input['array'] = [[
+                    'value' => $value,
                     'execute' => true,
                     'is_boolean' => true
                 ]];
+                return $input;
             case 'false':
-                return [[
+                $input['array'] = [[
+                    'value' => $value,
                     'execute' => false,
                     'is_boolean' => true
                 ]];
+                return $input;
+            break;
             case 'null':
-                return [[
+                $input['array'] = [[
+                    'value' => $value,
                     'execute' => null,
                     'is_null' => true
                 ]];
+                return $input;
+            break;
             default:
                 if(
                     substr($value, 0, 1) === '\'' &&
@@ -682,6 +692,7 @@ class Parse
                         'execute' => substr($value, 1, -1),
                         'is_single_quoted' => true
                     ]];
+                    return $input;
                 }
                 return Parse::value_split($object, $input, $flags, $options);
         }
