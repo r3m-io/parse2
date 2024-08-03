@@ -187,7 +187,6 @@ class Variable
                                             $argument_array[] = $input['array'][$i];
                                         }
                                         elseif(array_key_exists('value', $input['array'][$i])){
-
                                             if($input['array'][$i]['value'] === '('){
                                                 $set_depth++;
                                             }
