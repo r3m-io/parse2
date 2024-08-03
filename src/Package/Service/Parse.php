@@ -593,10 +593,6 @@ class Parse
                                 }
                             }
                             if($argument){
-                                if($modifier_name === 'default1'){
-                                    ddd($argument_array);
-                                }
-
                                 $argument_list[] = Parse::value(
                                     $object,
                                     [

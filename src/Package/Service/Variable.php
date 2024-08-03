@@ -80,8 +80,34 @@ class Variable
                         $argument_list = [];
                         $modifier_name = '';
                         for($i = $is_variable + 1; $i < $count; $i++){
-                            $previous = $input['array'][$i - 1] ?? null;
-                            $next = $input['array'][$i + 1] ?? null;
+                            if(
+                                array_key_exists($i - 1, $input['array']) &&
+                                array_key_exists('value', $input['array'][$i - 1])
+                            ){
+                                $previous = $input['array'][$i - 1]['value'];
+                            }
+                            elseif(
+                                array_key_exists($i - 1, $input['array']) &&
+                                !is_array($input['array'][$i - 1])
+                            ){
+                                $previous = $char;
+                            } else {
+                                $previous = null;
+                            }
+                            if(
+                                array_key_exists($i + 1, $input['array']) &&
+                                array_key_exists('value', $input['array'][$i + 1])
+                            ){
+                                $next = $input['array'][$i + 1]['value'];
+                            }
+                            elseif(
+                                array_key_exists($i + 1, $input['array']) &&
+                                !is_array($input['array'][$i + 1])
+                            ){
+                                $next = $char;
+                            } else {
+                                $next = null;
+                            }
                             if(
                                 is_array($input['array'][$i]) &&
                                 array_key_exists('value', $input['array'][$i])
