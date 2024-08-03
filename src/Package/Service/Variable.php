@@ -37,6 +37,7 @@ class Variable
                     d($nr);
                     d($count);
                     d('yes');
+                    d($input['array']);
                     $is_variable = $nr;
                     $name = '$';
                     for($i = $nr + 1; $i < $count; $i++){
