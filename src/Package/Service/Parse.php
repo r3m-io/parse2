@@ -143,6 +143,8 @@ class Parse
                     $is_double_quoted === false
                 ){
                     $curly_count--;
+                    $is_curly_open = false;
+                    $is_curly_close = false;
                 }
                 elseif(
                     $char === '{' &&
