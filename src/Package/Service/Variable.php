@@ -228,18 +228,16 @@ class Variable
                                     }
                                     $input['array'][$i] = null;
                                 } else {
+                                    $argument_array[] = $input['array'][$i];
                                     if(is_array($input['array'][$i])){
                                         if(array_key_exists('execute', $input['array'][$i])){
                                             $argument .= $input['array'][$i]['execute'];
-                                            $argument_array[] = $input['array'][$i];
                                         }
                                         elseif(array_key_exists('value', $input['array'][$i])){
                                             $argument .= $input['array'][$i]['value'];
-                                            $argument_array[] = $input['array'][$i];
                                         }
                                     } else {
                                         $argument .= $input['array'][$i];
-                                        $argument_array[] = $input['array'][$i];
                                     }
                                     $input['array'][$i] = null;
                                 }
