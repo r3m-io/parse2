@@ -82,7 +82,7 @@ class Variable
                         for($i = $is_variable + 1; $i < $count; $i++){
                             if(
                                 array_key_exists($i - 1, $input['array']) &&
-                                is_array($input['array'][$i + 1]) &&
+                                is_array($input['array'][$i - 1]) &&
                                 array_key_exists('value', $input['array'][$i - 1])
                             ){
                                 $previous = $input['array'][$i - 1]['value'];
