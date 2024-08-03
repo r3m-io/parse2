@@ -10,6 +10,11 @@ use Exception;
 class Variable
 {
     public static function define(App $object, $input, $flags, $options){
+        $cache = $object->get(App::CACHE);
+        $hash = hash('sha256', $input['string']);
+        if($cache->has($hash)){
+            return $cache->get($hash);
+        }
         $count = count($input['array']);
         $is_variable = false;
         $set_depth = 0;
@@ -297,6 +302,7 @@ class Variable
             }
 
         }
+        $cache->set($hash, $input);
 //        $input = Parse::remove_whitespace($object, $input, $flags, $options);
         return $input;
     }
