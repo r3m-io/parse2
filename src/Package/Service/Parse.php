@@ -21,11 +21,14 @@ class Parse
             throw new Exception('Source not found');
         }
         // Step 1: Read the template file
+        $start = microtime(true);
         $template = File::read($options->source);
 
         $tags = Parse::tags($object, $template, $flags, $options);
         $tags = Parse::tags_remove($object, $tags, $flags, $options);
         $tags = Parse::variable($object, $tags, $flags, $options);
+        $duration = microtime(true) - $start;
+        ddd($duration);
         ddd($tags);
 
         // Step 2: Define the placeholder values
