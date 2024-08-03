@@ -205,6 +205,7 @@ class Variable
                                         $argument .= $input['array'][$i];
                                         $argument_array[] = $input['array'][$i];
                                     }
+                                    unset($input['array'][$i]);
                                 }
                             }
                             elseif($has_modifier === false) {
@@ -247,7 +248,6 @@ class Variable
                                     }
                                 }
                                 elseif($has_name === false) {
-                                    d($input['array'][$i]);
                                     if(is_array($input['array'][$i])){
                                         if(array_key_exists('execute', $input['array'][$i])){
                                             $modifier_name .= $input['array'][$i]['execute'];
@@ -259,7 +259,6 @@ class Variable
                                         $modifier_name .= $input['array'][$i];
                                     }
                                 } else {
-                                    d($input['array'][$i]);
                                     $argument_array[] = $input['array'][$i];
                                     if(is_array($input['array'][$i])){
                                         if(array_key_exists('execute', $input['array'][$i])){
@@ -271,6 +270,7 @@ class Variable
                                     } else {
                                         $argument .= $input['array'][$i];
                                     }
+                                    $input['array'][$i] = null;
                                 }
                             }
                         }
