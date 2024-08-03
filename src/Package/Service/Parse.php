@@ -1313,9 +1313,9 @@ class Parse
         $input = Symbol::define($object, $input, $flags, $options);
         $input = Cast::define($object, $input, $flags, $options);
         $input = Method::define($object, $input, $flags, $options);
-        d($input);
+//        d($input);
         $input = Variable::define($object, $input, $flags, $options);
-        d($input);
+//        d($input);
         $input = Parse::remove_whitespace($object, $input, $flags, $options);
         return $input;
         ddd($input);
