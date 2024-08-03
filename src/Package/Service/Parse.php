@@ -442,13 +442,17 @@ class Parse
                             }
                             if($operator && $is_after === false){
                                 if(
-                                    $char === ' ' ||
-                                    $char === "\t" ||
-                                    $char === "\n" ||
-                                    $char === "\r"
+                                    (
+                                        $char === ' ' ||
+                                        $char === "\t" ||
+                                        $char === "\n" ||
+                                        $char === "\r"
+                                    ) &&
+                                    $is_single_quoted === false &&
+                                    $is_double_quoted === false
                                 ) {
                                     $is_after = true;
-                                    d('yes');
+                                    ddd($operator);
                                 } else {
                                     if($operator === '.' && $char === '='){
                                         //fix false positives
@@ -466,27 +470,24 @@ class Parse
                                         $char === "\n" ||
                                         $char === "\r"
                                     ) &&
+                                    $is_single_quoted === false &&
+                                    $is_double_quoted === false &&
                                     $after === ''
                                 ) {
                                     continue;
                                 }
-                                /*
-                                if(
-                                    $char === ',' &&
-                                    $is_single_quoted === false &&
-                                    $is_double_quoted === false
-                                ){
-                                    d($after);
-                                    ddd('found');
-                                }*/
                                 $after .= $char;
                                 $after_array[] = $char;
                             }
                             elseif(
-                                $char !== ' ' &&
-                                $char !== "\t" &&
-                                $char !== "\r" &&
-                                $char !== "\n"
+                                (
+                                    $char !== ' ' &&
+                                    $char !== "\t" &&
+                                    $char !== "\r" &&
+                                    $char !== "\n"
+                                ) &&
+                                $is_single_quoted === false &&
+                                $is_double_quoted === false
                             ){
                                 $variable_name .= $char;
                             }
