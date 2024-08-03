@@ -76,7 +76,6 @@ class Parse
         $next = false;
         $chunk = 64;
         for($i = 0; $i < $length; $i+=$chunk){
-            echo 'i: ' . $i . PHP_EOL;
             $char_list = [];
             for($j = 0; $j < $chunk; $j++){
                 $char_list[] = $split[$i + $j] ?? null;
