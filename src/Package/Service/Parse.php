@@ -1400,7 +1400,8 @@ class Parse
         $list = [];
 
         $counter = 0;
-        ddd($input);
+        d($input);
+        trace();
         $input = Symbol::define($object, $input, $flags, $options);
         $input = Cast::define($object, $input, $flags, $options);
         $input = Method::define($object, $input, $flags, $options);
