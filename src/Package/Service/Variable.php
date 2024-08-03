@@ -205,7 +205,7 @@ class Variable
                                         $argument .= $input['array'][$i];
                                         $argument_array[] = $input['array'][$i];
                                     }
-                                    unset($input['array'][$i]);
+                                    $input['array'][$i] = null;
                                 }
                             }
                             elseif($has_modifier === false) {
