@@ -34,6 +34,8 @@ class Variable
                 array_key_exists('value', $char)
             ){
                 if($char['value'] === '$'){
+                    d($nr);
+                    d($count);
                     d('yes');
                     $is_variable = $nr;
                     $name = '$';
