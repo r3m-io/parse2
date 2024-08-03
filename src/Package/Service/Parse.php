@@ -186,7 +186,7 @@ class Parse
                         $count = count($explode);
                         if($count > 1){
                             $content = trim(substr($tag, 2, -2));
-                            $length = strlen($explode[0]);
+                            $length_start = strlen($explode[0]);
                             $record = [
                                 'tag' => $tag,
                                 'is_multiline' => true,
@@ -195,12 +195,12 @@ class Parse
                                     'end' => $line
                                 ],
                                 'length' => [
-                                    'start' => $length,
+                                    'start' => $length_start,
                                     'end' => strlen($explode[$count - 1])
                                 ],
                                 'column' => [
                                     ($line - $count + 1) => [
-                                        'start' => $column[$line - $count + 1] - $length,
+                                        'start' => $column[$line - $count + 1] - $length_start,
                                         'end' => $column[$line - $count + 1]
                                     ],
                                     $line => [
@@ -210,13 +210,13 @@ class Parse
                                 ]
                             ];
                         } else {
-                            $length = strlen($explode[0]);
+                            $length_start = strlen($explode[0]);
                             $record = [
                                 'tag' => $tag,
                                 'line' => $line,
-                                'length' => $length,
+                                'length' => $length_start,
                                 'column' => [
-                                    'start' => $column[$line] - $length,
+                                    'start' => $column[$line] - $length_start,
                                     'end' => $column[$line]
                                 ]
                             ];
