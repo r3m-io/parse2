@@ -91,15 +91,56 @@ class Value
                 true
                 )
             ){
-                d($is_single_quote);
-                d($is_double_quote);
                 ddd($value);
                 $value = '';
             }
             $value .= $char;
         }
         if($value){
-            ddd($value);
+            switch($value){
+                case 'true':
+                    $input['array'] = [
+                        'value' => $value,
+                        'is_boolean' => true,
+                        'execute' => true
+                    ];
+                    break;
+                case 'false':
+                    $input['array'] = [
+                        'value' => $value,
+                        'is_boolean' => true,
+                        'execute' => false
+                    ];
+                    break;
+                case 'null':
+                    $input['array'] = [
+                        'value' => $value,
+                        'is_null' => true,
+                        'execute' => null
+                    ];
+                    break;
+                default:
+                    if(
+                        is_numeric($value) &&
+                        strpos($value, '.') === false
+                    ){
+                        $input['array'] = [
+                            'value' => $value,
+                            'is_integer' => true,
+                            'execute' => $value + 0
+                        ];
+                    }
+                    elseif(
+                        is_numeric($value) &&
+                        strpos($value, '.') === true
+                    ){
+                        $input['array'] = [
+                            'value' => $value,
+                            'is_float' => true,
+                            'execute' => $value + 0
+                        ];
+                    }
+            }
         }
         return $input;
     }
