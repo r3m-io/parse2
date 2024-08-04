@@ -54,6 +54,7 @@ class Parse
                 ){
                     d($cache_url);
                     $tags = File::read($cache_url);
+                    $tags = gzdecode($tags);
                     $tags = Core::object($tags, Core::OBJECT_ARRAY);
                 }
                 elseif(File::exist($cache_url)){
