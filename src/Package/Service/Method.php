@@ -175,6 +175,7 @@ class Method
                             $flags,
                             $options
                         );
+                        ddd($argument_value);
                         $argument_list[] = $argument_value;
                         $argument_array = [];
                         $argument = '';
@@ -209,6 +210,7 @@ class Method
                             $flags,
                             $options
                         );
+                        ddd($argument_value);
                         $argument_list[] = $argument_value;
                         $argument_array = [];
                         $argument = '';
