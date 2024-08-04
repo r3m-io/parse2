@@ -36,6 +36,7 @@ class Parse
             $object->config('ds')
         ;
         $cache_url = $cache_dir . $hash . $object->config('extension.json');
+        $cache = $object->get(App::CACHE);
         $mtime = File::mtime($options->source);
         $is_new = false;
         if(
@@ -83,6 +84,7 @@ class Parse
         File::write($options->source, implode(PHP_EOL, $data));
         */
         $duration = (microtime(true) - $start) * 1000 . ' msec';
+        d($cache->data());
         ddd($duration);
         ddd($tags);
 

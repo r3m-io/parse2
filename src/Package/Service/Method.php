@@ -9,8 +9,12 @@ use R3m\Io\Module\File;
 use Exception;
 class Method
 {
+    /**
+     * @throws Exception
+     */
     public static function define(App $object, $input, $flags, $options): array
     {
+        $cache = $object->get(App::CACHE);
         $has_name = false;
         $name = false;
         $is_method = false;
@@ -175,7 +179,8 @@ class Method
                             $flags,
                             $options
                         );
-                        ddd($argument_value);
+                        $argument_value['uuid'] =  Core::uuid();
+                        $cache->set($argument_value['string'], $argument_value);
                         $argument_list[] = $argument_value;
                         $argument_array = [];
                         $argument = '';
@@ -210,7 +215,8 @@ class Method
                             $flags,
                             $options
                         );
-                        ddd($argument_value);
+                        $argument_value['uuid'] =  Core::uuid();
+                        $cache->set($argument_value['string'], $argument_value);
                         $argument_list[] = $argument_value;
                         $argument_array = [];
                         $argument = '';
@@ -232,6 +238,8 @@ class Method
                                 $flags,
                                 $options
                             );
+                            $argument_value['uuid'] =  Core::uuid();
+                            $cache->set($argument_value['string'], $argument_value);
                             $argument_list[] = $argument_value;
                             $argument_array = [];
                             $argument = '';
