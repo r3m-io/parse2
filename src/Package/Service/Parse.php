@@ -91,7 +91,6 @@ class Parse
                     $options->compress === true
                 ){
                     $data = new Data($tags);
-                    $cache_url .= '.gz';
                     $data->write($cache_url, [
                         'compact' => true,
                         'compress' => true
@@ -106,7 +105,6 @@ class Parse
                     $options->compress === true
                 ){
                     $data = new Data($tags);
-                    $cache_url .= '.gz';
                     $data->write($cache_url, [
                         'compact' => true,
                         'compress' => true
