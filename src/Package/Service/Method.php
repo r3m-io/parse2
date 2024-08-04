@@ -11,11 +11,6 @@ class Method
 {
     public static function define(App $object, $input, $flags, $options): array
     {
-        $cache = $object->get(App::CACHE);
-        $hash = hash('sha256', $input['string']);
-        if($cache->has($hash)){
-            return $cache->get($hash);
-        }
         $has_name = false;
         $name = false;
         $is_method = false;
@@ -283,7 +278,6 @@ class Method
             ddd($argument_list);
         }
         */
-        $cache->set($hash, $input);
         return $input;
     }
 }
