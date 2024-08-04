@@ -126,8 +126,9 @@ class Parse
         File::write($options->source, implode(PHP_EOL, $data));
         */
         $duration = (microtime(true) - $start) * 1000 . ' msec';
+        d('tags: ' . count($tags));
         ddd($duration);
-        ddd($tags);
+
 
         // Step 2: Define the placeholder values
         $placeholders = [
