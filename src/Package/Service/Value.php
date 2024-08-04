@@ -64,6 +64,8 @@ class Value
                 true
                 )
             ){
+                d($is_single_quote);
+                d($is_double_quote);
                 ddd($value);
                 $value = '';
             }
