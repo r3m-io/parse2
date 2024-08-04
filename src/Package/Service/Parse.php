@@ -5,6 +5,7 @@ use R3m\Io\App;
 use R3m\Io\Config;
 
 use R3m\Io\Module\Core;
+use R3m\Io\Module\Data;
 use R3m\Io\Module\Dir;
 use R3m\Io\Module\File;
 
@@ -68,9 +69,35 @@ class Parse
         ){
             Dir::create($cache_dir, Dir::CHMOD);
             if($object->config('framework.environment') === Config::MODE_DEVELOPMENT){
-                File::write($cache_url, Core::object($tags, Core::OBJECT_JSON));
+                if(
+                    property_exists($options, 'compress') &&
+                    $options->compress === true
+                ){
+                    $data = new Data($tags);
+                    $cache_url .= '.gz';
+                    $data->write($cache_url, [
+                        'compact' => true,
+                        'compress' => true
+                    ]);
+                } else {
+                    File::write($cache_url, Core::object($tags, Core::OBJECT_JSON));
+                }
+
             } else {
-                File::write($cache_url, Core::object($tags, Core::OBJECT_JSON_LINE));
+                if(
+                    property_exists($options, 'compress') &&
+                    $options->compress === true
+                ){
+                    $data = new Data($tags);
+                    $cache_url .= '.gz';
+                    $data->write($cache_url, [
+                        'compact' => true,
+                        'compress' => true
+                    ]);
+                } else {
+                    File::write($cache_url, Core::object($tags, Core::OBJECT_JSON_LINE));
+                }
+
             }
             File::touch($cache_url, $mtime);
         }
