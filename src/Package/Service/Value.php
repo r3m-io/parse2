@@ -11,8 +11,8 @@ class Value
 {
     public static function define(App $object, $input, $flags, $options): array
     {
-        $previous_nr = false;
         $is_single_quote = false;
+        $value = '';
         foreach($input['array'] as $nr => $char) {
             if (is_array($char)) {
                 continue;
@@ -28,8 +28,27 @@ class Value
             ) {
                 $is_single_quote = false;
             }
+            if(
+                $is_single_quote === false &&
+                in_array(
+                    $char,
+                    [
+                        ' ',
+                        "\n",
+                        "\r",
+                        "\t",
+                    ],
+                true
+                )
+            ){
+                ddd($value);
+                $value = '';
+            }
+            $value .= $char;
         }
-        d($input['array']);
+        if($value){
+            ddd($value);
+        }
         return $input;
     }
 }
