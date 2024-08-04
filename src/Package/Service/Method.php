@@ -179,8 +179,8 @@ class Method
                             $flags,
                             $options
                         );
-                        $argument_value['uuid'] =  Core::uuid();
-                        $cache->set($argument_value['string'], $argument_value);
+                        $hash = hash('sha256', $argument_value['string']);
+                        $cache->set($hash, $argument_value);
                         $argument_list[] = $argument_value;
                         $argument_array = [];
                         $argument = '';
@@ -215,8 +215,8 @@ class Method
                             $flags,
                             $options
                         );
-                        $argument_value['uuid'] =  Core::uuid();
-                        $cache->set($argument_value['string'], $argument_value);
+                        $hash = hash('sha256', $argument_value['string']);
+                        $cache->set($hash, $argument_value);
                         $argument_list[] = $argument_value;
                         $argument_array = [];
                         $argument = '';
@@ -238,8 +238,8 @@ class Method
                                 $flags,
                                 $options
                             );
-                            $argument_value['uuid'] =  Core::uuid();
-                            $cache->set($argument_value['string'], $argument_value);
+                            $hash = hash('sha256', $argument_value['string']);
+                            $cache->set($hash, $argument_value);
                             $argument_list[] = $argument_value;
                             $argument_array = [];
                             $argument = '';
