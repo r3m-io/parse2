@@ -9,12 +9,8 @@ use R3m\Io\Module\File;
 use Exception;
 class Method
 {
-    /**
-     * @throws Exception
-     */
     public static function define(App $object, $input, $flags, $options): array
     {
-        $cache = $object->get(App::CACHE);
         $has_name = false;
         $name = false;
         $is_method = false;
@@ -170,21 +166,15 @@ class Method
                         $is_single_quote = false;
                         $argument_array[] = $char;
                         $argument .= $char['value'];
-                        $hash = hash('sha256', $argument);
-                        if($cache->has($hash)){
-                            $argument_value = $cache->get($hash);
-                        } else {
-                            $argument_value = Parse::value(
-                                $object,
-                                [
-                                    'string' => $argument,
-                                    'array' => $argument_array
-                                ],
-                                $flags,
-                                $options
-                            );
-                            $cache->set($hash, $argument_value);
-                        }
+                        $argument_value = Parse::value(
+                            $object,
+                            [
+                                'string' => $argument,
+                                'array' => $argument_array
+                            ],
+                            $flags,
+                            $options
+                        );
                         $argument_list[] = $argument_value;
                         $argument_array = [];
                         $argument = '';
@@ -210,21 +200,15 @@ class Method
                         $is_double_quote = false;
                         $argument_array[] = $char;
                         $argument .= $char['value'];
-                        $hash = hash('sha256', $argument);
-                        if($cache->has($hash)){
-                            $argument_value = $cache->get($hash);
-                        } else {
-                            $argument_value = Parse::value(
-                                $object,
-                                [
-                                    'string' => $argument,
-                                    'array' => $argument_array
-                                ],
-                                $flags,
-                                $options
-                            );
-                            $cache->set($hash, $argument_value);
-                        }
+                        $argument_value = Parse::value(
+                            $object,
+                            [
+                                'string' => $argument,
+                                'array' => $argument_array
+                            ],
+                            $flags,
+                            $options
+                        );
                         $argument_list[] = $argument_value;
                         $argument_array = [];
                         $argument = '';
@@ -237,21 +221,15 @@ class Method
                         $is_double_quote === false
                     ){
                         if(array_key_exists(0, $argument_array)){
-                            $hash = hash('sha256', $argument);
-                            if($cache->has($hash)){
-                                $argument_value = $cache->get($hash);
-                            } else {
-                                $argument_value = Parse::value(
-                                    $object,
-                                    [
-                                        'string' => $argument,
-                                        'array' => $argument_array
-                                    ],
-                                    $flags,
-                                    $options
-                                );
-                                $cache->set($hash, $argument_value);
-                            }
+                            $argument_value = Parse::value(
+                                $object,
+                                [
+                                    'string' => $argument,
+                                    'array' => $argument_array
+                                ],
+                                $flags,
+                                $options
+                            );
                             $argument_list[] = $argument_value;
                             $argument_array = [];
                             $argument = '';
@@ -285,21 +263,6 @@ class Method
                 }
             }
         }
-        /*
-        if(array_key_exists(0, $argument_array)){
-            $argument_value = Parse::value(
-                $object,
-                [
-                    'string' => $argument,
-                    'array' => $argument_array
-                ],
-                $flags,
-                $options
-            );
-            $argument_list[] = $argument_value;
-            ddd($argument_list);
-        }
-        */
         return $input;
     }
 }
