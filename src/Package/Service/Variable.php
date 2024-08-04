@@ -258,7 +258,18 @@ class Variable
                                         elseif(array_key_exists('value', $input['array'][$i])){
                                             $modifier_name .= $input['array'][$i]['value'];
                                         }
-                                    } else {
+                                    }
+                                    elseif(
+                                        !in_array(
+                                            $input['array'][$i],
+                                            [
+                                                ' ',
+                                                "\n",
+                                                "\r",
+                                                "\t"
+                                            ]
+                                        )
+                                    ){
                                         $modifier_name .= $input['array'][$i];
                                     }
                                     $input['array'][$i] = null;
