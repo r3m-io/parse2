@@ -21,6 +21,32 @@ class Value
                     $value .= $char['execute'];
                 }
                 elseif(array_key_exists('value', $char)){
+                    if (
+                        $char['value'] === '\'' &&
+                        $is_single_quote === false &&
+                        $is_double_quote === false
+                    ) {
+                        $is_single_quote = true;
+                    } elseif (
+                        $char['value'] === '\'' &&
+                        $is_single_quote === true &&
+                        $is_double_quote === false
+                    ) {
+                        $is_single_quote = false;
+                    }
+                    elseif (
+                        $char['value'] === '"' &&
+                        $is_single_quote === false &&
+                        $is_double_quote === false
+                    ) {
+                        $is_double_quote = true;
+                    } elseif (
+                        $char['value'] === '"' &&
+                        $is_single_quote === false &&
+                        $is_double_quote === true
+                    ) {
+                        $is_double_quote = false;
+                    }
                     $value .= $char['value'];
                 }
                 continue;
