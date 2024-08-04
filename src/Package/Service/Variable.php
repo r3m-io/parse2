@@ -14,8 +14,11 @@ class Variable
         $is_variable = false;
         $set_depth = 0;
         foreach($input['array'] as $nr => $char){
+            if(!is_numeric($nr)){
+                ddd($input);
+            }
             if(
-                array_key_exists($nr - 1,$input['array']) &&
+                array_key_exists($nr - 1, $input['array']) &&
                 is_array($input['array'][$nr - 1])
             ){
                 if(array_key_exists('execute', $input['array'][$nr - 1])){
