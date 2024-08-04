@@ -17,9 +17,11 @@ class Value
         foreach($input['array'] as $nr => $char) {
             if (is_array($char)) {
                 if(array_key_exists('execute', $char)){
-                    $value .= $char['execute'];
+                    $value = '';
                 }
                 elseif(array_key_exists('value', $char)){
+                    $value = '';
+                    /*
                     if (
                         $char['value'] === '\'' &&
                         $is_single_quote === false &&
@@ -47,6 +49,7 @@ class Value
                         $is_double_quote = false;
                     }
                     $value .= $char['value'];
+                    */
                 }
                 continue;
             }
@@ -93,46 +96,46 @@ class Value
                 if($value){
                     switch($value){
                         case 'true':
-                            $input['array'] = [
+                            $input['array'] = [[
                                 'value' => $value,
                                 'is_boolean' => true,
                                 'execute' => true
-                            ];
+                            ]];
                             break;
                         case 'false':
-                            $input['array'] = [
+                            $input['array'] = [[
                                 'value' => $value,
                                 'is_boolean' => true,
                                 'execute' => false
-                            ];
+                            ]];
                             break;
                         case 'null':
-                            $input['array'] = [
+                            $input['array'] = [[
                                 'value' => $value,
                                 'is_null' => true,
                                 'execute' => null
-                            ];
+                            ]];
                             break;
                         default:
                             if(
                                 is_numeric($value) &&
                                 strpos($value, '.') === false
                             ){
-                                $input['array'] = [
+                                $input['array'] = [[
                                     'value' => $value,
                                     'is_integer' => true,
                                     'execute' => $value + 0
-                                ];
+                                ]];
                             }
                             elseif(
                                 is_numeric($value) &&
                                 strpos($value, '.') === true
                             ){
-                                $input['array'] = [
+                                $input['array'] = [[
                                     'value' => $value,
                                     'is_float' => true,
                                     'execute' => $value + 0
-                                ];
+                                ]];
                             }
                     }
                 }
@@ -143,46 +146,46 @@ class Value
         if($value){
             switch($value){
                 case 'true':
-                    $input['array'] = [
+                    $input['array'] = [[
                         'value' => $value,
                         'is_boolean' => true,
                         'execute' => true
-                    ];
+                    ]];
                     break;
                 case 'false':
-                    $input['array'] = [
+                    $input['array'] = [[
                         'value' => $value,
                         'is_boolean' => true,
                         'execute' => false
-                    ];
+                    ]];
                     break;
                 case 'null':
-                    $input['array'] = [
+                    $input['array'] = [[
                         'value' => $value,
                         'is_null' => true,
                         'execute' => null
-                    ];
+                    ]];
                     break;
                 default:
                     if(
                         is_numeric($value) &&
                         strpos($value, '.') === false
                     ){
-                        $input['array'] = [
+                        $input['array'] = [[
                             'value' => $value,
                             'is_integer' => true,
                             'execute' => $value + 0
-                        ];
+                        ]];
                     }
                     elseif(
                         is_numeric($value) &&
                         strpos($value, '.') === true
                     ){
-                        $input['array'] = [
+                        $input['array'] = [[
                             'value' => $value,
                             'is_float' => true,
                             'execute' => $value + 0
-                        ];
+                        ]];
                     }
             }
         }
