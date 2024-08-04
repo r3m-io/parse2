@@ -170,17 +170,21 @@ class Method
                         $is_single_quote = false;
                         $argument_array[] = $char;
                         $argument .= $char['value'];
-                        $argument_value = Parse::value(
-                            $object,
-                            [
-                                'string' => $argument,
-                                'array' => $argument_array
-                            ],
-                            $flags,
-                            $options
-                        );
-                        $hash = hash('sha256', $argument_value['string']);
-                        $cache->set($hash, $argument_value);
+                        $hash = hash('sha256', $argument);
+                        if($cache->has($hash)){
+                            $argument_value = $cache->get($hash);
+                        } else {
+                            $argument_value = Parse::value(
+                                $object,
+                                [
+                                    'string' => $argument,
+                                    'array' => $argument_array
+                                ],
+                                $flags,
+                                $options
+                            );
+                            $cache->set($hash, $argument_value);
+                        }
                         $argument_list[] = $argument_value;
                         $argument_array = [];
                         $argument = '';
@@ -206,17 +210,21 @@ class Method
                         $is_double_quote = false;
                         $argument_array[] = $char;
                         $argument .= $char['value'];
-                        $argument_value = Parse::value(
-                            $object,
-                            [
-                                'string' => $argument,
-                                'array' => $argument_array
-                            ],
-                            $flags,
-                            $options
-                        );
-                        $hash = hash('sha256', $argument_value['string']);
-                        $cache->set($hash, $argument_value);
+                        $hash = hash('sha256', $argument);
+                        if($cache->has($hash)){
+                            $argument_value = $cache->get($hash);
+                        } else {
+                            $argument_value = Parse::value(
+                                $object,
+                                [
+                                    'string' => $argument,
+                                    'array' => $argument_array
+                                ],
+                                $flags,
+                                $options
+                            );
+                            $cache->set($hash, $argument_value);
+                        }
                         $argument_list[] = $argument_value;
                         $argument_array = [];
                         $argument = '';
@@ -229,17 +237,21 @@ class Method
                         $is_double_quote === false
                     ){
                         if(array_key_exists(0, $argument_array)){
-                            $argument_value = Parse::value(
-                                $object,
-                                [
-                                    'string' => $argument,
-                                    'array' => $argument_array
-                                ],
-                                $flags,
-                                $options
-                            );
-                            $hash = hash('sha256', $argument_value['string']);
-                            $cache->set($hash, $argument_value);
+                            $hash = hash('sha256', $argument);
+                            if($cache->has($hash)){
+                                $argument_value = $cache->get($hash);
+                            } else {
+                                $argument_value = Parse::value(
+                                    $object,
+                                    [
+                                        'string' => $argument,
+                                        'array' => $argument_array
+                                    ],
+                                    $flags,
+                                    $options
+                                );
+                                $cache->set($hash, $argument_value);
+                            }
                             $argument_list[] = $argument_value;
                             $argument_array = [];
                             $argument = '';
