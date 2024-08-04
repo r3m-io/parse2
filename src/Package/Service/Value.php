@@ -12,6 +12,7 @@ class Value
     public static function define(App $object, $input, $flags, $options): array
     {
         $is_single_quote = false;
+        $is_double_quote = false;
         $value = '';
         foreach($input['array'] as $nr => $char) {
             if (is_array($char)) {
@@ -25,17 +26,33 @@ class Value
             }
             if (
                 $char === '\'' &&
-                $is_single_quote === false
+                $is_single_quote === false &&
+                $is_double_quote === false
             ) {
                 $is_single_quote = true;
             } elseif (
                 $char === '\'' &&
-                $is_single_quote === true
+                $is_single_quote === true &&
+                $is_double_quote === false
             ) {
                 $is_single_quote = false;
             }
+            elseif (
+                $char === '"' &&
+                $is_single_quote === false &&
+                $is_double_quote === false
+            ) {
+                $is_double_quote = true;
+            } elseif (
+                $char === '"' &&
+                $is_single_quote === false &&
+                $is_double_quote === true
+            ) {
+                $is_double_quote = false;
+            }
             if(
                 $is_single_quote === false &&
+                $is_double_quote === false &&
                 in_array(
                     $char,
                     [
