@@ -14,7 +14,6 @@ class Value
         $is_single_quote = false;
         $is_double_quote = false;
         $value = '';
-        d($input);
         foreach($input['array'] as $nr => $char) {
             if (is_array($char)) {
                 if(array_key_exists('execute', $char)){
