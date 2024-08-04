@@ -15,6 +15,12 @@ class Value
         $value = '';
         foreach($input['array'] as $nr => $char) {
             if (is_array($char)) {
+                if(array_key_exists('execute', $char)){
+                    $value .= $char['execute'];
+                }
+                elseif(array_key_exists('value', $char)){
+                    $value .= $char['value'];
+                }
                 continue;
             }
             if (
