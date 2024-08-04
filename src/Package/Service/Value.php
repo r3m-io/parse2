@@ -91,7 +91,7 @@ class Value
                 true
                 )
             ){
-                ddd($value);
+                d($value);
                 $value = '';
             }
             $value .= $char;
