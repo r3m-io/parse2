@@ -84,7 +84,7 @@ class Parse
         File::write($options->source, implode(PHP_EOL, $data));
         */
         $duration = (microtime(true) - $start) * 1000 . ' msec';
-        d($cache->data());
+//        d($cache->data());
         ddd($duration);
         ddd($tags);
 
