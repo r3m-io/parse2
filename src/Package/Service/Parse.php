@@ -1446,7 +1446,7 @@ class Parse
 
         $counter = 0;
         $input = Symbol::define($object, $input, $flags, $options);
-        $input = Value::define($object, $input, $flags, $options);
+//        $input = Value::define($object, $input, $flags, $options);
         $input = Cast::define($object, $input, $flags, $options);
         $input = Method::define($object, $input, $flags, $options);
         $input = Variable::define($object, $input, $flags, $options);
