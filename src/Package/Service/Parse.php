@@ -44,6 +44,23 @@ class Parse
             $options->ramdisk === true
         ){
             if(
+                property_exists($options, 'compress') &&
+                $options->compress === true
+            ){
+                $cache_url .= '.gz';
+                if(
+                    File::exist($cache_url) &&
+                    $mtime === File::mtime($cache_url)
+                ){
+                    d($cache_url);
+                    $tags = File::read($cache_url);
+                    $tags = Core::object($tags, Core::OBJECT_ARRAY);
+                }
+                elseif(File::exist($cache_url)){
+                    File::delete($cache_url);
+                }
+            }
+            elseif(
                 File::exist($cache_url) &&
                 $mtime === File::mtime($cache_url)
             ){
