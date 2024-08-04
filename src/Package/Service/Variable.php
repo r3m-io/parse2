@@ -31,7 +31,10 @@ class Variable
                 is_array($char) &&
                 array_key_exists('value', $char)
             ){
-                if($char['value'] === '$' && $input['array'][$nr] !== null){ // null check needed
+                if(
+                    $char['value'] === '$' &&
+                    $input['array'][$nr] !== null // null check needed
+                ){
                     $is_variable = $nr;
                     $name = '$';
                     for($i = $nr + 1; $i < $count; $i++){
@@ -260,7 +263,6 @@ class Variable
                                     }
                                     $input['array'][$i] = null;
                                 } else {
-                                    $argument_array[] = $input['array'][$i];
                                     if(is_array($input['array'][$i])){
                                         if(array_key_exists('execute', $input['array'][$i])){
                                             $argument .= $input['array'][$i]['execute'];
@@ -271,6 +273,7 @@ class Variable
                                     } else {
                                         $argument .= $input['array'][$i];
                                     }
+                                    $argument_array[] = $input['array'][$i];
                                     $input['array'][$i] = null;
                                 }
                             }
